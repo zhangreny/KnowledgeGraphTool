@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识图谱生成系统v0.1.0</title>
+    <link rel="stylesheet" href="/static/global/GlobalCSS.css">
+    <link rel="stylesheet" href="/static/global/css/layui.css"  media="all">
+	<link rel="shortcut icon" href="/static/global/images/icon.png">
+    <style>
+        .bg {
+            position: relative;
+            overflow: hidden;
+        }
+        .bg::before {
+            content: "";
+            position: absolute;
+            top: 17%;
+            left: 17%;
+            width: 66%;
+            height: 66%;
+            background-image: url("/static/global/images/icon.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            filter: blur(50px);
+            opacity: 0.6;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="width-100per" style="height:100vh;">
+        <div class="width-100per flex-row align-center justify-center" style="height:18%">
+            <div class="flex-column padding-10">
+                <img src="/static/global/images/icon.png" style="width:40px;height:40px;">
+                <div class="fontweight-600 fontsize-20" style="font-family:PingFang SC;">KGTools</div>
+            </div>
+        </div>
+        <div class="width-100per flex-row align-center justify-center bg" style="height:64%">
+            <div id="login" class="flex-column padding-10 align-center justify-center padding-20">
+                <input type="text" name="username" autocomplete="off" placeholder="用户名" class="layui-input" style="width:280px;border-radius:6px 6px 0px 0px;margin-bottom:1px;">
+                <input type="password" name="password" autocomplete="off" placeholder="密码" class="layui-input" style="width:280px;border-radius:0px 0px 6px 6px;">
+                <button onclick="login()" type="button" class="layui-btn layui-btn-normal margintop-15" style="width:280px;border-radius:6px;font-weight:600;">登录</button>
+                <div onclick="change('toregister')" class="cursor-pointer fontweight-600 fontsize-12 margintop-10" style="color:#1C86EE">新用户注册</div>
+            </div>    
+            <div id="register" class="flex-column padding-10 align-center justify-center padding-20 hidden">
+                <input type="text" name="username" autocomplete="off" placeholder="用户名" class="layui-input" style="width:280px;border-radius:6px 6px 0px 0px;margin-bottom:1px;">
+                <input type="password" name="password" autocomplete="off" placeholder="密码" class="layui-input" style="width:280px;margin-bottom:1px;">
+                <input type="password" name="confirmpassword" autocomplete="off" placeholder="确认密码" class="layui-input" style="width:280px;border-radius:0px 0px 6px 6px;">
+                <button onclick="register()" type="button" class="layui-btn layui-btn-normal margintop-15" style="width:280px;border-radius:6px;font-weight:600;">注册</button>
+                <div onclick="change('tologin')" class="cursor-pointer fontweight-600 fontsize-12 margintop-10" style="color:#1C86EE">去登录</div>
+            </div>  
+        </div>
+        <div class="width-100per flex-row align-center justify-center" style="height:18%">
+            <div class="flex-column padding-10">
+                <div class="fontsize-12 color-grey" style="font-family:PingFang SC;">KGTools Version: v0.1.0</div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/global/layui.js" charset="utf-8"></script>
+    <script src="/static/global/jquery.js"></script>
+    <script>
+        function change(modestr) {
+            if (modestr == "toregister") {
+                $("#login").addClass("hidden")
+                $("#register").removeClass("hidden")
+            } else if (modestr == "tologin") {
+                $("#register").addClass("hidden")
+                $("#login").removeClass("hidden")
+            }
+        }
+        function register() {
+            var register = document.getElementById("register")
+            var username = register.getElementsByTagName("input")[0].value
+            var password = register.getElementsByTagName("input")[1].value
+            var confirmpassword = register.getElementsByTagName("input")[2].value
+            if (username == "") {
+                layui.layer.msg("用户名不可为空", {offset: 'calc(50% - 170px)', time: 2000})
+                var element = register.getElementsByTagName("input")[0]
+                element.style.border = "2px solid red"
+                setTimeout(function() {
+                    element.style.border = ""
+                }, 1500);
+            } else if (password == "") {
+                layui.layer.msg("密码不可为空", {offset: 'calc(50% - 170px)', time: 2000})
+                var element = register.getElementsByTagName("input")[1]
+                element.style.border = "2px solid red"
+                setTimeout(function() {
+                    element.style.border = ""
+                }, 1500);
+            } else if (confirmpassword != password) {
+                layui.layer.msg("两次密码输入不一致", {offset: 'calc(50% - 170px)', time: 2000})
+                var element = register.getElementsByTagName("input")[2]
+                element.style.border = "2px solid red"
+                setTimeout(function() {
+                    element.style.border = ""
+                }, 1500);
+            }
+            var formFile = new FormData()
+            formFile.append("username", username)
+            formFile.append("password", password)
+            formFile.append("confirmpassword", confirmpassword)
+            var data = formFile;
+            $.ajax({
+                url: "/api/register",
+                data: data,
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.status == "success") {
+                        layer.msg('注册成功', {offset: 'calc(50% - 170px)', time: 2000})
+                        setTimeout(function() {
+                            change("tologin")
+                        }, 1000);
+                    } else if (res.status == "fail1") {
+                        layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
+                        var element = document.getElementById("register").getElementsByTagName("input")[0]
+                        element.style.border = "2px solid red"
+                        setTimeout(function() {
+                            element.style.border = ""
+                        }, 1500);
+                    } else if (res.status == "fail3") {
+                        layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
+                        var element = document.getElementById("register").getElementsByTagName("input")[2]
+                        element.style.border = "2px solid red"
+                        setTimeout(function() {
+                            element.style.border = ""
+                        }, 1500);
+                    } else if (res.status == "fail") {
+                        layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
+                    }
+                },
+            })
+        }
+        function login() {
+            var login = document.getElementById("login")
+            var username = login.getElementsByTagName("input")[0].value
+            var password = login.getElementsByTagName("input")[1].value
+            if (username == "") {
+                layui.layer.msg("用户名不可为空", {offset: 'calc(50% - 170px)', time: 2000})
+                var element = login.getElementsByTagName("input")[0]
+                element.style.border = "2px solid red"
+                setTimeout(function() {
+                    element.style.border = ""
+                }, 1500);
+            } else if (password == "") {
+                layui.layer.msg("密码不可为空", {offset: 'calc(50% - 170px)', time: 2000})
+                var element = login.getElementsByTagName("input")[1]
+                element.style.border = "2px solid red"
+                setTimeout(function() {
+                    element.style.border = ""
+                }, 1500);
+            }
+            var formFile = new FormData()
+            formFile.append("username", username)
+            formFile.append("password", password)
+            var data = formFile;
+            $.ajax({
+                url: "/api/login",
+                data: data,
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    if (res.status == "success") {
+                        window.location.href = "index";
+                    } else if (res.status == "fail1") {
+                        layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
+                        var element = document.getElementById("login").getElementsByTagName("input")[0]
+                        element.style.border = "2px solid red"
+                        setTimeout(function() {
+                            element.style.border = ""
+                        }, 1500);
+                    } else if (res.status == "fail2") {
+                        layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
+                        var element = document.getElementById("login").getElementsByTagName("input")[1]
+                        element.style.border = "2px solid red"
+                        setTimeout(function() {
+                            element.style.border = ""
+                        }, 1500);
+                    } else if (res.status == "fail") {
+                        layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
+                    }
+                },
+            })
+        }
+    </script>
+</body>
+</html>
+
