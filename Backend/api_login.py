@@ -1,5 +1,5 @@
 # 127.0.0.1:8000/login
-# pages/login
+# pages/login.html
 
 from flask import Blueprint
 from flask import request

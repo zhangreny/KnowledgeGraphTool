@@ -3,6 +3,7 @@ from flask import Flask
 from flask import redirect
 from datetime import timedelta
 from api_login import api_login
+from api_index import api_index
 from loadsystem import load_password_file
 
 port = 8000
@@ -13,6 +14,7 @@ app = Flask(
     static_url_path='/static'
 )
 app.register_blueprint(api_login)
+app.register_blueprint(api_index)
 
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1) 
@@ -33,3 +35,4 @@ if __name__ == '__main__':
     app.config['System_Auth_dict'] = load_password_file(app.config['System_Passwd_file'])
     print(error_msg if app.config['System_Auth_dict']=="Failed!" else success_msg)
     app.run(host='127.0.0.1', port=port)
+

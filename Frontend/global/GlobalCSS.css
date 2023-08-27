@@ -282,6 +282,9 @@ img{
 .border-bottom-white{
 	border-bottom: 1px solid #ffffff;
 }
+.border-bottom-grey{
+	border-bottom: 1px solid rgb(223,226,232);
+}
 
 /*************** 背景background ***************/
 .bg-white{
@@ -292,6 +295,9 @@ img{
 }
 .bg-lightblue{
 	background-color: rgb(231,236,240);
+}
+.bg-grey{
+	background-color: rgb(237,240,246);
 }
 .bg-black{
 	background-color: #000;
