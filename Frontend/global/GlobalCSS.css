@@ -422,9 +422,18 @@ img{
 	height: 60px;
 }
 
-
 .waited{
 	color: red;
 	font-size: 16px;
 	font-weight: 600;
 }
+
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+

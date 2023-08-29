@@ -12,48 +12,101 @@
         body {
             font-family: sans-serif;
         }
+        input::placeholder {
+            color: #999; /* 这里可以是任何你想要的颜色 */
+        }
+        /*自定义layui-layer.msg成功提示框样式*/
+        body .success-class{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 3px;
+            color: #000;
+            height: 46px;
+            white-space: nowrap;
+        }
+        body .success-class .layui-layer-padding {
+            text-align: center;
+            padding: 0;
+            height: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% - 20px);
+            white-space: nowrap;
+            padding-left: 40px;
+            padding-right: 20px;
+        }
+        body .success-class .layui-layer-content .layui-layer-ico {
+            background-image: url(/static/global/images/right.png);
+            background-position: center;
+            background-size: 80%;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
     <div class="width-100per" style="height:100vh;">
         <!-- popup -->
-        <div id="popup" class="flex-row align-center justify-center width-100per height-100per hidden" style="position: fixed;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.5);z-index: 9999;">
+        <div id="popup" class="flex-row align-center justify-center width-100per height-100per hidden" style="position: fixed;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.5);z-index: 999;">
             <div id="popup-content" class="bg-white flex-column align-center justify-center layui-anim" data-anim="layui-anim-up" style="width:calc(100% - 20px); height:calc(100% - 20px)">
                 <div onclick="ClosePopup()" class="flex-row cursor-pointer align-center justify-center" style="position: fixed;top: 26px;right:26px;width:24px;height:24px;border-radius: 50%;background-color: #4b4b4b;">
                     <i class="layui-icon layui-icon-close" style="font-size: 14px; color:#fff;"></i>
                 </div>
-                <div id="kgdb-popup" class="paddingleft-10 overflow-auto" style="width: 40%;padding-top:40px;height:calc(100% - 60px);">
-                    <div class="fontweight-600 margintop-20" style="font-size:32px;margin-left: -10px;margin-bottom:18px;">
-                        创建数据库连接
+                <div id="kgdb-popup" class="paddingleft-10" style="width: 40%;margin-top:40px;height:100%;">
+                    <div class="paddingleft-10 overflow-auto paddingbottom-20" style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
+                        <div class="fontweight-600 margintop-10" style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
+                            创建数据库连接
+                        </div>
+                        <!-- 小栏 -->
+                        <div class="fontweight-600 paddingtop-15 paddingbottom-15" style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
+                            基本信息
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">名称</div>
+                            <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">数据库类型</div>
+                            <div class="paddingleft-5">Neo4j</div>
+                        </div>
+                        <!-- 小栏 -->
+                        <div class="fontweight-600 paddingtop-15 paddingbottom-15" style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
+                            鉴权信息
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">数据库uri</div>
+                            <input type="text" autocomplete="off" placeholder="形如 bolt:// http:// https://" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">用户名</div>
+                            <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">密码</div>
+                            <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                        </div>
                     </div>
-                    <!-- 小栏 -->
-                    <div class="fontweight-600 paddingtop-15 paddingbottom-15" style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
-                        基本信息
+                    <div class="flex-row align-center justify-between" style="width: 100%; height:59px;border-top: 1px solid #d1d1d1;">
+                        <div class="color-red">
+                            <span></span>
+                        </div>
+                        <div class="flex-row">
+                            <button onclick="ClosePopup()" type="button" class="layui-btn layui-btn-primary" style="width:80px;border-radius:6px;font-weight:600;">取消</button>
+                            <button onclick="AddNewDBConnection()" type="button" class="layui-btn layui-btn-normal" style="width:80px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
+                                <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop" style="display:none;margin-right:3px;"></i>
+                                提交
+                            </button> 
+                        </div>
                     </div>
-                    <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
-                        <div style="color: #808896;width:30%">名称</div>
-                        <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
-                    </div>
-                    <!-- 小栏 -->
-                    <div class="fontweight-600 paddingtop-15 paddingbottom-15" style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
-                        鉴权信息
-                    </div>
-                    <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
-                        <div style="color: #808896;width:30%">数据库uri</div>
-                        <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
-                    </div>
-                    <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
-                        <div style="color: #808896;width:30%">用户名</div>
-                        <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
-                    </div>
-                    <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
-                        <div style="color: #808896;width:30%">密码</div>
-                        <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
-                    </div>
-                </div>
-                <div class="flex-row align-center justify-end" style="width: 40%; height:59px;border-top: 1px solid #d1d1d1;">
-                    <button onclick="ClosePopup()" type="button" class="layui-btn layui-btn-primary" style="width:70px;border-radius:6px;font-weight:600;">取消</button>
-                    <button onclick="AddNewDBConnection()" type="button" class="layui-btn layui-btn-normal" style="width:70px;border-radius:6px;font-weight:600;">提交</button>
                 </div>
             </div>
         </div>
@@ -67,6 +120,7 @@
                         <option value="知识库" selected>知识库</option>
                         <option value="用户事件">用户事件</option>
                         <option value="系统事件">系统事件</option>
+                        <option value="用户与权限">用户与权限</option>
                     </select>
                 </div>
                 <div class="flex-row align-center" style="height:38px; width: 280px; border-radius: 1px; border: 1px solid #e8e8e8; font-size: 12px; margin-left: 12px;">
@@ -99,6 +153,7 @@
                 </div>
                 <!-- navbar-kgdb -->
                 <div id="kgdb-content" class="height-100per width-100per flex-row align-center justify-center hidden">
+
                 </div>
             </div>
         </div>
@@ -113,7 +168,6 @@
             form.on('select(page-filter)', function(data){
                 var elem = data.elem;
                 var value = data.value;
-                elem.style.color = "#35038a";
                 ChangePage(value);
             });
         });

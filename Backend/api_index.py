@@ -10,5 +10,5 @@ from json import dumps
 api_index = Blueprint('api_index', __name__, static_folder='../Frontend')
 
 @api_index.route("/index")
-def get_login():
+def get_index():
     return api_index.send_static_file("pages/index.html")
