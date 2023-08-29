@@ -28,6 +28,48 @@
             opacity: 0.6;
             z-index: -1;
         }
+        body {
+            font-family: sans-serif;
+        }
+        input::placeholder {
+            color: #999; /* 这里可以是任何你想要的颜色 */
+        }
+        /*自定义layui-layer.msg成功提示框样式*/
+        body .success-class{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffffff;
+            border-radius: 3px;
+            color: #000;
+            height: 46px;
+            white-space: nowrap;
+        }
+        body .success-class .layui-layer-padding {
+            text-align: center;
+            padding: 0;
+            height: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: calc(100% - 20px);
+            white-space: nowrap;
+            padding-left: 40px;
+            padding-right: 20px;
+        }
+        body .success-class .layui-layer-content .layui-layer-ico {
+            background-image: url(/static/global/images/right.png);
+            background-position: center;
+            background-size: 80%;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
@@ -112,10 +154,13 @@
                 contentType: false,
                 success: function (res) {
                     if (res.status == "success") {
-                        layer.msg('注册成功', {offset: 'calc(50% - 170px)', time: 2000})
+                        showtaskmsg_success("注册成功")
                         setTimeout(function() {
                             change("tologin")
                         }, 1000);
+                        register.getElementsByTagName("input")[0].value = ""
+                        register.getElementsByTagName("input")[1].value = ""
+                        register.getElementsByTagName("input")[2].value = ""
                     } else if (res.status == "fail1") {
                         layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})
                         var element = document.getElementById("register").getElementsByTagName("input")[0]
@@ -189,6 +234,14 @@
                     }
                 },
             })
+        }
+        function showtaskmsg_success(msg) {
+            layui.layer.msg(msg,{
+                skin:'success-class',
+                offset: 'calc(50% - 170px)',
+                icon: 1,
+                time: 1500
+            });
         }
     </script>
 </body>

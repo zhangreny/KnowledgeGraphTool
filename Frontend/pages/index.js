@@ -92,9 +92,12 @@ function AddNewDBConnection() {
             } else if (res.status == "notuniquename"){
                 ShowErrorinPopup("kgdb-popup", res.resultdata)
                 inputs[0].style.border = "2px solid red"
-                setTimeout(function() {inputs[0].style.border = "1px solid #dadada"}, 1500);
+                setTimeout(function() {inputs[0].style.border = "1px solid #dadada"}, 3000);
+            } else if (res.status == "notuniquedb"){
+                ShowErrorinPopup("kgdb-popup", res.resultdata)
+                inputs[1].style.border = "2px solid red"
+                setTimeout(function() {inputs[1].style.border = "1px solid #dadada"}, 3000);
             }
-            
         },
     })
 }

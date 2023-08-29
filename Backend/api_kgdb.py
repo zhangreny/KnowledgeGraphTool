@@ -15,9 +15,9 @@ def uniquedbname(dblist, dbname):
             return True
     return False
 
-def uniquedbauth(dblist, uri, username, password):
+def uniquedbauth(dblist, uri):
     for db in dblist:
-        if db['uri'] == uri and db['username'] == username and db['password'] == password:
+        if db['uri'] == uri:
             return True
     return False
 
@@ -32,10 +32,11 @@ def api_index_post_addconnectiondb():
             return dumps({'status':'fail','resultdata':'存在为空的字段'})
         if uniquedbname(current_app.config['System_Database_list'], mydbname):
             return dumps({'status':'notuniquename', 'resultdata':'已存在同名数据库'})  
-        if uniquedbauth(current_app.config['System_Database_list'], uri, username, password):
-            return dumps({'status':'notuniquename', 'resultdata':'已和同一个数据库建立过连接'})  
+        if uniquedbauth(current_app.config['System_Database_list'], uri):
+            return dumps({'status':'notuniquedb', 'resultdata':'已和同一个数据库建立过连接'})  
         dbinfo = {
             "unique-dbname": mydbname,
+            "category": "neo4j",
             "uri": uri,
             "username": username,
             "password": password

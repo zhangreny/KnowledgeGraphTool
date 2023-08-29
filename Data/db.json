@@ -1,6 +1,7 @@
 [
     {
         "unique-dbname": "111",
+        "category": "neo4j",
         "uri": "bolt://127.0.0.1:7687",
         "username": "neo4j",
         "password": "zhangry2001"
