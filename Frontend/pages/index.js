@@ -1,3 +1,49 @@
+window.onpageshow = function () {
+	Getdatabase();
+}
+
+function Getdatabase() {
+    document.getElementById("loading-navbar").getElementsByTagName('button')[0].style.display = "none"
+    document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.remove('hidden')
+    $.get("/api/databaseinfo",
+    function (res) {
+        console.log(res)
+        // close loading
+        if (res.status == "success") {
+            document.getElementById("loading-navbar").classList.add("hidden");
+            document.getElementById("kgdb-navbar").classList.add("hidden");
+            document.getElementById("nodb-navbar").classList.add("hidden");
+            if (res.resultdata.length == 0) {
+                document.getElementById("nodb-navbar").classList.remove("hidden");
+            }
+            else {
+                document.getElementById("kgdb-navbar").classList.remove("hidden");
+                const navbar = $("div#kgdb-navbar").empty();
+                for (var i=0; i<res.resultdata.length; i++) {
+                    // add bar of database
+                    var addstr = '<div id="'+res.resultdata[i].id+'" class="marginbottom-10 flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;"><div onclick="ExpandandCollapse_database(\''+res.resultdata[i].id+'\')" class="cursor-pointer bg-hover-blueimage-right"></div><img src="/static/global/images/database.png" class="img-26 cursor-pointer" onclick="ClickDatabase(\''+res.resultdata[i].id+'\')"><div onclick="ClickDatabase(\''+res.resultdata[i].id+'\')" class="marginleft-10 flex-column cursor-pointer" style="width:calc(100% - 148px)"><span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">'+res.resultdata[i].unique_dbname+'</span><span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">'+res.resultdata[i].uri+'</span></div>'
+                    if (res.resultdata[i].status == "active") {
+                        addstr += '<div class="" style="width:82px"><div class="flex-row align-center"><div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div><span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span></div></div></div>'
+                    } else {
+                        addstr += '<div class="" style="width:82px"><div class="flex-row align-center"><div style="width:16px;height:16px;background-image: url(/static/global/images/reddot.png); background-position: center; background-size: 200%;"></div><span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#d81e06">连接异常</span></div></div></div>'
+                    }
+                    $(addstr).appendTo(navbar);
+
+                    // add domain if there are 
+
+
+                }
+            }
+        }
+        else {
+            showtaskmsg_fail("获取数据库列表失败")
+        }
+        document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.add('hidden')
+        document.getElementById("loading-navbar").getElementsByTagName('button')[0].style.display = ""
+    }, "json");
+    
+}
+
 function ChangePage(pagename) {
     console.log(pagename);
 }
@@ -83,10 +129,10 @@ function AddNewDBConnection() {
                 for (var i=0;i<inputs.length; i++) {
                     inputs[i].value = "";
                 }
-
                 // update tasks
 
                 // update navbar
+                Getdatabase()
             } else if (res.status == "fail") {
                 ShowErrorinPopup("kgdb-popup", res.resultdata)
             } else if (res.status == "notuniquename"){
@@ -117,3 +163,21 @@ function showtaskmsg_success(msg) {
     });
 }
 
+function showtaskmsg_fail(msg) {
+    layui.layer.msg(msg,{
+        skin:'fail-class',
+        offset: '80px',
+        icon: 1
+    });
+}
+
+function ExpandandCollapse_database(divid) {
+    const divelement = document.getElementById(divid).getElementsByTagName("div")[0]
+    if (divelement.classList.contains("bg-hover-blueimage-right")) {
+        divelement.classList.remove("bg-hover-blueimage-right")
+        divelement.classList.add("bg-hover-blueimage-down")
+    } else {
+        divelement.classList.remove("bg-hover-blueimage-down")
+        divelement.classList.add("bg-hover-blueimage-right")
+    }
+}

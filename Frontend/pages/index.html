@@ -1,110 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>知识图谱生成系统v0.1.0</title>
     <link rel="stylesheet" href="/static/global/GlobalCSS.css">
-    <link rel="stylesheet" href="/static/global/css/layui.css"  media="all">
-	<link rel="shortcut icon" href="/static/global/images/icon.png">
-    <style>
-        body {
-            font-family: sans-serif;
-        }
-        input::placeholder {
-            color: #999; /* 这里可以是任何你想要的颜色 */
-        }
-        /*自定义layui-layer.msg成功提示框样式*/
-        body .success-class{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            background-color: #ffffff;
-            border-radius: 3px;
-            color: #000;
-            height: 46px;
-            white-space: nowrap;
-        }
-        body .success-class .layui-layer-padding {
-            text-align: center;
-            padding: 0;
-            height: 24px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: calc(100% - 20px);
-            white-space: nowrap;
-            padding-left: 40px;
-            padding-right: 20px;
-        }
-        body .success-class .layui-layer-content .layui-layer-ico {
-            background-image: url(/static/global/images/right.png);
-            background-position: center;
-            background-size: 80%;
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            top: 0;
-            left: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/pages/index.css">
+    <link rel="stylesheet" href="/static/global/css/layui.css" media="all">
+    <link rel="shortcut icon" href="/static/global/images/icon.png">
+
 </head>
+
 <body>
     <div class="width-100per" style="height:100vh;">
         <!-- popup -->
-        <div id="popup" class="flex-row align-center justify-center width-100per height-100per hidden" style="position: fixed;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.5);z-index: 999;">
-            <div id="popup-content" class="bg-white flex-column align-center justify-center layui-anim" data-anim="layui-anim-up" style="width:calc(100% - 20px); height:calc(100% - 20px)">
-                <div onclick="ClosePopup()" class="flex-row cursor-pointer align-center justify-center" style="position: fixed;top: 26px;right:26px;width:24px;height:24px;border-radius: 50%;background-color: #4b4b4b;">
+        <div id="popup" class="flex-row align-center justify-center width-100per height-100per hidden"
+            style="position: fixed;top: 0;left: 0;background-color: rgba(0, 0, 0, 0.5);z-index: 999;">
+            <div id="popup-content" class="bg-white flex-column align-center justify-center layui-anim"
+                data-anim="layui-anim-up" style="width:calc(100% - 20px); height:calc(100% - 20px)">
+                <div onclick="ClosePopup()" class="flex-row cursor-pointer align-center justify-center"
+                    style="position: fixed;top: 26px;right:26px;width:24px;height:24px;border-radius: 50%;background-color: #4b4b4b;">
                     <i class="layui-icon layui-icon-close" style="font-size: 14px; color:#fff;"></i>
                 </div>
                 <div id="kgdb-popup" class="paddingleft-10" style="width: 40%;margin-top:40px;height:100%;">
-                    <div class="paddingleft-10 overflow-auto paddingbottom-20" style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
-                        <div class="fontweight-600 margintop-10" style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
+                    <div class="paddingleft-10 overflow-auto paddingbottom-20"
+                        style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
+                        <div class="fontweight-600 margintop-10"
+                            style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
                             创建数据库连接
                         </div>
                         <!-- 小栏 -->
-                        <div class="fontweight-600 paddingtop-15 paddingbottom-15" style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
+                        <div class="fontweight-600 paddingtop-15 paddingbottom-15"
+                            style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
                             基本信息
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">名称</div>
-                            <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                            <input type="text" autocomplete="off" class="layui-input"
+                                style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">数据库类型</div>
                             <div class="paddingleft-5">Neo4j</div>
                         </div>
                         <!-- 小栏 -->
-                        <div class="fontweight-600 paddingtop-15 paddingbottom-15" style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
+                        <div class="fontweight-600 paddingtop-15 paddingbottom-15"
+                            style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
                             鉴权信息
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">数据库uri</div>
-                            <input type="text" autocomplete="off" placeholder="形如 bolt:// http:// https://" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                            <input type="text" autocomplete="off" placeholder="形如 bolt:// http:// https://"
+                                class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">用户名</div>
-                            <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                            <input type="text" autocomplete="off" class="layui-input"
+                                style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">密码</div>
-                            <input type="password" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                            <input type="password" autocomplete="off" class="layui-input"
+                                style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
                         </div>
                     </div>
-                    <div class="flex-row align-center justify-between" style="width: 100%; height:59px;border-top: 1px solid #d1d1d1;">
+                    <div class="flex-row align-center justify-between"
+                        style="width: 100%; height:59px;border-top: 1px solid #d1d1d1;">
                         <div class="color-red">
                             <span></span>
                         </div>
                         <div class="flex-row">
-                            <button onclick="ClosePopup()" type="button" class="layui-btn layui-btn-primary" style="width:80px;border-radius:6px;font-weight:600;">取消</button>
-                            <button onclick="AddNewDBConnection()" type="button" class="layui-btn layui-btn-normal" style="width:80px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
-                                <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop" style="display:none;margin-right:3px;"></i>
+                            <button onclick="ClosePopup()" type="button" class="layui-btn layui-btn-primary"
+                                style="width:80px;border-radius:6px;font-weight:600;">取消</button>
+                            <button onclick="AddNewDBConnection()" type="button" class="layui-btn layui-btn-normal"
+                                style="width:80px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
+                                <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
+                                    style="display:none;margin-right:3px;"></i>
                                 提交
-                            </button> 
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -123,35 +98,125 @@
                         <option value="用户与权限">用户与权限</option>
                     </select>
                 </div>
-                <div class="flex-row align-center" style="height:38px; width: 280px; border-radius: 1px; border: 1px solid #e8e8e8; font-size: 12px; margin-left: 12px;">
+                <div class="flex-row align-center"
+                    style="height:38px; width: 280px; border-radius: 1px; border: 1px solid #e8e8e8; font-size: 12px; margin-left: 12px;">
                     <div class="flex-row align-center justify-center" style="height:38px; width: 38px;">
                         <img src="/static/global/images/search.png" class="img-20">
                     </div>
-                    <input type="text" placeholder="搜索" class="width-100per height-100per padding-10" style="border: none; padding-left:0px">
+                    <input type="text" placeholder="搜索" class="width-100per height-100per padding-10"
+                        style="border: none; padding-left:0px">
                 </div>
             </div>
         </div>
         <div class="width-100per flex-row" style="height:calc(100% - 56px)">
             <div class="height-100per bg-grey" style="width:20%;">
+                <!-- loading database -->
+                <div id="loading-navbar" class="height-100per width-100per flex-row align-center justify-center">
+                    <div class="padding-5 flex-row hidden">
+                        <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
+                            style="color: #a8a8ae;font-size: 20px;"></i>
+                        <span class="marginleft-10" style="color: #a8a8ae;">获取数据库信息中</span>
+                    </div>
+                    <button onclick="Getdatabase()" type="button"
+                        class="layui-btn layui-btn-primary fontsize-12 flex-row justify-center hidden"
+                        style="width:150px;border-radius:6px;color: #a8a8ae;">获取数据库列表
+                    </button>
+                </div>
                 <!-- No database now -->
-                <div class="height-100per width-100per flex-column align-center justify-center">
+                <div id="nodb-navbar" class="height-100per width-100per flex-column align-center justify-center hidden">
                     <img src="/static/global/images/nodatabase.png" class="img-32">
                     <div class="fontsize-16 fontweight-600" style="color: #a8a8ae;">无数据库信息</div>
-                    <button onclick="OpenPopup('kgdb-popup')" type="button" class="layui-btn layui-btn-normal margintop-10 fontsize-12" style="width:110px;border-radius:6px;font-weight:600;">添加数据库</button>
+                    <button onclick="OpenPopup('kgdb-popup')" type="button"
+                        class="layui-btn layui-btn-normal margintop-10 fontsize-12"
+                        style="width:110px;border-radius:6px;font-weight:600;">添加数据库</button>
                 </div>
                 <!-- navbar-kgdb -->
-                <div id="kgdb-navbar" class="height-100per width-100per flex-row align-center justify-center hidden">
+                <div id="kgdb-navbar" class="height-100per width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10">
+                    <div id="db-0" onclick="ClickDatabase('db-0')" class="marginbottom-10 flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;">
+                        <div class="cursor-pointer bg-hover-blueimage-right">
+                        </div>
+                        <img src="/static/global/images/database.png" class="img-26">
+                        <div class="marginleft-10 flex-column" style="width:calc(100% - 148px)">
+                            <span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">数据库名字</span>
+                            <span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">bolt://127.0.0.1:7687</span>
+                        </div>
+                        <div class="" style="width:82px">
+                            <div class="flex-row align-center">
+                                <div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div>
+                                <span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span>
+                            </div>
+                            <div class="flex-row align-center hidden">
+                                <div style="width:16px;height:16px;background-image: url(/static/global/images/reddot.png); background-position: center; background-size: 200%;"></div>
+                                <span class="fontsize-12" style="margin-bottom: 1px;">连接异常</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="db-0-domain-no" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
+                        <img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;">
+                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
+                            <span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span>
+                        </div>
+                        <!--
+                        <div class="" style="width:82px">
+                            <button class="flex-row justify-center align-center padding-5 fontsize-8 border-none borderradius-6 cursor-pointer" style="border: 1px solid rgb(223,226,232); color: white;background-color: #1C86EE;width:80px">
+                                <img src="/static/global/images/plus-white.png" class="img-12" style="margin-right: 5px;margin-top:1px;">
+                                <span style="font-weight:600;margin-bottom: 1px;">创建</span>
+                            </button>
+                        </div>
+                        -->
+                    </div>
+                    <div id="db-1" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;">
+                        <div class="cursor-pointer bg-hover-blueimage">
+                        </div>
+                        <img src="/static/global/images/database.png" class="img-26">
+                        <div class="marginleft-10 flex-column" style="width:calc(100% - 148px)">
+                            <span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">数据库名字</span>
+                            <span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">bolt://127.0.0.1:7687</span>
+                        </div>
+                        <div class="" style="width:82px">
+                            <div class="flex-row align-center">
+                                <div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div>
+                                <span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span>
+                            </div>
+                            <div class="flex-row align-center hidden">
+                                <div style="width:16px;height:16px;background-image: url(/static/global/images/reddot.png); background-position: center; background-size: 200%;"></div>
+                                <span class="fontsize-12" style="margin-bottom: 1px;">连接异常</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="db-1-domain-0" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
+                        <div class="cursor-pointer bg-hover-blueimage">
+                        </div>
+                        <img src="/static/global/images/domain.png" class="img-20">
+                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
+                            <span class="fontsize-12 overflow-ellipsis cursor-pointer">领域名1</span>
+                        </div>
+                    </div>
+                    <div id="db-1-domain-0" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
+                        <div class="cursor-pointer bg-hover-blueimage">
+                        </div>
+                        <img src="/static/global/images/domain.png" class="img-20">
+                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
+                            <span class="fontsize-12 overflow-ellipsis cursor-pointer">领域名1</span>
+                        </div>
+                    </div>
+                    <div id="db-1-domain-0" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
+                        <div class="cursor-pointer bg-hover-blueimage">
+                        </div>
+                        <img src="/static/global/images/domain.png" class="img-20">
+                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
+                            <span class="fontsize-12 overflow-ellipsis cursor-pointer">领域名1</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="height-100per" style="width:80%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
-                <!-- No database now -->
-                <div class="height-100per width-100per flex-column align-center justify-center">
-                    <img src="/static/global/images/nodatabase.png" class="img-32">
-                    <div class="fontsize-16 fontweight-600" style="color: #a8a8ae;">无数据库信息</div>
-                    <button onclick="OpenPopup('kgdb-popup')" type="button" class="layui-btn layui-btn-normal margintop-10 fontsize-12" style="width:110px;border-radius:6px;font-weight:600;">添加数据库</button>
+                <!-- content-loading -->
+                <div id="loading-content" class="height-100per width-100per flex-row align-center justify-center">
+
                 </div>
-                <!-- navbar-kgdb -->
+                <!-- content-kgdb -->
                 <div id="kgdb-content" class="height-100per width-100per flex-row align-center justify-center hidden">
 
                 </div>
@@ -163,15 +228,16 @@
     <script src="/static/global/jquery.js"></script>
     <script src="/static/pages/index.js"></script>
     <script>
-        layui.use(function(){
+        layui.use(function () {
             var form = layui.form;
-            form.on('select(page-filter)', function(data){
+            form.on('select(page-filter)', function (data) {
                 var elem = data.elem;
                 var value = data.value;
                 ChangePage(value);
             });
         });
+
     </script>
 </body>
-</html>
 
+</html>

@@ -231,6 +231,9 @@ img{
 .fontsize-10{
 	font-size: 10px;
 }
+.fontsize-8{
+	font-size: 8px;
+}
 .fontweight-600{
 	font-weight: 600;
 }
@@ -358,6 +361,10 @@ img{
 .overflowyauto-nobar::-webkit-scrollbar-thumb {
 	background-color: transparent;
 }
+.overflow-ellipsis{
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
 /*************** hover指针浮于组件上 ***************/
 .hover-textunderline:hover{
@@ -378,8 +385,14 @@ img{
 .hover-bg-lightblue:hover{
 	background-color: rgb(231,236,240);
 }
+.hover-bg-lightgrey:hover{
+	background-color: rgb(246,249,255);
+}
 .hover-bg-black:hover{
 	background-color: rgb(0,0,0);
+}
+.hover-bg-white:hover{
+	background-color: #ffffff;
 }
 .hover-bg-darkgreen:hover{
 	background-color: rgb(6, 65, 23);

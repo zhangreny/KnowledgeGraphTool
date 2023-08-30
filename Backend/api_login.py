@@ -54,3 +54,4 @@ def api_login_post_login():
                     return dumps({'status':'success','resultdata':'登录成功'})
         except:
             return dumps({'status':'fail','resultdata':'用户登录出现bug了'})
+        # 添加任务日志
