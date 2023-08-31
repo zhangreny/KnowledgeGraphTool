@@ -130,3 +130,8 @@ body .fail-class .layui-layer-content .layui-layer-ico {
 .bg-hover-blueimage-down:hover {
     background-image: url(/static/global/images/down-blue.png);
 }
+
+.clicked-dbordomain {
+    background: linear-gradient(to right, #c6dffc, rgb(227, 236, 251));
+    font-weight: 600;
+}

@@ -30,8 +30,17 @@ function Getdatabase() {
                     $(addstr).appendTo(navbar);
 
                     // add domain if there are 
-
-
+                    if (res.resultdata[i].status != "active") {
+                        $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">数据库连接失败，无法获取领域</span></div></div>').appendTo(navbar)
+                    } else {
+                        if (res.resultdata[i].domains.length == 0) {
+                            $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span></div></div>').appendTo(navbar)
+                        } else {
+                            for (var j=0; j<res.resultdata[i].domains.length; j++) {
+                                $('<div onclick="ClickDomain(\''+res.resultdata[i].domains[j].domainindex+'\')" id="'+res.resultdata[i].domains[j].domainindex+'" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#4b4b4b;">'+res.resultdata[i].domains[j].domainname+'</span></div></div>').appendTo(navbar)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -172,12 +181,59 @@ function showtaskmsg_fail(msg) {
 }
 
 function ExpandandCollapse_database(divid) {
-    const divelement = document.getElementById(divid).getElementsByTagName("div")[0]
+    const fatherdiv = document.getElementById(divid)
+    const divelement = fatherdiv.getElementsByTagName("div")[0]
     if (divelement.classList.contains("bg-hover-blueimage-right")) {
         divelement.classList.remove("bg-hover-blueimage-right")
         divelement.classList.add("bg-hover-blueimage-down")
+        const elements = document.querySelectorAll('div[id^="'+divid+'_domain"]');
+        elements.forEach(div => {
+            div.classList.remove('hidden')
+            div.classList.add("layui-anim")
+            div.classList.add("layui-anim-downbit")
+        });
     } else {
         divelement.classList.remove("bg-hover-blueimage-down")
         divelement.classList.add("bg-hover-blueimage-right")
+        const elements = document.querySelectorAll('div[id^="'+divid+'_domain"]');
+        elements.forEach(div => {
+            div.classList.add('hidden');
+            div.classList.remove("layui-anim")
+            div.classList.remove("layui-anim-downbit")
+        });
     }
+}
+
+function ClickDatabase(divid) {
+    // if current div not clicked, operate
+    const currentdiv = document.getElementById(divid)
+    if (currentdiv.classList.contains("clicked-dbordomain")) {
+        return
+    }
+    // change css
+    const navbar = document.getElementById("kgdb-navbar")
+    const divElements = navbar.querySelectorAll('div.clicked-dbordomain');
+    divElements.forEach(div => {
+        div.classList.remove("clicked-dbordomain")
+    });
+    currentdiv.classList.add("clicked-dbordomain")
+
+    // show content
+}
+
+function ClickDomain(domainid) {
+    // if current div not clicked, operate
+    const currentdiv = document.getElementById(domainid)
+    if (currentdiv.classList.contains("clicked-dbordomain")) {
+        return
+    }
+    // change css
+    const navbar = document.getElementById("kgdb-navbar")
+    const divElements = navbar.querySelectorAll('div.clicked-dbordomain');
+    divElements.forEach(div => {
+        div.classList.remove("clicked-dbordomain")
+    });
+    currentdiv.classList.add("clicked-dbordomain")
+
+    // show content
 }

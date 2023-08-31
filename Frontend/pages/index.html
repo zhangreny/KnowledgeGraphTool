@@ -132,89 +132,15 @@
                 </div>
                 <!-- navbar-kgdb -->
                 <div id="kgdb-navbar" class="height-100per width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10">
-                    <div id="db-0" onclick="ClickDatabase('db-0')" class="marginbottom-10 flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;">
-                        <div class="cursor-pointer bg-hover-blueimage-right">
-                        </div>
-                        <img src="/static/global/images/database.png" class="img-26">
-                        <div class="marginleft-10 flex-column" style="width:calc(100% - 148px)">
-                            <span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">数据库名字</span>
-                            <span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">bolt://127.0.0.1:7687</span>
-                        </div>
-                        <div class="" style="width:82px">
-                            <div class="flex-row align-center">
-                                <div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div>
-                                <span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span>
-                            </div>
-                            <div class="flex-row align-center hidden">
-                                <div style="width:16px;height:16px;background-image: url(/static/global/images/reddot.png); background-position: center; background-size: 200%;"></div>
-                                <span class="fontsize-12" style="margin-bottom: 1px;">连接异常</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="db-0-domain-no" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
-                        <img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;">
-                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
-                            <span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span>
-                        </div>
-                        <!--
-                        <div class="" style="width:82px">
-                            <button class="flex-row justify-center align-center padding-5 fontsize-8 border-none borderradius-6 cursor-pointer" style="border: 1px solid rgb(223,226,232); color: white;background-color: #1C86EE;width:80px">
-                                <img src="/static/global/images/plus-white.png" class="img-12" style="margin-right: 5px;margin-top:1px;">
-                                <span style="font-weight:600;margin-bottom: 1px;">创建</span>
-                            </button>
-                        </div>
-                        -->
-                    </div>
-                    <div id="db-1" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;">
-                        <div class="cursor-pointer bg-hover-blueimage">
-                        </div>
-                        <img src="/static/global/images/database.png" class="img-26">
-                        <div class="marginleft-10 flex-column" style="width:calc(100% - 148px)">
-                            <span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">数据库名字</span>
-                            <span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">bolt://127.0.0.1:7687</span>
-                        </div>
-                        <div class="" style="width:82px">
-                            <div class="flex-row align-center">
-                                <div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div>
-                                <span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span>
-                            </div>
-                            <div class="flex-row align-center hidden">
-                                <div style="width:16px;height:16px;background-image: url(/static/global/images/reddot.png); background-position: center; background-size: 200%;"></div>
-                                <span class="fontsize-12" style="margin-bottom: 1px;">连接异常</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="db-1-domain-0" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
-                        <div class="cursor-pointer bg-hover-blueimage">
-                        </div>
-                        <img src="/static/global/images/domain.png" class="img-20">
-                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
-                            <span class="fontsize-12 overflow-ellipsis cursor-pointer">领域名1</span>
-                        </div>
-                    </div>
-                    <div id="db-1-domain-0" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
-                        <div class="cursor-pointer bg-hover-blueimage">
-                        </div>
-                        <img src="/static/global/images/domain.png" class="img-20">
-                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
-                            <span class="fontsize-12 overflow-ellipsis cursor-pointer">领域名1</span>
-                        </div>
-                    </div>
-                    <div id="db-1-domain-0" onclick="expandorcollapse('db-0')" class="marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;">
-                        <div class="cursor-pointer bg-hover-blueimage">
-                        </div>
-                        <img src="/static/global/images/domain.png" class="img-20">
-                        <div class="marginleft-5 flex-column" style="width:calc(100% - 148px)">
-                            <span class="fontsize-12 overflow-ellipsis cursor-pointer">领域名1</span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
             <div class="height-100per" style="width:80%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
                 <!-- content-loading -->
-                <div id="loading-content" class="height-100per width-100per flex-row align-center justify-center">
-
+                <div id="loading-content" class="height-100per width-100per flex-column align-center justify-center" style="color: #a8a8ae;">
+                    <img src="/static/global/images/graph.png" class="marginbottom-10" style="width:40px;height:40px;">
+                    点击左侧数据库展示其中知识
                 </div>
                 <!-- content-kgdb -->
                 <div id="kgdb-content" class="height-100per width-100per flex-row align-center justify-center hidden">
