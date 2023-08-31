@@ -109,7 +109,7 @@
             </div>
         </div>
         <div class="width-100per flex-row" style="height:calc(100% - 56px)">
-            <div class="height-100per bg-grey" style="width:20%;">
+            <div id="navbar" class="height-100per bg-grey" style="width:20%;">
                 <!-- loading database -->
                 <div id="loading-navbar" class="height-100per width-100per flex-row align-center justify-center">
                     <div class="padding-5 flex-row hidden">
@@ -131,20 +131,56 @@
                         style="width:110px;border-radius:6px;font-weight:600;">添加数据库</button>
                 </div>
                 <!-- navbar-kgdb -->
-                <div id="kgdb-navbar" class="height-100per width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10">
+                <div id="kgdb-navbar"
+                    class="height-100per width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10">
 
                 </div>
             </div>
 
-            <div class="height-100per" style="width:80%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
+            <div id="content" class="height-100per" style="width:80%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
                 <!-- content-loading -->
-                <div id="loading-content" class="height-100per width-100per flex-column align-center justify-center" style="color: #a8a8ae;">
+                <div id="content-loading" class="height-100per width-100per flex-column align-center justify-center"
+                    style="color: #a8a8ae;">
                     <img src="/static/global/images/graph.png" class="marginbottom-10" style="width:40px;height:40px;">
-                    点击左侧数据库展示其中知识
+                    点击左侧数据库以展示知识
                 </div>
                 <!-- content-kgdb -->
-                <div id="kgdb-content" class="height-100per width-100per flex-row align-center justify-center hidden">
-
+                <div id="content-kgdb" class="height-100per width-100per hidden padding-20 overflow-auto">
+                    <div class="width-100per marginbottom-15 fontsize-22 fontweight-600">Database Name</div>
+                    <div id="tabbar-kgdb" class="width-100per marginbottom-10 fontsize-14 flex-row align-center" style="border-bottom: 1px solid #d0d0d9;">
+                        <div onclick="ClickTab_DB('kgdb_gailan',0)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">概览</div>
+                        <div onclick="ClickTab_DB('kgdb_lingyu',1)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">领域</div>
+                        <div onclick="ClickTab_DB('kgdb_shijianshenji',2)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">事件审计</div>
+                        <div onclick="ClickTab_DB('kgdb_beifenjihuifu',3)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">备份及恢复</div>
+                        <div onclick="ClickTab_DB('kgdb_shezhi',4)" class="cursor-pointer tab-notclicked tab-img-notclicked" style="padding:8px 18px 8px 38px; border-radius:6px 6px 0px 0px">设置</div>
+                    </div>
+                    <!-- 概览页内容 -->
+                    <div id="tabcontent-kgdb" class="width-100per" style="height:calc(100% - 85px)">
+                        <!-- 概览页内容 -->
+                        <div id="kgdb_gailan" class="width-100per height-100per">
+                            1
+                        </div>
+                        <!-- 领域页内容 -->
+                        <div id="kgdb_lingyu" class="hidden">
+                            2
+                        </div>
+                        <!-- 事件页内容 -->
+                        <div id="kgdb_shijianshenji" class="hidden">
+                            3
+                        </div>
+                        <!-- 备份页内容 -->
+                        <div id="kgdb_beifenjihuifu" class="hidden">
+                            4
+                        </div>
+                        <!-- 设置页内容 -->
+                        <div id="kgdb_gailan" class="hidden">
+                            5
+                        </div>
+                    </div>
+                </div>
+                <!-- content-domain -->
+                <div id="content-domain" class="height-100per width-100per hidden padding-15">
+                    domain
                 </div>
             </div>
         </div>

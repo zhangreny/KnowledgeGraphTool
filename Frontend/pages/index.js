@@ -31,7 +31,7 @@ function Getdatabase() {
 
                     // add domain if there are 
                     if (res.resultdata[i].status != "active") {
-                        $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">数据库连接失败，无法获取领域</span></div></div>').appendTo(navbar)
+                        $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightred" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">数据库连接失败，无法获取领域</span></div></div>').appendTo(navbar)
                     } else {
                         if (res.resultdata[i].domains.length == 0) {
                             $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span></div></div>').appendTo(navbar)
@@ -218,7 +218,14 @@ function ClickDatabase(divid) {
     });
     currentdiv.classList.add("clicked-dbordomain")
 
-    // show content
+    // conceal other contents, show content-db
+    const elements = document.getElementById("content").querySelectorAll('div[id^="content-"]');
+    elements.forEach(div => {
+        div.classList.add('hidden')
+    });
+    document.getElementById("content-kgdb").classList.remove("hidden")
+
+    ClickTab_DB('kgdb_gailan',0)
 }
 
 function ClickDomain(domainid) {
@@ -235,5 +242,42 @@ function ClickDomain(domainid) {
     });
     currentdiv.classList.add("clicked-dbordomain")
 
-    // show content
+    // conceal other contents, show content-domain
+    const elements = document.getElementById("content").querySelectorAll('div[id^="content-"]');
+    elements.forEach(div => {
+        div.classList.add('hidden')
+    });
+    document.getElementById("content-domain").classList.remove("hidden")
+}
+
+function ClickTab_DB(contentdivid, index) {
+    // check current tab bar
+    const tabbars = document.getElementById("tabbar-kgdb").getElementsByTagName("div")
+    const currentdiv = tabbars[index]
+    if (currentdiv.classList.contains("tab-clicked")) {
+        return
+    }
+
+    // change css
+    for (var i=0; i<tabbars.length; i++) {
+        tabbars[i].classList.remove("tab-clicked")
+        tabbars[i].classList.add("tab-unclicked")
+        if(i == 4){
+            tabbars[i].classList.remove("tab-img-clicked")
+            tabbars[i].classList.add("tab-img-notclicked")
+        }
+    }
+    currentdiv.classList.add("tab-clicked")
+    if(index == 4){
+        tabbars[index].classList.remove("tab-img-notclicked")
+        tabbars[index].classList.add("tab-img-clicked")
+    }
+
+    // change content show
+    const tabcontents = document.getElementById("tabcontent-kgdb").querySelectorAll('div[id^="kgdb_"]');
+    tabcontents.forEach(ele => {
+        ele.classList.add('hidden')
+    });
+    tabcontents[index].classList.remove("hidden")
+
 }

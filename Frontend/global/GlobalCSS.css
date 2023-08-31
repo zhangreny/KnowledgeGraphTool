@@ -394,6 +394,9 @@ img{
 .hover-bg-white:hover{
 	background-color: #ffffff;
 }
+.hover-bg-lightred:hover{
+    background-color: rgb(240, 224, 224);
+}
 .hover-bg-darkgreen:hover{
 	background-color: rgb(6, 65, 23);
 }

@@ -1,5 +1,5 @@
 body {
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 input::placeholder {
@@ -134,4 +134,37 @@ body .fail-class .layui-layer-content .layui-layer-ico {
 .clicked-dbordomain {
     background: linear-gradient(to right, #c6dffc, rgb(227, 236, 251));
     font-weight: 600;
+}
+
+.tab-notclicked {
+    color: #6b6b6b;
+}
+
+.tab-notclicked:hover {
+    color: #1C86EE;
+    background-color: rgb(222, 227, 238);
+}
+
+.tab-img-notclicked {
+    background-image: url(/static/global/images/setting.png);
+    background-position: 18px center;
+    background-size: 18%;
+    background-repeat: no-repeat;
+}
+
+.tab-img-notclicked:hover {
+    background-image: url(/static/global/images/setting-blue.png);
+}
+
+.tab-clicked {
+    color: #1C86EE;
+    font-weight: 600;
+    background-color: rgb(231, 243, 254);
+}
+
+.tab-img-clicked {
+    background-image: url(/static/global/images/setting-blue.png);
+    background-position: 18px center;
+    background-size: 18%;
+    background-repeat: no-repeat;
 }
