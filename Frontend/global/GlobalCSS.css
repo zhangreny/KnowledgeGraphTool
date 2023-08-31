@@ -385,6 +385,9 @@ img{
 .hover-bg-lightblue:hover{
 	background-color: rgb(231,236,240);
 }
+.hover-bg-blue:hover{
+	background-color: rgb(193, 225, 251);
+}
 .hover-bg-lightgrey:hover{
 	background-color: rgb(246,249,255);
 }

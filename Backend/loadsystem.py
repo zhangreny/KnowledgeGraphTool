@@ -1,6 +1,7 @@
 import json
 from neo4j import GraphDatabase
 from json import dumps
+import concurrent.futures
 
 def load_password_file(file_path):
     result_dict = {}
@@ -27,17 +28,25 @@ def load_db_file(file_path):
     except:
         return "Failed!"
 
+def connect_db(dbinfo):
+    try:
+        driver = GraphDatabase.driver(dbinfo['uri'], auth=(dbinfo['username'], dbinfo['password']))
+        with driver.session() as session:
+            session.run("MATCH (x) RETURN x limit 1")
+        return driver
+    except:
+        return "driver failed!"
+    
 # 可能会定时调用
 def load_dbdriver(dbinfolist):
     res = []
     success = 0
-    for dbinfo in dbinfolist:
-        try: 
-            driver = GraphDatabase.driver(dbinfo['uri'], auth=(dbinfo['username'],dbinfo['password']))
-            with driver.session() as session:
-                session.run("MATCH (x) RETURN x limit 1")
-            res.append(driver)
-            success += 1
-        except:
-            res.append("driver failed!")
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        results = executor.map(connect_db, dbinfolist)
+        for result in results:
+            if result != "driver failed!":
+                res.append(result)
+                success += 1
+            else:
+                res.append(result)
     return res, success

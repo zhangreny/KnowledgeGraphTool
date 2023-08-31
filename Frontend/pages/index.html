@@ -131,9 +131,15 @@
                         style="width:110px;border-radius:6px;font-weight:600;">添加数据库</button>
                 </div>
                 <!-- navbar-kgdb -->
-                <div id="kgdb-navbar"
-                    class="height-100per width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10">
+                <div id="kgdb-navbar" class="width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10" style="height:calc(100% - 42px);">
 
+                </div>
+                <!-- navbar-kgdb -->
+                <div id="adddb-navbar" class="width-100per flex-row align-center hidden justify-center padding-5" style="height:42px;border-top: 1px solid #dadada;">
+                    <div onclick="OpenPopup('kgdb-popup')" class="padding-5 width-100per height-100per flex-row align-center justify-center borderradius-6 cursor-pointer hover-bg-blue">
+                        <img src="/static/global/images/add.png" class="img-16 marginright-10" style="margin-top: 1px;">
+                        <span style="color: #1C86EE;">添加数据库</span>
+                    </div>
                 </div>
             </div>
 
@@ -145,7 +151,7 @@
                     点击左侧数据库以展示知识
                 </div>
                 <!-- content-kgdb -->
-                <div id="content-kgdb" class="height-100per width-100per hidden padding-20 overflow-auto">
+                <div id="content-kgdb" class="height-100per width-100per hidden" style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
                     <div class="width-100per marginbottom-15 fontsize-22 fontweight-600">Database Name</div>
                     <div id="tabbar-kgdb" class="width-100per marginbottom-10 fontsize-14 flex-row align-center" style="border-bottom: 1px solid #d0d0d9;">
                         <div onclick="ClickTab_DB('kgdb_gailan',0)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">概览</div>
@@ -155,7 +161,7 @@
                         <div onclick="ClickTab_DB('kgdb_shezhi',4)" class="cursor-pointer tab-notclicked tab-img-notclicked" style="padding:8px 18px 8px 38px; border-radius:6px 6px 0px 0px">设置</div>
                     </div>
                     <!-- 概览页内容 -->
-                    <div id="tabcontent-kgdb" class="width-100per" style="height:calc(100% - 85px)">
+                    <div id="tabcontent-kgdb" class="width-100per overflow-auto" style="height:calc(100% - 85px)">
                         <!-- 概览页内容 -->
                         <div id="kgdb_gailan" class="width-100per height-100per">
                             1

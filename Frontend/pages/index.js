@@ -13,11 +13,13 @@ function Getdatabase() {
             document.getElementById("loading-navbar").classList.add("hidden");
             document.getElementById("kgdb-navbar").classList.add("hidden");
             document.getElementById("nodb-navbar").classList.add("hidden");
+            document.getElementById("adddb-navbar").classList.add("hidden");
             if (res.resultdata.length == 0) {
                 document.getElementById("nodb-navbar").classList.remove("hidden");
             }
             else {
                 document.getElementById("kgdb-navbar").classList.remove("hidden");
+                document.getElementById("adddb-navbar").classList.remove("hidden");
                 const navbar = $("div#kgdb-navbar").empty();
                 for (var i=0; i<res.resultdata.length; i++) {
                     // add bar of database
