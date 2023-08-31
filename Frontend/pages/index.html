@@ -52,7 +52,7 @@
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">数据库uri</div>
-                            <input type="text" autocomplete="off" placeholder="形如 bolt:// http:// https://"
+                            <input type="text" autocomplete="off" placeholder="形如  bolt://  http://  https://"
                                 class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
@@ -108,13 +108,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- content -->
         <div class="width-100per flex-row" style="height:calc(100% - 56px)">
             <div id="navbar" class="height-100per bg-grey" style="width:20%;">
                 <!-- loading database -->
                 <div id="loading-navbar" class="height-100per width-100per flex-row align-center justify-center">
                     <div class="padding-5 flex-row hidden">
                         <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
-                            style="color: #a8a8ae;font-size: 20px;"></i>
+                            style="color: #a8a8ae;font-size: 18px;"></i>
                         <span class="marginleft-10" style="color: #a8a8ae;">获取数据库信息中</span>
                     </div>
                     <button onclick="Getdatabase()" type="button"
@@ -131,13 +133,17 @@
                         style="width:110px;border-radius:6px;font-weight:600;">添加数据库</button>
                 </div>
                 <!-- navbar-kgdb -->
-                <div id="kgdb-navbar" class="width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10" style="height:calc(100% - 42px);">
+                <div id="kgdb-navbar"
+                    class="width-100per flex-column hidden overflow-auto paddingright-10 paddingtop-10"
+                    style="height:calc(100% - 42px);">
 
                 </div>
                 <!-- navbar-kgdb -->
-                <div id="adddb-navbar" class="width-100per flex-row align-center hidden justify-center padding-5" style="height:42px;border-top: 1px solid #dadada;">
-                    <div onclick="OpenPopup('kgdb-popup')" class="padding-5 width-100per height-100per flex-row align-center justify-center borderradius-6 cursor-pointer hover-bg-blue">
-                        <img src="/static/global/images/add.png" class="img-16 marginright-10" style="margin-top: 1px;">
+                <div id="adddb-navbar" class="width-100per flex-row align-center hidden justify-center padding-5"
+                    style="height:42px;border-top: 1px solid #dadada;">
+                    <div onclick="OpenPopup('kgdb-popup')"
+                        class="padding-5 width-100per height-100per flex-row align-center justify-center borderradius-6 cursor-pointer hover-bg-blue">
+                        <img src="/static/global/images/add.png" class="img-16 marginright-10" style="margin-top: 2px;">
                         <span style="color: #1C86EE;">添加数据库</span>
                     </div>
                 </div>
@@ -151,14 +157,22 @@
                     点击左侧数据库以展示知识
                 </div>
                 <!-- content-kgdb -->
-                <div id="content-kgdb" class="height-100per width-100per hidden" style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
+                <div id="content-kgdb" class="height-100per width-100per hidden"
+                    style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
                     <div class="width-100per marginbottom-15 fontsize-22 fontweight-600">Database Name</div>
-                    <div id="tabbar-kgdb" class="width-100per marginbottom-10 fontsize-14 flex-row align-center" style="border-bottom: 1px solid #d0d0d9;">
-                        <div onclick="ClickTab_DB('kgdb_gailan',0)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">概览</div>
-                        <div onclick="ClickTab_DB('kgdb_lingyu',1)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">领域</div>
-                        <div onclick="ClickTab_DB('kgdb_shijianshenji',2)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">事件审计</div>
-                        <div onclick="ClickTab_DB('kgdb_beifenjihuifu',3)" class="cursor-pointer tab-notclicked" style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">备份及恢复</div>
-                        <div onclick="ClickTab_DB('kgdb_shezhi',4)" class="cursor-pointer tab-notclicked tab-img-notclicked" style="padding:8px 18px 8px 38px; border-radius:6px 6px 0px 0px">设置</div>
+                    <div id="tabbar-kgdb" class="width-100per marginbottom-10 fontsize-14 flex-row align-center"
+                        style="border-bottom: 1px solid #d0d0d9;">
+                        <div onclick="ClickTab_DB('kgdb_gailan',0)" class="cursor-pointer tab-notclicked"
+                            style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">概览</div>
+                        <div onclick="ClickTab_DB('kgdb_lingyu',1)" class="cursor-pointer tab-notclicked"
+                            style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">领域</div>
+                        <div onclick="ClickTab_DB('kgdb_shijianshenji',2)" class="cursor-pointer tab-notclicked"
+                            style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">事件审计</div>
+                        <div onclick="ClickTab_DB('kgdb_beifenjihuifu',3)" class="cursor-pointer tab-notclicked"
+                            style="padding:8px 18px 8px 18px; border-radius:6px 6px 0px 0px">备份及恢复</div>
+                        <div onclick="ClickTab_DB('kgdb_shezhi',4)"
+                            class="cursor-pointer tab-notclicked tab-img-notclicked"
+                            style="padding:8px 18px 8px 38px; border-radius:6px 6px 0px 0px">设置</div>
                     </div>
                     <!-- 概览页内容 -->
                     <div id="tabcontent-kgdb" class="width-100per overflow-auto" style="height:calc(100% - 85px)">
@@ -167,20 +181,38 @@
                             1
                         </div>
                         <!-- 领域页内容 -->
-                        <div id="kgdb_lingyu" class="hidden">
+                        <div id="kgdb_lingyu" class="width-100per height-100per hidden">
                             2
                         </div>
                         <!-- 事件页内容 -->
-                        <div id="kgdb_shijianshenji" class="hidden">
+                        <div id="kgdb_shijianshenji" class="width-100per height-100per hidden">
                             3
                         </div>
                         <!-- 备份页内容 -->
-                        <div id="kgdb_beifenjihuifu" class="hidden">
+                        <div id="kgdb_beifenjihuifu" class="width-100per height-100per hidden">
                             4
                         </div>
                         <!-- 设置页内容 -->
-                        <div id="kgdb_gailan" class="hidden">
-                            5
+                        <div id="kgdb_gailan" class="width-100per height-100per flex-row hidden">
+                            <div class="height-100per paddingright-15" style="width:15%;border-right: 1px solid #e8e8e8;">
+                                <div id="adddb-navbar" class="fontsize-12 width-100per flex-column padding-5" style="height:calc(100% - 42px);">
+                                    <div class="color-darkgrey fontweight-600" style="padding: 8px 15px 6px 15px;">常规</div>
+                                    <div class="content-tab-notclick borderradius-6 cursor-pointer" style="padding: 8px 15px 6px 15px;">数据库基本信息</div>
+                                    <div class="content-tab-notclick borderradius-6 cursor-pointer" style="padding: 8px 15px 6px 15px;">数据库连接信息</div>
+                                </div>
+                                <div class="width-100per flex-row align-center justify-center padding-5" style="height:42px;border-top: 1px solid #dadada;">
+                                    <div onclick="OpenPopup('deletedb-popup')"
+                                        class="hover-bg-lightred padding-5 width-100per height-100per flex-row align-center justify-center borderradius-6 cursor-pointer hover-bg-blue">
+                                        <img src="/static/global/images/disconnect.png" class="img-16 marginright-10"
+                                            style="margin-top: 1px;">
+                                        <span style="color: #d81e06;">移除数据库</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="height-100per" style="width:85%;">
+
+                            </div>
                         </div>
                     </div>
                 </div>

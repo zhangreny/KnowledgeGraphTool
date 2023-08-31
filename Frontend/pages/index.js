@@ -33,7 +33,7 @@ function Getdatabase() {
 
                     // add domain if there are 
                     if (res.resultdata[i].status != "active") {
-                        $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightred" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">数据库连接失败，无法获取领域</span></div></div>').appendTo(navbar)
+                        $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightred" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">连接异常 领域获取失败</span></div></div>').appendTo(navbar)
                     } else {
                         if (res.resultdata[i].domains.length == 0) {
                             $('<div id="'+res.resultdata[i].id+'_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span></div></div>').appendTo(navbar)
@@ -44,6 +44,9 @@ function Getdatabase() {
                         }
                     }
                 }
+                
+                // click the first
+                ClickDatabase("db_0")
             }
         }
         else {

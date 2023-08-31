@@ -1,5 +1,5 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: Inter var,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
 }
 
 input::placeholder {
@@ -167,4 +167,12 @@ body .fail-class .layui-layer-content .layui-layer-ico {
     background-position: 18px center;
     background-size: 18%;
     background-repeat: no-repeat;
+}
+
+.content-tab-notclick {
+    color: #4b4b4b;
+}
+.content-tab-notclick:hover {
+    color: #1C86EE;
+    background-color: rgb(231, 243, 254);
 }
