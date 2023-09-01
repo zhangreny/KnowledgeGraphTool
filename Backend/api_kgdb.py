@@ -61,6 +61,7 @@ def api_index_post_addconnectiondb():
 def api_index_get_databaseinfo():
     try: 
         ans = []
+        # 等自动更新数据库状态写好之后，这里就不再手动去连接一次了，直接获取状态就行（或者出于稳定也还是连接一次）
         dbdriverlist, activedrivernum = load_dbdriver(current_app.config['System_Database_list'])
         dblist = current_app.config['System_Database_list'].copy()
         for i in range(len(dbdriverlist)):

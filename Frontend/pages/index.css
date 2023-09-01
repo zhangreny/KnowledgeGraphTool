@@ -1,5 +1,5 @@
 body {
-    font-family: Inter var,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+    font-family: SimSun,Source Han Sans CN,Inter var,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
 }
 
 input::placeholder {
@@ -169,10 +169,14 @@ body .fail-class .layui-layer-content .layui-layer-ico {
     background-repeat: no-repeat;
 }
 
-.content-tab-notclick {
+.content-tab-notclicked {
     color: #4b4b4b;
 }
-.content-tab-notclick:hover {
+.content-tab-notclicked:hover {
     color: #1C86EE;
+}
+.content-tab-clicked {
+    color: #1C86EE;
+    font-weight: 600;
     background-color: rgb(231, 243, 254);
 }

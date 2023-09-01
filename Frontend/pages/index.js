@@ -1,3 +1,6 @@
+var Current_DB_index = -1;
+var Current_Domain_index = -1;
+
 window.onpageshow = function () {
 	Getdatabase();
 }
@@ -18,6 +21,7 @@ function Getdatabase() {
                 document.getElementById("nodb-navbar").classList.remove("hidden");
             }
             else {
+                sessionStorage.setItem("database", JSON.stringify(res.resultdata));
                 document.getElementById("kgdb-navbar").classList.remove("hidden");
                 document.getElementById("adddb-navbar").classList.remove("hidden");
                 const navbar = $("div#kgdb-navbar").empty();
@@ -215,6 +219,10 @@ function ClickDatabase(divid) {
     if (currentdiv.classList.contains("clicked-dbordomain")) {
         return
     }
+    var database_json = JSON.parse(sessionStorage.getItem('database'))
+    Current_DB_index = parseInt(divid.split("_")[1]);
+    document.getElementById("name-db-content").innerHTML = database_json[Current_DB_index].unique_dbname
+    
     // change css
     const navbar = document.getElementById("kgdb-navbar")
     const divElements = navbar.querySelectorAll('div.clicked-dbordomain');
@@ -285,4 +293,46 @@ function ClickTab_DB(contentdivid, index) {
     });
     tabcontents[index].classList.remove("hidden")
 
+    // get elements
+    var database_json = JSON.parse(sessionStorage.getItem('database'))
+    if (index == 0) {
+
+    } else if (index == 1) {
+
+    } else if (index == 2) {
+
+    } else if (index == 3) {
+
+    } else if (index == 4) {
+        document.getElementById("dbsetting_0").getElementsByTagName("input")[0].value = database_json[Current_DB_index].unique_dbname
+        document.getElementById("dbsetting_1").getElementsByTagName("input")[0].value = database_json[Current_DB_index].uri
+    }
+}
+
+function ClickTab_DB_setting(index) {
+    // check current tab bar
+    const tabbars = document.getElementById("shezhi_navbar").getElementsByClassName("cursor-pointer")
+    const currentdiv = tabbars[index]
+    if (currentdiv.classList.contains("content-tab-clicked")) {
+        return
+    }
+
+    // change css
+    for (var i=0; i<tabbars.length; i++) {
+        tabbars[i].classList.remove("content-tab-clicked")
+        tabbars[i].classList.add("content-tab-unclicked")
+    }
+    currentdiv.classList.add("content-tab-clicked")
+
+    // change content show
+    const tabcontents = document.getElementById("shezhi_content").querySelectorAll('div[id^="dbsetting_"]');
+    tabcontents.forEach(ele => {
+        ele.classList.add('hidden')
+    });
+    tabcontents[index].classList.remove("hidden")
+
+}
+
+function DB_Setting_savename(input_divcontainer_id) {
+    const inputs = document.getElementById(input_divcontainer_id).getElementsByTagName("input")
 }

@@ -18,6 +18,9 @@ input, textarea{
 img{
 	object-fit: contain;
 }
+.inputfocus-blue:focus {
+	border-color: rgb(91,155,214) !important;
+}
 
 /*************** 组件大小统一CSS ***************/
 .width-100per{
