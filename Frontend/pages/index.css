@@ -7,6 +7,11 @@ input::placeholder {
     /* 这里可以是任何你想要的颜色 */
 }
 
+.layui-form-select dl dd.layui-this {
+    background-color: #69b4ff !important;
+}
+
+
 /*自定义layui-layer.msg成功提示框样式*/
 body .success-class {
     display: flex;

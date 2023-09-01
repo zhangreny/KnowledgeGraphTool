@@ -7,7 +7,7 @@
         "password": "zhangry2001"
     },
     {
-        "unique_dbname": "http",
+        "unique_dbname": "db2",
         "category": "neo4j",
         "uri": "bolt://127.0.0.1:7687",
         "username": "neo4j",

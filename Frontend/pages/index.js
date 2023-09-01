@@ -27,7 +27,7 @@ function Getdatabase() {
                     const navbar = $("div#kgdb-navbar").empty();
                     for (var i = 0; i < res.resultdata.length; i++) {
                         // add bar of database
-                        var addstr = '<div id="' + res.resultdata[i].id + '" class="marginbottom-10 flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;"><div onclick="ExpandandCollapse_database(\'' + res.resultdata[i].id + '\')" class="cursor-pointer bg-hover-blueimage-right"></div><img src="/static/global/images/database.png" class="img-26 cursor-pointer" onclick="ClickDatabase(\'' + res.resultdata[i].id + '\')"><div onclick="ClickDatabase(\'' + res.resultdata[i].id + '\')" class="marginleft-10 flex-column cursor-pointer" style="width:calc(100% - 148px)"><span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">' + res.resultdata[i].unique_dbname + '</span><span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">' + res.resultdata[i].uri + '</span></div>'
+                        var addstr = '<div id="' + res.resultdata[i].id + '" onclick="ClickDatabase(\'' + res.resultdata[i].id + '\')" class="marginbottom-10 cursor-pointer flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;"><div onclick="ExpandandCollapse_database(\'' + res.resultdata[i].id + '\', event)" class="cursor-pointer bg-hover-blueimage-right"></div><img src="/static/global/images/database.png" class="img-26 cursor-pointer"><div class="marginleft-10 flex-column cursor-pointer" style="width:calc(100% - 148px)"><span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">' + res.resultdata[i].unique_dbname + '</span><span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">' + res.resultdata[i].uri + '</span></div>'
                         if (res.resultdata[i].status == "active") {
                             addstr += '<div class="" style="width:82px"><div class="flex-row align-center"><div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div><span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span></div></div></div>'
                         } else {
@@ -198,7 +198,8 @@ function showtaskmsg_loading(msg) {
     });
 }
 
-function ExpandandCollapse_database(divid) {
+function ExpandandCollapse_database(divid, event) { 
+    event.stopPropagation()
     const fatherdiv = document.getElementById(divid)
     const divelement = fatherdiv.getElementsByTagName("div")[0]
     if (divelement.classList.contains("bg-hover-blueimage-right")) {
