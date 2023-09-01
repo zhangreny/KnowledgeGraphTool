@@ -104,6 +104,45 @@ body .fail-class .layui-layer-content .layui-layer-ico {
 }
 
 
+body .loading-class {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 3px;
+    color: #000;
+    height: 46px;
+    white-space: nowrap;
+}
+
+body .loading-class .layui-layer-padding {
+    text-align: center;
+    padding: 0;
+    height: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 20px);
+    white-space: nowrap;
+    padding-left: 40px;
+    padding-right: 20px;
+}
+
+body .loading-class .layui-layer-content .layui-layer-ico {
+    background-image: url(/static/global/images/loading.gif);
+    background-position: center;
+    background-size: 80%;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 0;
+    left: 0;
+}
+
+
 .bg-hover-blueimage-right {
     width: 30px;
     height: 30px;
@@ -179,4 +218,30 @@ body .fail-class .layui-layer-content .layui-layer-ico {
     color: #1C86EE;
     font-weight: 600;
     background-color: rgb(231, 243, 254);
+}
+
+.confirm-delete {
+    width: 500px;
+    height: 260px;
+    border-radius: 20px;
+}
+
+.layui-layer-dialog .layui-layer-content {
+    height: 165px;
+}
+
+.layui-layer-btn .layui-layer-btn0 {
+    width: 64px;
+    border-radius: 6px;
+    border-color: #d81e06 !important;
+    background-color: #d81e06 !important;
+    color: #fff;
+    text-align: center;
+}
+
+.layui-layer-btn .layui-layer-btn1 {
+    width: 64px;
+    border-radius: 6px;
+    margin-left: 5px;
+    text-align: center;
 }

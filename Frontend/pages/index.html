@@ -110,7 +110,7 @@
 
         <!-- content -->
         <div class="width-100per flex-row" style="height:calc(100% - 56px)">
-            <div id="navbar" class="height-100per bg-grey" style="width:20%;">
+            <div id="navbar" class="height-100per bg-grey" style="width:16%;">
                 <!-- loading database -->
                 <div id="loading-navbar" class="height-100per width-100per flex-row align-center justify-center">
                     <div class="padding-5 flex-row hidden">
@@ -148,7 +148,7 @@
                 </div>
             </div>
 
-            <div id="content" class="height-100per" style="width:80%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
+            <div id="content" class="height-100per" style="width:84%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
                 <!-- content-loading -->
                 <div id="content-loading" class="height-100per width-100per flex-column align-center justify-center"
                     style="color: #a8a8ae;">
@@ -193,14 +193,14 @@
                         </div>
                         <!-- 设置页内容 -->
                         <div id="kgdb_shezhi" class="width-100per height-100per flex-row hidden">
-                            <div class="height-100per paddingright-15" style="width:15%;border-right: 1px solid #e8e8e8;">
+                            <div class="height-100per paddingright-15" style="width:15%;border-right: 1px solid #cacaca;">
                                 <div id="shezhi_navbar" class="fontsize-14 width-100per flex-column padding-5" style="height:calc(100% - 42px);">
                                     <div class="fontweight-600 fontsize-16" style="padding: 8px 15px 6px 15px;color:#a8a8ae">常规</div>
                                     <div onclick="ClickTab_DB_setting(0)" class="content-tab-clicked borderradius-6 cursor-pointer margintop-5" style="padding: 8px 15px 8px 15px;">数据库基本信息</div>
                                     <div onclick="ClickTab_DB_setting(1)" class="content-tab-notclicked borderradius-6 cursor-pointer margintop-5" style="padding: 8px 15px 8px 15px;">数据库连接信息</div>
                                 </div>
                                 <div class="width-100per flex-row align-center justify-center padding-5" style="height:42px;border-top: 1px solid #dadada;">
-                                    <div onclick="OpenPopup('deletedb-popup')"
+                                    <div onclick="Confirm_DeleteDB()"
                                         class="hover-bg-lightred padding-5 width-100per height-100per flex-row align-center justify-center borderradius-6 cursor-pointer hover-bg-blue">
                                         <img src="/static/global/images/disconnect.png" class="img-16 marginright-10"
                                             style="margin-top: 1px;">

@@ -1,71 +1,15 @@
 [
     {
-        "unique-dbname": "db1",
+        "unique_dbname": "db1",
         "category": "neo4j",
         "uri": "bolt://127.0.0.1",
         "username": "neo4j",
         "password": "zhangry2001"
     },
     {
-        "unique-dbname": "db2",
+        "unique_dbname": "http",
         "category": "neo4j",
-        "uri": "bolt://127.0.0.2",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db3",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.3",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db4",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.4",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db5",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.5",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db6",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.6",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db7",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.7",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db8",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.8",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db9",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.9",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique-dbname": "db10",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.10",
+        "uri": "bolt://127.0.0.1:7687",
         "username": "neo4j",
         "password": "zhangry2001"
     }

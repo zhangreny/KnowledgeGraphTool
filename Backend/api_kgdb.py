@@ -12,7 +12,7 @@ api_kgdb = Blueprint('api_kgdb', __name__, static_folder='../Frontend')
 
 def uniquedbname(dblist, dbname):
     for db in dblist:
-        if db['unique-dbname'] == dbname:
+        if db['unique_dbname'] == dbname:
             return True
     return False
 
@@ -36,7 +36,7 @@ def api_index_post_addconnectiondb():
         if uniquedbauth(current_app.config['System_Database_list'], uri):
             return dumps({'status':'notuniquedb', 'resultdata':'已和同一个数据库建立过连接'})  
         dbinfo = {
-            "unique-dbname": mydbname,
+            "unique_dbname": mydbname,
             "category": "neo4j",
             "uri": uri,
             "username": username,
@@ -74,7 +74,7 @@ def api_index_get_databaseinfo():
             }
             tmp['id'] = "db_"+str(i)
             tmp['status'] = "active" if dbdriverlist[i] != "driver failed!" else "down"
-            tmp['unique_dbname'] = dblist[i]['unique-dbname']
+            tmp['unique_dbname'] = dblist[i]['unique_dbname']
             tmp['uri'] = dblist[i]['uri']
             if dbdriverlist[i] != "driver failed!":
                 with dbdriverlist[i].session() as session:
@@ -86,3 +86,18 @@ def api_index_get_databaseinfo():
         return dumps({'status':'success', 'resultdata':ans})  
     except:
         return dumps({'status':'fail', 'resultdata':'获取数据库列表失败'})  
+
+@api_kgdb.route("/api/deleteconnectiondb", methods=['POST'], strict_slashes=False)
+def api_index_post_deleteconnectiondb():
+    if request.method == 'POST':
+        dbname = request.form['dbname']
+        try: 
+            with current_app.config['Lock_Database_Driver']:
+                tmp = [dict_item for dict_item in current_app.config['System_Database_list'] if dict_item['unique_dbname'] != dbname]  
+                current_app.config['System_Database_list'] = tmp
+                with open(current_app.config['System_Database_file'], 'w') as json_file:
+                    dump(current_app.config['System_Database_list'], json_file, indent=4)
+            return dumps({'status':'success', 'resultdata':'移除数据库 ' + dbname + ' 成功！'})  
+        except:
+            return dumps({'status':'fail', 'resultdata':'移除数据库 ' + dbname + ' 失败'})  
+        
