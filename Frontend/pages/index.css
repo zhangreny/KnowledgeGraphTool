@@ -252,7 +252,7 @@ body .loading-class .layui-layer-content .layui-layer-ico {
 }
 
 .graph-tab-unclicked{
-    
+    color: #000000;
 }
 .graph-tab-unclicked:hover{
     color: #1C86EE;
@@ -262,4 +262,9 @@ body .loading-class .layui-layer-content .layui-layer-ico {
     color: #1C86EE;
     border: 1px solid #1C86EE;
     box-shadow: 0 0 5px rgba(164, 201, 255, 0.5);
+}
+
+.layui-btn{
+    height: 32px !important;
+    line-height: 32px !important;
 }

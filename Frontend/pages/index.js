@@ -260,6 +260,9 @@ function ClickDomain(domainid) {
 
     Current_DB_index = parseInt(domainid.split("_domain_")[0].split("_")[1]);
     Current_Domain_index = parseInt(domainid.split("_domain_")[1]);
+    var database_json = JSON.parse(sessionStorage.getItem('database'))
+    document.getElementById("name-db-domain-content").innerHTML = database_json[Current_DB_index].unique_dbname
+    document.getElementById("name-domain-domain-content").innerHTML = database_json[Current_DB_index].domains[Current_Domain_index].domainname
     
     // change css
     const navbar = document.getElementById("kgdb-navbar")
