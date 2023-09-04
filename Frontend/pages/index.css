@@ -250,3 +250,16 @@ body .loading-class .layui-layer-content .layui-layer-ico {
     margin-left: 5px;
     text-align: center;
 }
+
+.graph-tab-unclicked{
+    
+}
+.graph-tab-unclicked:hover{
+    color: #1C86EE;
+}
+
+.graph-tab-clicked{
+    color: #1C86EE;
+    border: 1px solid #1C86EE;
+    box-shadow: 0 0 5px rgba(164, 201, 255, 0.5);
+}

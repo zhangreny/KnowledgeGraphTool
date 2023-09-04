@@ -257,6 +257,10 @@ function ClickDomain(domainid) {
     if (currentdiv.classList.contains("clicked-dbordomain")) {
         return
     }
+
+    Current_DB_index = parseInt(domainid.split("_domain_")[0].split("_")[1]);
+    Current_Domain_index = parseInt(domainid.split("_domain_")[1]);
+    
     // change css
     const navbar = document.getElementById("kgdb-navbar")
     const divElements = navbar.querySelectorAll('div.clicked-dbordomain');
@@ -271,6 +275,8 @@ function ClickDomain(domainid) {
         div.classList.add('hidden')
     });
     document.getElementById("content-domain").classList.remove("hidden")
+
+    ClickTab_Domain('domain_gailan', 0)
 }
 
 function ClickTab_DB(contentdivid, index) {
@@ -393,4 +399,49 @@ function DeleteDBConnection(dbname) {
             }
         },
     })
+}
+
+function ClickTab_Domain(contentdivid, index) {
+    // check current tab bar
+    const tabbars = document.getElementById("tabbar-domain").getElementsByTagName("div")
+    const currentdiv = tabbars[index]
+    if (currentdiv.classList.contains("tab-clicked")) {
+        return
+    }
+
+    // change css
+    for (var i = 0; i < tabbars.length; i++) {
+        tabbars[i].classList.remove("tab-clicked")
+        tabbars[i].classList.add("tab-unclicked")
+        if (i == 7) {
+            tabbars[i].classList.remove("tab-img-clicked")
+            tabbars[i].classList.add("tab-img-notclicked")
+        }
+    }
+    currentdiv.classList.add("tab-clicked")
+    if (index == 7) {
+        tabbars[index].classList.remove("tab-img-notclicked")
+        tabbars[index].classList.add("tab-img-clicked")
+    }
+
+    // change content show
+    const tabcontents = document.getElementById("tabcontent-domain").querySelectorAll('div[id^="domain_"]');
+    tabcontents.forEach(ele => {
+        ele.classList.add('hidden')
+    });
+    tabcontents[index].classList.remove("hidden")
+
+}
+
+function ClickDB_fromDomain() {
+    ClickDatabase("db_"+Current_DB_index.toString())
+}
+
+function ChangeView(tobehiddenid, tobeunhiddenid) {
+    document.getElementById(tobehiddenid).classList.add("hidden")
+    document.getElementById(tobeunhiddenid).classList.remove("hidden")
+    document.getElementById(tobehiddenid+"_tab").classList.remove("graph-tab-clicked")
+    document.getElementById(tobehiddenid+"_tab").classList.add("graph-tab-unclicked")
+    document.getElementById(tobeunhiddenid+"_tab").classList.remove("graph-tab-unclicked")
+    document.getElementById(tobeunhiddenid+"_tab").classList.add("graph-tab-clicked")
 }
