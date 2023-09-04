@@ -261,6 +261,9 @@ img{
 .border-blue{
 	border: 1px solid #2547ba
 }
+.border-lightgrey{
+	border: 1px solid #dadada;
+}
 .border-darkgrey{
 	border: 1px solid #7e7e7e;
 }

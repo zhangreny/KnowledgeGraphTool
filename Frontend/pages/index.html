@@ -148,7 +148,8 @@
                 </div>
             </div>
 
-            <div id="content" class="height-100per" style="width:84%;background: linear-gradient(to top, rgb(246, 249, 255), #fff);">
+            <div id="content" class="height-100per"
+                style="width:84%;background: linear-gradient(to top, rgb(241, 244, 251), #fff);">
                 <!-- content-loading -->
                 <div id="content-loading" class="height-100per width-100per flex-column align-center justify-center"
                     style="color: #a8a8ae;">
@@ -158,7 +159,8 @@
                 <!-- content-kgdb -->
                 <div id="content-kgdb" class="height-100per width-100per hidden"
                     style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
-                    <div id="name-db-content" class="width-100per marginbottom-15 fontsize-22 fontweight-600">Database Name</div>
+                    <div id="name-db-content" class="width-100per marginbottom-15 fontsize-22 fontweight-600">Database
+                        Name</div>
                     <div id="tabbar-kgdb" class="width-100per marginbottom-10 fontsize-14 flex-row align-center"
                         style="border-bottom: 1px solid #d0d0d9;">
                         <div onclick="ClickTab_DB('kgdb_gailan',0)" class="cursor-pointer tab-notclicked"
@@ -176,8 +178,46 @@
                     <!-- 概览页内容 -->
                     <div id="tabcontent-kgdb" class="width-100per overflow-auto" style="height:calc(100% - 85px)">
                         <!-- 概览页内容 -->
-                        <div id="kgdb_gailan" class="width-100per height-100per">
-                            1
+                        <div id="kgdb_gailan" class="width-100per height-100per flex-row" style="flex-wrap: wrap;">
+                            <div class="layui-row" style="width:100%">
+                                <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                        <div class="width-100per flex-row align-center justify-between">
+                                            <span class="fontsize-12 fontweight-600">连接状态</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                        <div class="width-100per flex-row align-center justify-between">
+                                            <span class="fontsize-12 fontweight-600">领域</span>
+                                            <span class="fontsize-12" style="color: #aeaeae;">
+                                                共 <text id="gailan_numofdomain">2</text> 个
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                        <div class="width-100per flex-row align-center justify-between">
+                                            <span class="fontsize-12 fontweight-600">事件审计</span>
+                                            <span class="fontsize-12" style="color: #aeaeae;">
+                                                共 <text id="gailan_numofeventlog">2</text> 条记录 · <text id="gailan_sizeofeventlog">200 MB</text>
+                                            </span>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                        <div class="width-100per flex-row align-center justify-between">
+                                            <span class="fontsize-12 fontweight-600">备份和恢复</span>
+                                            <span class="fontsize-12" style="color: #aeaeae;">
+                                                共 <text id="gailan_numofbackup">2</text> 个备份
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 领域页内容 -->
                         <div id="kgdb_lingyu" class="width-100per height-100per hidden">
@@ -193,13 +233,21 @@
                         </div>
                         <!-- 设置页内容 -->
                         <div id="kgdb_shezhi" class="width-100per height-100per flex-row hidden">
-                            <div class="height-100per paddingright-15" style="width:15%;border-right: 1px solid #cacaca;">
-                                <div id="shezhi_navbar" class="fontsize-14 width-100per flex-column padding-5" style="height:calc(100% - 42px);">
-                                    <div class="fontweight-600 fontsize-16" style="padding: 8px 15px 6px 15px;color:#a8a8ae">常规</div>
-                                    <div onclick="ClickTab_DB_setting(0)" class="content-tab-clicked borderradius-6 cursor-pointer margintop-5" style="padding: 8px 15px 8px 15px;">数据库基本信息</div>
-                                    <div onclick="ClickTab_DB_setting(1)" class="content-tab-notclicked borderradius-6 cursor-pointer margintop-5" style="padding: 8px 15px 8px 15px;">数据库连接信息</div>
+                            <div class="height-100per paddingright-15"
+                                style="width:15%;border-right: 1px solid #cacaca;">
+                                <div id="shezhi_navbar" class="fontsize-14 width-100per flex-column padding-5"
+                                    style="height:calc(100% - 42px);">
+                                    <div class="fontweight-600 fontsize-16"
+                                        style="padding: 8px 15px 6px 15px;color:#a8a8ae">常规</div>
+                                    <div onclick="ClickTab_DB_setting(0)"
+                                        class="content-tab-clicked borderradius-6 cursor-pointer margintop-5"
+                                        style="padding: 8px 15px 8px 15px;">数据库基本信息</div>
+                                    <div onclick="ClickTab_DB_setting(1)"
+                                        class="content-tab-notclicked borderradius-6 cursor-pointer margintop-5"
+                                        style="padding: 8px 15px 8px 15px;">数据库连接信息</div>
                                 </div>
-                                <div class="width-100per flex-row align-center justify-center padding-5" style="height:42px;border-top: 1px solid #dadada;">
+                                <div class="width-100per flex-row align-center justify-center padding-5"
+                                    style="height:42px;border-top: 1px solid #dadada;">
                                     <div onclick="Confirm_DeleteDB()"
                                         class="hover-bg-lightred padding-5 width-100per height-100per flex-row align-center justify-center borderradius-6 cursor-pointer hover-bg-blue">
                                         <img src="/static/global/images/disconnect.png" class="img-16 marginright-10"
@@ -209,26 +257,34 @@
                                 </div>
                             </div>
                             <div id="shezhi_content" class="height-100per" style="width:85%;">
-                                <div id="dbsetting_0" class="height-100per width-100per" style="padding: 10px 20px 10px 20px">
+                                <div id="dbsetting_0" class="height-100per width-100per"
+                                    style="padding: 10px 20px 10px 20px">
                                     <div class="flex-row align-center" style="height:40px;width:550px;">
                                         <div class="" style="width:200px;color: #808896;">
                                             数据库名称
                                         </div>
                                         <div style="width:350px;">
-                                            <input type="text" class="width-100per borderradius-6 inputfocus-blue padding-10" style="height:30px;border: 1px solid #dadada">
+                                            <input type="text"
+                                                class="width-100per borderradius-6 inputfocus-blue padding-10"
+                                                style="height:30px;border: 1px solid #dadada">
                                         </div>
                                     </div>
                                     <div class="flex-row justify-end margintop-15" style="width:550px;">
-                                        <button onclick="DB_Setting_savename('dbsetting_0')" type="button" class="layui-btn layui-btn-normal margintop-10" style="width:70px;border-radius:6px;font-weight:600;">保存</button>
+                                        <button onclick="DB_Setting_savename('dbsetting_0')" type="button"
+                                            class="layui-btn layui-btn-normal margintop-10"
+                                            style="width:70px;border-radius:6px;font-weight:600;">保存</button>
                                     </div>
                                 </div>
-                                <div id="dbsetting_1" class="height-100per width-100per hidden" style="padding: 10px 20px 10px 20px">
+                                <div id="dbsetting_1" class="height-100per width-100per hidden"
+                                    style="padding: 10px 20px 10px 20px">
                                     <div class="flex-row align-center" style="height:40px;width:550px;">
                                         <div class="" style="width:200px;color: #808896;">
                                             数据库uri
                                         </div>
                                         <div style="width:350px;">
-                                            <input type="text" class="width-100per borderradius-6 inputfocus-blue padding-10" style="height:30px;border: 1px solid #dadada">
+                                            <input type="text"
+                                                class="width-100per borderradius-6 inputfocus-blue padding-10"
+                                                style="height:30px;border: 1px solid #dadada">
                                         </div>
                                     </div>
                                     <div class="flex-row align-center margintop-5" style="height:40px;width:550px;">
@@ -236,7 +292,9 @@
                                             用户名
                                         </div>
                                         <div style="width:350px;">
-                                            <input type="text" class="width-100per borderradius-6 inputfocus-blue padding-10" style="height:30px;border: 1px solid #dadada">
+                                            <input type="text"
+                                                class="width-100per borderradius-6 inputfocus-blue padding-10"
+                                                style="height:30px;border: 1px solid #dadada">
                                         </div>
                                     </div>
                                     <div class="flex-row align-center margintop-5" style="height:40px;width:550px;">
@@ -244,11 +302,14 @@
                                             密码
                                         </div>
                                         <div style="width:350px;">
-                                            <input type="password" class="width-100per borderradius-6 inputfocus-blue padding-10" style="height:30px;border: 1px solid #dadada">
+                                            <input type="password"
+                                                class="width-100per borderradius-6 inputfocus-blue padding-10"
+                                                style="height:30px;border: 1px solid #dadada">
                                         </div>
                                     </div>
                                     <div class="flex-row justify-end margintop-15" style="width:550px;">
-                                        <button type="button" class="layui-btn layui-btn-normal margintop-10" style="width:70px;border-radius:6px;font-weight:600;">保存</button>
+                                        <button type="button" class="layui-btn layui-btn-normal margintop-10"
+                                            style="width:70px;border-radius:6px;font-weight:600;">保存</button>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +336,6 @@
                 ChangePage(value);
             });
         });
-
     </script>
 </body>
 
