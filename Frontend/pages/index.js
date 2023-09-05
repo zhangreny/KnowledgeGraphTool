@@ -10,7 +10,7 @@ function Getdatabase() {
     document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.remove('hidden')
     $.get("/api/databaseinfo",
         function (res) {
-            console.log(res)
+            console.log("Database List:", res)
             // close loading
             if (res.status == "success") {
                 document.getElementById("loading-navbar").classList.add("hidden");
@@ -27,7 +27,7 @@ function Getdatabase() {
                     const navbar = $("div#kgdb-navbar").empty();
                     for (var i = 0; i < res.resultdata.length; i++) {
                         // add bar of database
-                        var addstr = '<div id="' + res.resultdata[i].id + '" onclick="ClickDatabase(\'' + res.resultdata[i].id + '\')" class="marginbottom-10 cursor-pointer flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;"><div onclick="ExpandandCollapse_database(\'' + res.resultdata[i].id + '\', event)" class="cursor-pointer bg-hover-blueimage-right"></div><img src="/static/global/images/database.png" class="img-26 cursor-pointer"><div class="marginleft-10 flex-column cursor-pointer" style="width:calc(100% - 148px)"><span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">' + res.resultdata[i].unique_dbname + '</span><span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">' + res.resultdata[i].uri + '</span></div>'
+                        var addstr = '<div id="' + res.resultdata[i].id + '" onclick="ClickDatabase(\'' + res.resultdata[i].id + '\')" class="marginbottom-5 cursor-pointer flex-row align-center bg-white width-100per hover-bg-lightgrey" style="min-height:70px;border-radius: 0px 6px 6px 0px;"><div onclick="ExpandandCollapse_database(\'' + res.resultdata[i].id + '\', event)" class="cursor-pointer bg-hover-blueimage-right"></div><img src="/static/global/images/database.png" class="img-26 cursor-pointer"><div class="marginleft-10 flex-column cursor-pointer" style="width:calc(100% - 148px)"><span class="marginbottom-5 fontweight-600 overflow-ellipsis cursor-pointer">' + res.resultdata[i].unique_dbname + '</span><span class="fontsize-12 overflow-ellipsis" style="color:#a8a8ae;">' + res.resultdata[i].uri + '</span></div>'
                         if (res.resultdata[i].status == "active") {
                             addstr += '<div class="" style="width:82px"><div class="flex-row align-center"><div style="width:16px;height:16px;background-image: url(/static/global/images/greendot.png); background-position: center; background-size: 200%;"></div><span class="fontsize-12 fontweight-600" style="margin-bottom: 1px;color:#59cd59">连接正常</span></div></div></div>'
                         } else {
@@ -37,13 +37,13 @@ function Getdatabase() {
 
                         // add domain if there are 
                         if (res.resultdata[i].status != "active") {
-                            $('<div id="' + res.resultdata[i].id + '_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightred" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">连接异常 领域获取失败</span></div></div>').appendTo(navbar)
+                            $('<div id="' + res.resultdata[i].id + '_domain_no" class="hidden marginbottom-5 flex-row align-center width-100per hover-bg-lightred" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain-red.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 69px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#ef6170;">连接异常 领域获取失败</span></div></div>').appendTo(navbar)
                         } else {
                             if (res.resultdata[i].domains.length == 0) {
-                                $('<div id="' + res.resultdata[i].id + '_domain_no" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span></div></div>').appendTo(navbar)
+                                $('<div id="' + res.resultdata[i].id + '_domain_no" class="hidden marginbottom-5 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/no-domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 69px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#a8a8ae;">数据库中未发现任何领域</span></div></div>').appendTo(navbar)
                             } else {
                                 for (var j = 0; j < res.resultdata[i].domains.length; j++) {
-                                    $('<div onclick="ClickDomain(\'' + res.resultdata[i].domains[j].domainindex + '\')" id="' + res.resultdata[i].domains[j].domainindex + '" class="hidden marginbottom-10 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 148px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#4b4b4b;">' + res.resultdata[i].domains[j].domainname + '</span></div></div>').appendTo(navbar)
+                                    $('<div onclick="ClickDomain(\'' + res.resultdata[i].domains[j].domainindex + '\')" id="' + res.resultdata[i].domains[j].domainindex + '" class="hidden marginbottom-5 flex-row align-center width-100per hover-bg-lightgrey" style="min-height:30px;border-radius: 0px 6px 6px 0px;"><img src="/static/global/images/domain.png" class="img-20" style="margin-left: 30px;"><div class="marginleft-5 flex-column" style="width:calc(100% - 69px)"><span class="fontsize-10 overflow-ellipsis cursor-pointer" style="color:#4b4b4b;">' + res.resultdata[i].domains[j].domainname + '</span></div></div>').appendTo(navbar)
                                 }
                             }
                         }
@@ -198,7 +198,7 @@ function showtaskmsg_loading(msg) {
     });
 }
 
-function ExpandandCollapse_database(divid, event) { 
+function ExpandandCollapse_database(divid, event) {
     event.stopPropagation()
     const fatherdiv = document.getElementById(divid)
     const divelement = fatherdiv.getElementsByTagName("div")[0]
@@ -263,7 +263,7 @@ function ClickDomain(domainid) {
     var database_json = JSON.parse(sessionStorage.getItem('database'))
     document.getElementById("name-db-domain-content").innerHTML = database_json[Current_DB_index].unique_dbname
     document.getElementById("name-domain-domain-content").innerHTML = database_json[Current_DB_index].domains[Current_Domain_index].domainname
-    
+
     // change css
     const navbar = document.getElementById("kgdb-navbar")
     const divElements = navbar.querySelectorAll('div.clicked-dbordomain');
@@ -365,7 +365,7 @@ function Confirm_DeleteDB() {
         btn: ['删除', '取消']
     }, function (index) {
         layer.close(index);
-        showtaskmsg_loading("移除数据库 "+dbname)
+        showtaskmsg_loading("移除数据库 " + dbname)
         DeleteDBConnection(dbname)
     });
 }
@@ -390,9 +390,9 @@ function DeleteDBConnection(dbname) {
                 document.getElementById("content-kgdb").classList.add("hidden")
                 document.getElementById("content-loading").classList.remove("hidden")
                 const navbar = document.getElementById("kgdb-navbar")
-                var divs = navbar.querySelectorAll('div[id^="db_'+Current_DB_index.toString()+'"]');
-                for (var i = 0; i < divs.length; i++) {  
-                    divs[i].parentNode.removeChild(divs[i]);  
+                var divs = navbar.querySelectorAll('div[id^="db_' + Current_DB_index.toString() + '"]');
+                for (var i = 0; i < divs.length; i++) {
+                    divs[i].parentNode.removeChild(divs[i]);
                 }
                 Current_DB_index = -1
                 // refresh page
@@ -434,17 +434,328 @@ function ClickTab_Domain(contentdivid, index) {
     });
     tabcontents[index].classList.remove("hidden")
 
+    // get elements
+    var database_json = JSON.parse(sessionStorage.getItem('database'))
+    if (index == 0) {
+
+    } else if (index == 1) {
+        // 判断目前是拓扑还是表格
+        if (document.getElementById("jishu_tuopu_tab").classList.contains("graph-tab-clicked")) {
+            GetTechnologyGraph(database_json[Current_DB_index].unique_dbname, database_json[Current_DB_index].domains[Current_Domain_index].domainid)
+        } else if (document.getElementById("jishu_biaoge_tab").classList.contains("graph-tab-clicked")) {
+            GetTechnologyForm()
+        }
+    } else if (index == 2) {
+
+    } else if (index == 3) {
+
+    } else if (index == 4) {
+
+    }
+
 }
 
 function ClickDB_fromDomain() {
-    ClickDatabase("db_"+Current_DB_index.toString())
+    ClickDatabase("db_" + Current_DB_index.toString())
 }
 
 function ChangeView(tobehiddenid, tobeunhiddenid) {
     document.getElementById(tobehiddenid).classList.add("hidden")
     document.getElementById(tobeunhiddenid).classList.remove("hidden")
-    document.getElementById(tobehiddenid+"_tab").classList.remove("graph-tab-clicked")
-    document.getElementById(tobehiddenid+"_tab").classList.add("graph-tab-unclicked")
-    document.getElementById(tobeunhiddenid+"_tab").classList.remove("graph-tab-unclicked")
-    document.getElementById(tobeunhiddenid+"_tab").classList.add("graph-tab-clicked")
+    document.getElementById(tobehiddenid + "_tab").classList.remove("graph-tab-clicked")
+    document.getElementById(tobehiddenid + "_tab").classList.add("graph-tab-unclicked")
+    document.getElementById(tobeunhiddenid + "_tab").classList.remove("graph-tab-unclicked")
+    document.getElementById(tobeunhiddenid + "_tab").classList.add("graph-tab-clicked")
+}
+
+function GetTechnologyGraph(dbname, domainnodeid) {
+    const jishugraph = $("div#jishu_tuopu").empty();
+    $('<img src="/static/global/images/loading.gif" class="img-20"><span style="color:#1C86EE;font-size: 16px;margin-left: 10px;">获取技术节点中...</span>').appendTo(jishugraph)
+
+    var formFile = new FormData()
+    formFile.append("dbname", dbname)
+    formFile.append("nodeid", domainnodeid)
+    formFile.append("nodetype", "技术")
+    formFile.append("downlevel", 2)
+    formFile.append("uplevel", 1)
+    formFile.append("numlimit", 120)
+    var data = formFile;
+    $.ajax({
+        url: "/api/gettechnologygraph",
+        data: data,
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            console.log("Domain Node List:", res)
+            if (res.status == "success") {
+                d3.select("#jishu_tuopu").selectAll('*').remove();
+
+				var alllabels = [];
+				var numsinlabel = [];
+				Array.from(res.resultdata.nodes).forEach(function (record, i){
+					var tmp = ''
+					if(record.label != "领域名"){
+						tmp = record.level + "级" + record.label
+					}
+					else{
+						tmp = record.label
+					}
+					if(alllabels.indexOf(tmp) == -1){
+						alllabels.push(tmp);
+						numsinlabel.push(1);
+					}
+					else{
+						numsinlabel[alllabels.indexOf(tmp)] += 1;
+					}
+				})
+
+                var colors = d3.scaleOrdinal()
+					.domain(d3.range(alllabels.length))
+					.range(d3.schemeCategory10);
+                    
+                $('<div id="tuli-jishu" class="fontsize-14" style="position: absolute; top: 10px; left: 10px; padding: 5px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">图例</div>').appendTo(jishugraph)
+                const tuli = $("div#tuli-jishu");
+                Array.from(alllabels).forEach(function (record, index) {
+					$('<div class="flex-row align-center paddingtop-5"><div class="marginright-5" style="width:10px;height:10px;border-radius:5px;background-color:'+colors(index)+';margin-top:1px;"></div><div class="fontsize-12">'+record+'</div></div>').appendTo(tuli);
+				})
+
+                const links = res.resultdata.links;
+                const nodes = res.resultdata.nodes;
+                const width = document.getElementById("jishu_tuopu").getBoundingClientRect().width - 2;
+                const height = document.getElementById("jishu_tuopu").getBoundingClientRect().height - 2;
+                const zoom = d3.zoom().scaleExtent([0.1, 10])
+                    .on("zoom", function () {
+                        g.attr("transform", d3.event.transform)
+                    })
+                    .filter(function () {
+                        return !d3.event.button && d3.event.type !== "dblclick";
+                    })
+                const svg = d3.select("#jishu_tuopu")
+                    .append("svg")
+                    .attr("viewBox", [0, 0, width, height])
+                    .call(zoom);
+                var g = svg.append('g');
+
+                const simulation = d3.forceSimulation();
+                simulation.nodes(nodes);
+                simulation.force("link", d3.forceLink(links).distance(100))
+                simulation.force("charge", d3.forceManyBody().strength(-2000))
+                simulation.force("center", d3.forceCenter(width / 2, height / 2))
+                simulation.force("x", d3.forceX().strength(0.1))
+                simulation.force("y", d3.forceY().strength(0.25))
+                simulation.force("radial", d3.forceRadial(width / 4, height / 4, width / 2))
+                simulation.alphaDecay(0.12); 
+                simulation.force("collide", d3.forceCollide().radius(50))
+                simulation.tick(15);
+
+                // 边长
+                const link = g.append("g").selectAll(".link")
+                    .data(links)
+                    .enter()
+                    .append("path")
+                    .attr("class", "link")
+                    .attr("marker-end", "url(#direction)")
+                    .attr("id", d => d.source.id + "_" + d.relaname + "_" + d.target.id)
+                // 边上的箭头,分正反两种
+                const positiveMarker = svg.append("marker")
+                    .attr("id", "positiveMarker")
+                    .attr("orient", "auto")
+                    .attr("stroke-width", 2)
+                    .attr("markerUnits", "strokeWidth")
+                    .attr("markerUnits", "userSpaceOnUse")
+                    .attr("viewBox", "0 -5 10 10")
+                    .attr("refX", 56)
+                    .attr("refY", 0)
+                    .attr("markerWidth", 9)
+                    .attr("markerHeight", 9)
+                    .append("path")
+                    .attr("d", "M 0 -5 L 10 0 L 0 5")
+                    .attr('fill', '#999')
+                    .attr("stroke-opacity", 0.6);
+                const negativeMarker = svg.append("marker")
+                    .attr("id", "negativeMarker")
+                    .attr("orient", "auto")
+                    .attr("stroke-width", 2)
+                    .attr("markerUnits", "strokeWidth")
+                    .attr("markerUnits", "userSpaceOnUse")
+                    .attr("viewBox", "0 -5 10 10")
+                    .attr("refX", -46)
+                    .attr("refY", 0)
+                    .attr("markerWidth", 9)
+                    .attr("markerHeight", 9)
+                    .append("path")
+                    .attr("d", "M 10 -5 L 0 0 L 10 5")
+                    .attr('fill', '#999')
+                    .attr("stroke-opacity", 0.6);
+                // 边上的关系名
+                const relanametest = g.append("g").selectAll("text")
+                    .data(links)
+                    .enter()
+                    .append("text")
+                    .attr("dy", "-2")
+                    .attr("class", "relaname")
+                    .append('textPath')
+                    .attr(
+                        "xlink:href", d => "#" + d.source.id + "_" + d.relaname + "_" + d.target.id
+                    )
+                    .attr("startOffset", "50%")
+                    .attr("class", "relatest")
+                    .text(function (d) {
+                        if (d.relaname.length > 10) {
+                            return d.relaname.slice(0, 10) + "..."
+                        }
+                        return d.relaname
+                    })
+                    .on("click", function (d) {
+
+                    })
+
+                // 节点
+                const node = g.append("g").selectAll(".node")
+                    .data(nodes)
+                    .enter()
+                    .append("circle")
+                    .attr("class", "node")
+                    .attr("r", function(d) {
+                        if (d.id == parseInt(res.nodeid)) {
+                            return 60
+                        }
+                        return 42
+                    })
+                    .attr("id", d => "Node" + d.id.toString())
+                    .attr("fill", function (d) {
+                        var tmp = ''
+                        if (d.label != "领域名") {
+                            tmp = d.level + "级" + d.label
+                        }
+                        else {
+                            tmp = d.label
+                        }
+                        return colors(alllabels.indexOf(tmp))
+                    })
+                    .call(
+                        d3.drag()//相当于移动端的拖拽手势  分以下三个阶段
+                            .on('start', start)
+                            .on('drag', drag)
+                            .on('end', end)
+                    )
+                    .on("click", function (d) {
+                        ClickNode_KG_Graph(d.id, nodes, links);
+                    })
+                    .on("dblclick", function (d) {
+                        GetRelatedofChosenNode(d.id, parseInt(document.getElementById("view-kg-relationmaxnum").value))
+                    });
+                function start(d) {
+                    if (!d3.event.active) {
+                        //这里就是drag的过程中
+                        simulation.alphaTarget(0.3).restart();//设置衰减系数，对节点位置移动过程的模拟，数值越高移动越快，数值范围[0，1]
+                    }
+                    d.fx = d.x;
+                    d.fy = d.y;
+                }
+                function drag(d) {
+                    d.fx = d3.event.x;
+                    d.fy = d3.event.y;
+                }
+                function end(d) {
+                    if (!d3.event.active) {
+                        simulation.alphaTarget(0);
+                    }
+                    d.fx = null;
+                    d.fy = null;
+                }
+
+                // 节点名称
+                const nodetest = g.append("g").selectAll("foreignObject")
+                    .data(nodes)
+                    .enter()
+                    .append("g")
+
+                // 节点和边动起来
+                simulation.on("tick", function () {
+                    // 边设置
+                    link.attr("d", function (d) {
+                        if (d.source.x < d.target.x) {
+                            return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y
+                        }
+                        else {
+                            return "M " + d.target.x + " " + d.target.y + " L " + d.source.x + " " + d.source.y
+                        }
+                    })
+                        .attr("marker-end", function (d) {
+                            if (d.source.x < d.target.x) {
+                                return "url(#positiveMarker)"
+                            }
+                            else {
+                                return null
+                            }
+                        })
+                        .attr("marker-start", function (d) {
+                            if (d.source.x < d.target.x) {
+                                return null
+                            }
+                            else {
+                                return "url(#negativeMarker)"
+                            }
+                        })
+                    node
+                        .attr("transform", d => `translate(${d.x},${d.y})`);
+                    nodetest
+                        .attr("transform", d => `translate(${d.x},${d.y})`);
+                });
+                nodetest
+                    .append("foreignObject")
+                    .attr("class", "cursor-pointer")
+                    .attr("x", function (d) {
+                        if (d.id == parseInt(res.nodeid)) {
+                            return -39
+                        }
+                        return -28;
+                    })
+                    .attr("y", function (d) {
+                        if (d.id == parseInt(res.nodeid)) {
+                            return -39
+                        }
+                        return -28;
+                    })
+                    .attr("width", function (d) {
+                        if (d.id == parseInt(res.nodeid)) {
+                            return 78
+                        }
+                        return 56
+                    })
+                    .attr("height", function (d) {
+                        if (d.id == parseInt(res.nodeid)) {
+                            return 78
+                        }
+                        return 56
+                    })
+                    .append("xhtml:div")
+                    .attr("class", "flex-row align-center justify-center")
+                    .on("click", function (d) {
+                        ClickNode_KG_Graph(d.id, nodes, links);
+                    })
+                    .on("dblclick", function (d) {
+
+                        GetRelatedofChosenNode(d.id, parseInt(document.getElementById("view-kg-relationmaxnum").value))
+                    })
+                    .style("width", "100%")
+                    .style("height", "100%")
+                    .style("color", "white")
+                    .style("font-size", "8px")
+                    .style("padding", "3px")
+                    .style("overflow-wrap", "break-word")
+                    .style("word-break", "break-all")
+                    .style("text-align", "middle")
+                    .style("overflow", "hidden")
+                    .text(d => d.name);
+
+            } else {
+                showtaskmsg_fail(res.resultdata)
+            }
+        },
+    })
 }

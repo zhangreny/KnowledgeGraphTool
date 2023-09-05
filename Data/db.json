@@ -33,26 +33,5 @@
         "uri": "bolt://127.0.0.5",
         "username": "neo4j",
         "password": "zhangry2001"
-    },
-    {
-        "unique_dbname": "db6",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.6:7687",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique_dbname": "db7",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.7",
-        "username": "neo4j",
-        "password": "zhangry2001"
-    },
-    {
-        "unique_dbname": "db8",
-        "category": "neo4j",
-        "uri": "bolt://127.0.0.8:7687",
-        "username": "neo4j",
-        "password": "zhangry2001"
     }
 ]

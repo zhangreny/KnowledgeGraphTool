@@ -268,3 +268,30 @@ body .loading-class .layui-layer-content .layui-layer-ico {
     height: 32px !important;
     line-height: 32px !important;
 }
+
+.link{
+	stroke: #ccc;
+	stroke-width: 1px;
+}
+
+/* 边上的关系 */
+.relaname{
+	text-anchor: middle;
+	fill: #8e8e8e;
+	font-size: 8px;
+	user-select: none;
+}
+.relaname:hover{
+	font-weight: 600;
+}
+
+/* 节点 */
+.node:hover{
+	stroke: #ccc;
+	stroke-width: 5px;
+}
+/* 节点被选中 */
+.chosen{
+	stroke: #ccc;
+	stroke-width: 5px;
+}

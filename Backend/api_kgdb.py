@@ -62,7 +62,8 @@ def api_index_get_databaseinfo():
     try: 
         ans = []
         # 等自动更新数据库状态写好之后，这里就不再手动去连接一次了，直接获取状态就行（或者出于稳定也还是连接一次）
-        dbdriverlist, activedrivernum = load_dbdriver(current_app.config['System_Database_list'])
+        with current_app.config['Lock_Database_Driver']:
+            dbdriverlist, activedrivernum = load_dbdriver(current_app.config['System_Database_list'])
         dblist = current_app.config['System_Database_list'].copy()
         for i in range(len(dbdriverlist)):
             tmp = {
@@ -93,11 +94,152 @@ def api_index_post_deleteconnectiondb():
         dbname = request.form['dbname']
         try: 
             with current_app.config['Lock_Database_Driver']:
+                for i in range(len(current_app.config['System_Database_list'])):
+                    dict_item = current_app.config['System_Database_list'][i]
+                    if dict_item['unique_dbname'] == dbname:
+                        ind = i
+                        break
                 tmp = [dict_item for dict_item in current_app.config['System_Database_list'] if dict_item['unique_dbname'] != dbname]  
                 current_app.config['System_Database_list'] = tmp
+                tmpdriver = [current_app.config['System_Dbdriver_list'][i] for i in range(len(current_app.config['System_Dbdriver_list'])) if i != ind]
+                current_app.config['System_Dbdriver_list'] = tmpdriver
                 with open(current_app.config['System_Database_file'], 'w') as json_file:
                     dump(current_app.config['System_Database_list'], json_file, indent=4)
             return dumps({'status':'success', 'resultdata':'移除数据库 ' + dbname + ' 成功！'})  
         except:
             return dumps({'status':'fail', 'resultdata':'移除数据库 ' + dbname + ' 失败'})  
-        
+
+@api_kgdb.route("/api/gettechnologygraph", methods=['POST'], strict_slashes=False)     
+def api_index_post_gettechnologygraph():
+    if request.method == 'POST':
+        dbname = request.form['dbname']
+        nodeid = request.form['nodeid']
+        nodetype = request.form['nodetype']
+        downlevel = request.form['downlevel']
+        uplevel = request.form['uplevel']
+        numlimit = request.form['numlimit']
+        #try: 
+        with current_app.config['Lock_Database_Driver']:
+            for i in range(len(current_app.config['System_Database_list'])):
+                dict_item = current_app.config['System_Database_list'][i]
+                if dict_item['unique_dbname'] == dbname:
+                    ind = i
+                    break
+            driver = current_app.config['System_Dbdriver_list'][ind]
+        res = {}
+        res['nodes'] = []
+        res['links'] = []
+        # get center node first
+        with driver.session() as session:
+            tmpres = list(session.run("MATCH (n) where id(n)=" + str(nodeid) + " "
+                                        "RETURN properties(n) AS Properties, n.name as Name, labels(n) as Label"))[0]
+        node = tmpres['Properties']
+        node['id'] = int(nodeid)
+        node['label'] = tmpres['Label'][0]
+        res['nodes'].append(node)
+        centerlevel = tmpres['Properties']['level']
+        domainname = tmpres['Properties']['domain']
+
+        # get outer link node
+        subids = []
+        subids.append(nodeid)
+        for i in range(int(downlevel)):
+            tmpsubids = []
+            for sub_id in subids:
+                with driver.session() as session:
+                    result = list(session.run("MATCH p=(s)-[r:"+nodetype+"细分]->(o:"+nodetype+") "
+                                        "where s.domain=$domainname "
+                                        "and o.domain=$domainname "
+                                        "and id(s)="+str(sub_id)+" "
+                                        "RETURN properties(s) AS subproperties, ID(s) as subid, labels(s) as sublabel, "
+                                        "properties(o) AS objproperties, ID(o) as objid, labels(o) as objlabel, "
+                                        "properties(r) AS properties, type(r) as type "
+                                        "LIMIT $numlimit"
+                                        ,domainname=domainname
+                                        ,numlimit=int(numlimit)-len(res['nodes'])
+                                        ))
+                for record in result:
+                    subnode = record['subproperties']
+                    subnode['id'] = record['subid']
+                    subnode['label'] = record['sublabel'][0]
+                    try: 
+                        subindex = res['nodes'].index(subnode)
+                    except ValueError:
+                        res['nodes'].append(subnode)
+                        subindex = len(res['nodes'])-1
+                        
+                    objnode = record['objproperties']
+                    objnode['id'] = record['objid']
+                    tmpsubids.append(record['objid'])
+                    objnode['label'] = record['objlabel'][0]
+                    try: 
+                        objindex = res['nodes'].index(objnode)
+                    except ValueError:
+                        res['nodes'].append(objnode)
+                        objindex = len(res['nodes'])-1   
+                        
+                    relation = record['properties']
+                    relation['relaname'] = record['type']
+                    relation['source'] = subindex
+                    relation['target'] = objindex    
+                    if relation not in res['links']:
+                        res['links'].append(relation)   
+
+                    if len(res['nodes']) >= int(numlimit):
+                        return dumps({'status':'success','resultdata':res,'nodeid':nodeid})    
+            subids = tmpsubids
+
+        # get upper link node
+        objids = []
+        objids.append(nodeid)
+        for i in range(int(downlevel)):
+            tmpobjids = []
+            for obj_id in objids:
+                with driver.session() as session:
+                    result = list(session.run("MATCH p=(s)-[r:"+nodetype+"细分]->(o:"+nodetype+") "
+                                        "where s.domain=$domainname "
+                                        "and o.domain=$domainname "
+                                        "and id(o)="+str(obj_id)+" "
+                                        "RETURN properties(s) AS subproperties, ID(s) as subid, labels(s) as sublabel, "
+                                        "properties(o) AS objproperties, ID(o) as objid, labels(o) as objlabel, "
+                                        "properties(r) AS properties, type(r) as type "
+                                        "LIMIT $numlimit"
+                                        ,domainname=domainname
+                                        ,numlimit=int(numlimit)-len(res['nodes'])
+                                        ))
+                for record in result:
+                    subnode = record['subproperties']
+                    subnode['id'] = record['subid']
+                    tmpobjids.append(record['objid'])
+                    subnode['label'] = record['sublabel'][0]
+                    try: 
+                        subindex = res['nodes'].index(subnode)
+                    except ValueError:
+                        res['nodes'].append(subnode)
+                        subindex = len(res['nodes'])-1
+                        
+                    objnode = record['objproperties']
+                    objnode['id'] = record['objid']
+                    objnode['label'] = record['objlabel'][0]
+                    try: 
+                        objindex = res['nodes'].index(objnode)
+                    except ValueError:
+                        res['nodes'].append(objnode)
+                        objindex = len(res['nodes'])-1   
+                        
+                    relation = record['properties']
+                    relation['relaname'] = record['type']
+                    relation['source'] = subindex
+                    relation['target'] = objindex    
+                    if relation not in res['links']:
+                        res['links'].append(relation)   
+
+                    if len(res['nodes']) >= int(numlimit):
+                        return dumps({'status':'success','resultdata':res,'nodeid':nodeid})        
+            objids = tmpobjids
+
+        return dumps({'status':'success','resultdata':res,'nodeid':nodeid})
+
+            
+        #except:
+         #   return dumps({'status':'fail', 'resultdata':'获取领域 ' + dbname + ' 技术节点失败'})  

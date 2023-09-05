@@ -319,11 +319,11 @@
                 <!-- content-domain -->
                 <div id="content-domain" class="height-100per width-100per hidden"
                     style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
-                    <div class="width-100per marginbottom-5 fontsize-12 color-lightblack flex-row align-center fontweight-600">
+                    <div class="width-100per marginbottom-5 fontsize-12 color-lightblack flex-row align-center fontweight-600" style="height:20px;">
                         <span onclick="ClickDB_fromDomain()" id="name-db-domain-content" class="hover-font-blue cursor-pointer">Database Name</span>
                         <img src="/static/global/images/right.png" class="marginleft-5 img-16">
                     </div>
-                    <div id="name-domain-domain-content" class="width-100per marginbottom-20 fontsize-22 fontweight-600">Domain
+                    <div id="name-domain-domain-content" class="width-100per marginbottom-20 fontsize-22 fontweight-600" style="height:32px;">Domain
                         Name</div>
                     <div id="tabbar-domain" class="width-100per marginbottom-10 fontsize-14 flex-row align-center"
                         style="border-bottom: 1px solid #d0d0d9;">
@@ -346,7 +346,7 @@
                             style="padding:8px 18px 8px 38px; border-radius:6px 6px 0px 0px">设置</div>
                     </div>
                     <!-- 概览页内容 -->
-                    <div id="tabcontent-domain" class="width-100per overflow-auto" style="height:calc(100% - 110px)">
+                    <div id="tabcontent-domain" class="width-100per overflow-auto" style="height:calc(100% - 121px)">
                         <!-- 概览页内容 -->
                         <div id="domain_gailan" class="width-100per height-100per flex-row" style="flex-wrap: wrap;">
                             1
@@ -360,7 +360,11 @@
                                 </div>
                                 <button onclick="AddKnowledgeToDomain('jishu')" type="button" class="layui-btn layui-btn-normal" style="width:110px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;"><text style="font-size: 24px;margin-right: 5px;">+</text>添加技术</button>
                             </div>
-                            <div id="jishu_tuopu" class="width-100per margintop-5" style="height:calc(100% - 45px);background-image: url('/static/global/images/bg-grid.png');background-repeat: repeat;background-size:20%;"></div>
+                            <div id="jishu_tuopu" class="width-100per margintop-5 flex-row align-center justify-center" style=" position: relative;height:calc(100% - 45px);background-image: url('/static/global/images/bg-grid.png');background-repeat: repeat;background-size:20%;">
+                                <img src="/static/global/images/loading.gif" class="img-20">
+                                <span style="color:#1C86EE;font-size: 16px;margin-left: 10px;">获取技术节点中...</span>
+                                <div style="position: absolute; top: 10px; left: 10px; padding: 5px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></div>
+                            </div>
                             <div id="jishu_biaoge" class="width-100per hidden margintop-5" style="height:calc(100% - 45px)"></div>
                         </div> 
                         <div id="domain_lunwen" class="width-100per height-100per hidden">
@@ -389,6 +393,7 @@
     </div>
     <script src="/static/global/layui.js" charset="utf-8"></script>
     <script src="/static/global/jquery.js"></script>
+    <script src="/static/global/d3v5.js"></script>
     <script src="/static/pages/index.js"></script>
     <script>
         layui.use(function () {
