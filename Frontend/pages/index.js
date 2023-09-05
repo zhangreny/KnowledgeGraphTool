@@ -1,5 +1,9 @@
 var Current_DB_index = -1;
 var Current_Domain_index = -1;
+var openmapslide = true; // 用于判断用户是否开启了滚动查看父子节点
+var uplevel = 1;
+var downlevel = 2;
+var numlimit = 90;
 
 window.onpageshow = function () {
     Getdatabase();
@@ -476,9 +480,9 @@ function GetTechnologyGraph(dbname, domainnodeid) {
     formFile.append("dbname", dbname)
     formFile.append("nodeid", domainnodeid)
     formFile.append("nodetype", "技术")
-    formFile.append("downlevel", 2)
-    formFile.append("uplevel", 1)
-    formFile.append("numlimit", 120)
+    formFile.append("downlevel", downlevel)
+    formFile.append("uplevel", uplevel)
+    formFile.append("numlimit", numlimit)
     var data = formFile;
     $.ajax({
         url: "/api/gettechnologygraph",
@@ -521,6 +525,9 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                 Array.from(alllabels).forEach(function (record, index) {
 					$('<div class="flex-row align-center paddingtop-5"><div class="marginright-5" style="width:10px;height:10px;border-radius:5px;background-color:'+colors(index)+';margin-top:1px;"></div><div class="fontsize-12">'+record+'</div></div>').appendTo(tuli);
 				})
+
+                $('<div onclick="GraphViewSetting(`jishu`)" class="cursor-pointer fontsize-12 borderradius-6 color-white fontweight-600 flex-row align-center" style="height:34px;position: absolute; bottom: 10px; left: 10px; padding: 8px; background-color: #1c86ee;"><img src="/static/global/images/setting-white.png" class="img-16 marginright-5"><text style="margin-bottom:2px;">查看设置</text></div>').appendTo(jishugraph)
+                $('<div id="chakanshezhi-jishu" class="layui-anim hidden fontsize-12 borderradius-6 color-lightblack" style="position: absolute; bottom: 44px; left: 10px; padding: 8px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);height:220px;width:400px"><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">共同展示中心节点的子节点层数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">共同展示中心节点的父节点层数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">开启地图查看模式（滚轮操作查看父子节点）</div><div style="width:100px;"><input type="checkbox" class="borderradius-6 inputfocus-blue padding-10" style="width:15px;height:15px;border: 1px solid #eaeaea"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">图可展示最大节点数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="width-100per flex-row align-center justify-between margintop-5 paddingtop-5" style="border-top:1px solid #dadada;height:45px;"><span class="color-red"></span><div class="flex-row"><button onclick="CancelGraphViewSetting(`jishu`)" type="button" class="layui-btn layui-btn-primary" style="width:70px;border-radius:6px;font-weight:600;">取消</button><button onclick="SaveGraphViewSetting(`jishu`)" type="button" class="layui-btn layui-btn-normal" style="width:70px;border-radius:6px;font-weight:600;">保存</button></div></div></div></div>').appendTo(jishugraph)
 
                 const links = res.resultdata.links;
                 const nodes = res.resultdata.nodes;
@@ -642,12 +649,6 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                             .on('drag', drag)
                             .on('end', end)
                     )
-                    .on("click", function (d) {
-                        ClickNode_KG_Graph(d.id, nodes, links);
-                    })
-                    .on("dblclick", function (d) {
-                        GetRelatedofChosenNode(d.id, parseInt(document.getElementById("view-kg-relationmaxnum").value))
-                    });
                 function start(d) {
                     if (!d3.event.active) {
                         //这里就是drag的过程中
@@ -758,4 +759,69 @@ function GetTechnologyGraph(dbname, domainnodeid) {
             }
         },
     })
+}
+
+function GraphViewSetting(dimension) {
+    var container = document.getElementById("chakanshezhi-"+dimension)
+    const inputs = container.getElementsByTagName("input")
+    inputs[0].value = downlevel
+    inputs[1].value = uplevel
+    inputs[3].value = numlimit
+    if (openmapslide) {
+        inputs[2].checked = true
+    } else {
+        inputs[2].checked = false
+    }
+    container.classList.remove("hidden");
+}
+
+function isNumeric(str) {
+    return /^\d+$/.test(str);
+  }
+
+function SaveGraphViewSetting(dimension) {
+    var container = document.getElementById("chakanshezhi-"+dimension)
+    const inputs = container.getElementsByTagName("input")
+    const span_element = container.getElementsByTagName("span")[0]
+    if (isNumeric(inputs[0].value) && isNumeric(inputs[1].value) && isNumeric(inputs[3].value)) {
+        downlevel = inputs[0].value
+        uplevel = inputs[1].value
+        if (inputs[2].checked) {
+            openmapslide = true
+        } else {
+            openmapslide = false
+        }
+        numlimit = inputs[3].value
+    } else {
+        if (!isNumeric(inputs[0].value)) {
+            span_element.innerHTML = "请输入数字"
+            setTimeout(function () { span_element.innerHTML = "" }, 1500);
+            inputs[0].style.border = "2px solid red"
+            setTimeout(function () { inputs[0].style.border = "1px solid #dadada" }, 3000);
+            return;
+        }
+        if (!isNumeric(inputs[1].value)) {
+            span_element.innerHTML = "请输入数字"
+            setTimeout(function () { span_element.innerHTML = "" }, 1500);
+            inputs[1].style.border = "2px solid red"
+            setTimeout(function () { inputs[1].style.border = "1px solid #dadada" }, 3000);
+            return;
+        }
+        if (!isNumeric(inputs[3].value)) {
+            span_element.innerHTML = "请输入数字"
+            setTimeout(function () { span_element.innerHTML = "" }, 1500);
+            inputs[3].style.border = "2px solid red"
+            setTimeout(function () { inputs[3].style.border = "1px solid #dadada" }, 3000);
+            return;
+        }
+    }
+    container.classList.add("hidden")
+
+    var database_json = JSON.parse(sessionStorage.getItem('database'))
+    GetTechnologyGraph(database_json[Current_DB_index].unique_dbname, database_json[Current_DB_index].domains[Current_Domain_index].domainid)
+}
+
+function CancelGraphViewSetting(dimension) {
+    var container = document.getElementById("chakanshezhi-"+dimension)
+    container.classList.add("hidden")
 }
