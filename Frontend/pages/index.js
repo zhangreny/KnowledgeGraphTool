@@ -5,6 +5,10 @@ var uplevel = 1;
 var downlevel = 2;
 var numlimit = 90;
 
+var former_jishu_nodeid = -1;
+
+
+
 window.onpageshow = function () {
     Getdatabase();
 }
@@ -529,6 +533,8 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                 $('<div onclick="GraphViewSetting(`jishu`)" class="cursor-pointer fontsize-12 borderradius-6 color-white fontweight-600 flex-row align-center" style="height:34px;position: absolute; bottom: 10px; left: 10px; padding: 8px; background-color: #1c86ee;"><img src="/static/global/images/setting-white.png" class="img-16 marginright-5"><text style="margin-bottom:2px;">查看设置</text></div>').appendTo(jishugraph)
                 $('<div id="chakanshezhi-jishu" class="layui-anim hidden fontsize-12 borderradius-6 color-lightblack" style="position: absolute; bottom: 44px; left: 10px; padding: 8px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);height:220px;width:400px"><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">共同展示中心节点的子节点层数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">共同展示中心节点的父节点层数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">开启地图查看模式（滚轮操作查看父子节点）</div><div style="width:100px;"><input type="checkbox" class="borderradius-6 inputfocus-blue padding-10" style="width:15px;height:15px;border: 1px solid #eaeaea"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">图可展示最大节点数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="width-100per flex-row align-center justify-between margintop-5 paddingtop-5" style="border-top:1px solid #dadada;height:45px;"><span class="color-red"></span><div class="flex-row"><button onclick="CancelGraphViewSetting(`jishu`)" type="button" class="layui-btn layui-btn-primary" style="width:70px;border-radius:6px;font-weight:600;">取消</button><button onclick="SaveGraphViewSetting(`jishu`)" type="button" class="layui-btn layui-btn-normal" style="width:70px;border-radius:6px;font-weight:600;">保存</button></div></div></div></div>').appendTo(jishugraph)
 
+                $('<div id="jishu-showbox-title" class="overflowy-auto color-lightblack bg-grey paddingbottom-5 layui-anim"style="border-radius:6px 6px 0px 0px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);width:450px;min-height:100px;max-height:95px;position: absolute; top: 10px; right: 10px;"><div class="width-100per"style="height:95px;border-radius: 6px 6px 0px 0px;padding: 12px;"><div class="flex-row justify-between align-center width-100per paddingbottom-5"><span class="fontsize-18 fontweight-600"style="width: calc(100% - 30px)">Node Name</span><div onclick="CloseShowBox(`jishu`)"class="flex-row cursor-pointer align-center justify-center"style="width:16px;height:16px;border-radius: 50%;background-color: #4b4b4b;"><i class="layui-icon layui-icon-close"style="font-size:8px; color:#fff;"></i></div></div><div class="flex-row align-center width-100per borderradius-6 fontsize-12"style="background-color:rgb(246,250,254);height:40px;margin-top:3px;border:1px solid #dadada"><div class="flex-row align-center marginleft-5 padding-5 hover-bg-blue borderradius-6 cursor-pointer"style="color:#1C86EE"><img src="/static/global/images/edit.png"class="marginright-5 img-14">编辑</div><div class="flex-row align-center marginleft-5 padding-5 hover-bg-lightred color-red borderradius-6 cursor-pointer"><img src="/static/global/images/delete.png"class="marginright-5 img-14">删除</div></div></div></div><div id="jishu-showbox" class="overflowy-auto color-lightblack bg-grey paddingbottom-5 layui-anim"style="border-radius:0px 0px 6px 6px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);width:450px;min-height:100px;max-height:calc(100% - 115px);position: absolute; top: 106px; right: 10px;"><div class="padding-10" style="min-height:0px;max-height:calc(100% - 115px);border-radius: 0px 0px 6px 6px;border-top:1px solid #dadada;padding: 8px;"><div class="fontweight-600 color-darkgrey fontsize-14 padding-5">基本信息</div><div class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点名</text><span class="color-lightblack"style="width: calc(100% - 110px);">Node Name</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点类型</text><span class="color-lightblack"style="width: calc(100% - 110px);">Node Label</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点层级</text><span class="color-lightblack"style="width: calc(100% - 110px);">1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">所属领域</text><span class="color-lightblack"style="width: calc(100% - 110px);">Domain Name</span></div></div><div class="fontweight-600 color-darkgrey fontsize-14 padding-5 margintop-15">其它属性</div><div class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">key2</text><span class="color-lightblack"style="width: calc(100% - 110px);">value2</span></div></div><div class="fontweight-600 color-darkgrey fontsize-14 padding-5 margintop-15">其他类型节点相连情况</div><div class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">key2</text><span class="color-lightblack"style="width: calc(100% - 110px);">value2</span></div></div></div></div>').appendTo(jishugraph)
+
                 const links = res.resultdata.links;
                 const nodes = res.resultdata.nodes;
                 const width = document.getElementById("jishu_tuopu").getBoundingClientRect().width - 2;
@@ -556,7 +562,7 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                 simulation.force("radial", d3.forceRadial(width / 4, height / 4, width / 2))
                 simulation.alphaDecay(0.12); 
                 simulation.force("collide", d3.forceCollide().radius(50))
-                simulation.tick(15);
+                simulation.tick(20);
 
                 // 边长
                 const link = g.append("g").selectAll(".link")
@@ -565,7 +571,7 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                     .append("path")
                     .attr("class", "link")
                     .attr("marker-end", "url(#direction)")
-                    .attr("id", d => d.source.id + "_" + d.relaname + "_" + d.target.id)
+                    .attr("id", d => "jishu" + d.source.id + "_" + d.relaname + "_" + d.target.id)
                 // 边上的箭头,分正反两种
                 const positiveMarker = svg.append("marker")
                     .attr("id", "positiveMarker")
@@ -606,7 +612,7 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                     .attr("class", "relaname")
                     .append('textPath')
                     .attr(
-                        "xlink:href", d => "#" + d.source.id + "_" + d.relaname + "_" + d.target.id
+                        "xlink:href", d => "#jishu" + d.source.id + "_" + d.relaname + "_" + d.target.id
                     )
                     .attr("startOffset", "50%")
                     .attr("class", "relatest")
@@ -632,7 +638,7 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                         }
                         return 42
                     })
-                    .attr("id", d => "Node" + d.id.toString())
+                    .attr("id", d => "jishuNode" + d.id.toString())
                     .attr("fill", function (d) {
                         var tmp = ''
                         if (d.label != "领域名") {
@@ -712,36 +718,35 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                     .attr("class", "cursor-pointer")
                     .attr("x", function (d) {
                         if (d.id == parseInt(res.nodeid)) {
-                            return -39
+                            return -41
                         }
-                        return -28;
+                        return -31;
                     })
                     .attr("y", function (d) {
                         if (d.id == parseInt(res.nodeid)) {
-                            return -39
+                            return -41
                         }
-                        return -28;
+                        return -31;
                     })
                     .attr("width", function (d) {
                         if (d.id == parseInt(res.nodeid)) {
-                            return 78
+                            return 82
                         }
-                        return 56
+                        return 62
                     })
                     .attr("height", function (d) {
                         if (d.id == parseInt(res.nodeid)) {
-                            return 78
+                            return 82
                         }
-                        return 56
+                        return 62
                     })
                     .append("xhtml:div")
                     .attr("class", "flex-row align-center justify-center")
                     .on("click", function (d) {
-                        ClickNode_KG_Graph(d.id, nodes, links);
+                        ClickNode_jishu_Graph(d.id, nodes, links);
                     })
                     .on("dblclick", function (d) {
-
-                        GetRelatedofChosenNode(d.id, parseInt(document.getElementById("view-kg-relationmaxnum").value))
+                        GetRelatedofChosenNode(d.id)
                     })
                     .style("width", "100%")
                     .style("height", "100%")
@@ -754,11 +759,45 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                     .style("overflow", "hidden")
                     .text(d => d.name);
 
+                former_jishu_nodeid = -1
+                ClickNode_jishu_Graph(res.nodeid, nodes, links);
+                sessionStorage.setItem("nodes", JSON.stringify(nodes))
+                sessionStorage.setItem("links", JSON.stringify(links))
             } else {
                 showtaskmsg_fail(res.resultdata)
             }
         },
     })
+}
+
+function ClickNode_jishu_Graph(id, nodes, links) {
+    // 修改节点样式
+	const node = document.getElementById("jishuNode"+id.toString());
+	if(former_jishu_nodeid != -1){
+		const formernode = document.getElementById("jishuNode"+former_jishu_nodeid.toString());
+		formernode.classList.remove("chosen");
+	}
+	node.classList.add("chosen");
+
+    //
+    const showbox = document.getElementById("jishu-showbox")
+    showbox.classList.remove("hidden")
+    showbox.classList.add("layui-anim-downbit")
+    const showboxtitle = document.getElementById("jishu-showbox-title")
+    showboxtitle.classList.remove("hidden")
+    showboxtitle.classList.add("layui-anim-downbit")
+
+
+    former_jishu_nodeid = id;
+}
+
+function CloseShowBox(dimension) {
+    const showbox = document.getElementById(dimension+"-showbox")
+    showbox.classList.add("hidden")
+    showbox.classList.remove("layui-anim-downbit")
+    const showboxtitle = document.getElementById(dimension+"-showbox-title")
+    showboxtitle.classList.add("hidden")
+    showboxtitle.classList.remove("layui-anim-downbit")
 }
 
 function GraphViewSetting(dimension) {
@@ -825,3 +864,8 @@ function CancelGraphViewSetting(dimension) {
     var container = document.getElementById("chakanshezhi-"+dimension)
     container.classList.add("hidden")
 }
+
+
+
+
+

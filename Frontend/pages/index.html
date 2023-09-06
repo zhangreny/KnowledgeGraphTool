@@ -181,14 +181,16 @@
                         <div id="kgdb_gailan" class="width-100per height-100per flex-row" style="flex-wrap: wrap;">
                             <div class="layui-row" style="width:100%">
                                 <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
-                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15"
+                                        style="width: calc(100% - 15px);height: calc(100% - 15px);">
                                         <div class="width-100per flex-row align-center justify-between">
                                             <span class="fontsize-12 fontweight-600">连接状态</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
-                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15"
+                                        style="width: calc(100% - 15px);height: calc(100% - 15px);">
                                         <div class="width-100per flex-row align-center justify-between">
                                             <span class="fontsize-12 fontweight-600">领域</span>
                                             <span class="fontsize-12" style="color: #aeaeae;">
@@ -198,17 +200,20 @@
                                     </div>
                                 </div>
                                 <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
-                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15"
+                                        style="width: calc(100% - 15px);height: calc(100% - 15px);">
                                         <div class="width-100per flex-row align-center justify-between">
                                             <span class="fontsize-12 fontweight-600">事件审计</span>
                                             <span class="fontsize-12" style="color: #aeaeae;">
-                                                共 <text id="gailan_numofeventlog">2</text> 条记录 · <text id="gailan_sizeofeventlog">200 MB</text>
+                                                共 <text id="gailan_numofeventlog">2</text> 条记录 · <text
+                                                    id="gailan_sizeofeventlog">200 MB</text>
                                             </span>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="layui-col-xs6 layui-col-sm4 layui-col-md3" style="height:300px;">
-                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15" style="width: calc(100% - 15px);height: calc(100% - 15px);">
+                                    <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15"
+                                        style="width: calc(100% - 15px);height: calc(100% - 15px);">
                                         <div class="width-100per flex-row align-center justify-between">
                                             <span class="fontsize-12 fontweight-600">备份和恢复</span>
                                             <span class="fontsize-12" style="color: #aeaeae;">
@@ -319,11 +324,14 @@
                 <!-- content-domain -->
                 <div id="content-domain" class="height-100per width-100per hidden"
                     style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
-                    <div class="width-100per marginbottom-5 fontsize-12 color-lightblack flex-row align-center fontweight-600" style="height:20px;">
-                        <span onclick="ClickDB_fromDomain()" id="name-db-domain-content" class="hover-font-blue cursor-pointer">Database Name</span>
+                    <div class="width-100per marginbottom-5 fontsize-12 color-lightblack flex-row align-center fontweight-600"
+                        style="height:20px;">
+                        <span onclick="ClickDB_fromDomain()" id="name-db-domain-content"
+                            class="hover-font-blue cursor-pointer">Database Name</span>
                         <img src="/static/global/images/right.png" class="marginleft-5 img-16">
                     </div>
-                    <div id="name-domain-domain-content" class="width-100per marginbottom-20 fontsize-22 fontweight-600" style="height:32px;">Domain
+                    <div id="name-domain-domain-content" class="width-100per marginbottom-20 fontsize-22 fontweight-600"
+                        style="height:32px;">Domain
                         Name</div>
                     <div id="tabbar-domain" class="width-100per marginbottom-10 fontsize-14 flex-row align-center"
                         style="border-bottom: 1px solid #d0d0d9;">
@@ -352,21 +360,38 @@
                             1
                         </div>
                         <div id="domain_jishu" class="width-100per height-100per hidden">
-                            <div class="bg-white width-100per flex-row align-center justify-between" style="height:40px;">
+                            <div class="bg-white width-100per flex-row align-center justify-between"
+                                style="height:40px;">
                                 <div class="paddingleft-10 paddingright-10 height-100per flex-row align-center">
-                                    <div id="jishu_tuopu_tab" onclick="ChangeView('jishu_biaoge', 'jishu_tuopu')" class="flex-row align-center justify-center border-lightgrey cursor-pointer graph-tab-clicked fontsize-14" style="border-radius: 6px 0px 0px 6px;height: 32px;width: 90px;">拓扑视图</div>
-                                    <div id="jishu_biaoge_tab" onclick="ChangeView('jishu_tuopu', 'jishu_biaoge')" class="flex-row align-center justify-center border-lightgrey cursor-pointer graph-tab-unclicked fontsize-14" style="border-radius: 0px 6px 6px 0px;height: 32px;width: 90px;">表格试图</div>
-                                    <input type="text" id="input_jishu" autocomplete="off" placeholder="搜索技术" class="layui-input" style="width:400px;border-radius:6px 6px 6px 6px;height:32px;font-size: 12px;margin-left: 15px;border: 1px solid #dadada">
+                                    <div id="jishu_tuopu_tab" onclick="ChangeView('jishu_biaoge', 'jishu_tuopu')"
+                                        class="flex-row align-center justify-center border-lightgrey cursor-pointer graph-tab-clicked fontsize-14"
+                                        style="border-radius: 6px 0px 0px 6px;height: 32px;width: 90px;">拓扑视图</div>
+                                    <div id="jishu_biaoge_tab" onclick="ChangeView('jishu_tuopu', 'jishu_biaoge')"
+                                        class="flex-row align-center justify-center border-lightgrey cursor-pointer graph-tab-unclicked fontsize-14"
+                                        style="border-radius: 0px 6px 6px 0px;height: 32px;width: 90px;">表格试图</div>
+                                    <input type="text" id="input_jishu" autocomplete="off" placeholder="搜索技术"
+                                        class="layui-input"
+                                        style="width:400px;border-radius:6px 6px 6px 6px;height:32px;font-size: 12px;margin-left: 15px;border: 1px solid #dadada">
                                 </div>
-                                <button onclick="AddKnowledgeToDomain('jishu')" type="button" class="layui-btn layui-btn-normal" style="width:110px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;"><text style="font-size: 24px;margin-right: 5px;">+</text>添加技术</button>
+                                <button onclick="AddKnowledgeToDomain('jishu')" type="button"
+                                    class="layui-btn layui-btn-normal"
+                                    style="width:110px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;"><text
+                                        style="font-size: 24px;margin-right: 5px;">+</text>添加技术</button>
                             </div>
-                            <div id="jishu_tuopu" class="width-100per margintop-5 flex-row align-center justify-center" style=" position: relative;height:calc(100% - 45px);background-image: url('/static/global/images/bg-grid.png');background-repeat: repeat;background-size:20%;">
+                            <!-- 拓扑 -->
+                            <div id="jishu_tuopu" class="width-100per margintop-5 flex-row align-center justify-center"
+                                style="position: relative;height:calc(100% - 45px);background-image: url('/static/global/images/bg-grid.png');background-repeat: repeat;background-size:20%;">
                                 <img src="/static/global/images/loading.gif" class="img-20">
                                 <span style="color:#1C86EE;font-size: 16px;margin-left: 10px;">获取技术节点中...</span>
-                                <div style="position: absolute; top: 10px; left: 10px; padding: 5px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);"></div>
+                                <div
+                                    style="position: absolute; top: 10px; left: 10px; padding: 5px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                                </div>
+                                
                             </div>
-                            <div id="jishu_biaoge" class="width-100per hidden margintop-5" style="height:calc(100% - 45px)"></div>
-                        </div> 
+                            <!-- 表格 -->
+                            <div id="jishu_biaoge" class="width-100per hidden margintop-5"
+                                style="height:calc(100% - 45px)"></div>
+                        </div>
                         <div id="domain_lunwen" class="width-100per height-100per hidden">
                             3
                         </div>

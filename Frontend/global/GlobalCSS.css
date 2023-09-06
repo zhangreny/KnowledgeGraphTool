@@ -21,6 +21,9 @@ img{
 .inputfocus-blue:focus {
 	border-color: rgb(91,155,214) !important;
 }
+span {
+	word-break: break-all;
+}
 
 /*************** 组件大小统一CSS ***************/
 .width-100per{
@@ -199,7 +202,7 @@ img{
 	color: #7e7e7e;
 }
 .color-grey{
-	color: #bfbfbf;
+	color: #aeaeae;
 }
 .color-lightgrey{
 	color: #e8e8e8;
@@ -381,6 +384,9 @@ img{
 }
 .hover-font-blue:hover{
 	color: #1C86EE;
+}
+.hover-font-red:hover{
+	color: #d81e06;
 }
 .hover-font-lightblack:hover{
 	color: #4b4b4b;

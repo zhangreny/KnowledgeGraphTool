@@ -285,13 +285,8 @@ body .loading-class .layui-layer-content .layui-layer-ico {
 	font-weight: 600;
 }
 
-/* 节点 */
-.node:hover{
-	stroke: #ccc;
-	stroke-width: 5px;
-}
 /* 节点被选中 */
 .chosen{
-	stroke: #ccc;
+	stroke: rgb(153, 205, 252);
 	stroke-width: 5px;
 }
