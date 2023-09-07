@@ -109,26 +109,36 @@
                         </div>
                         <!-- 概念体系文件导入框 -->
                         <div class="width-100per flex-column paddingbottom-20">
-                            <div class="padding-10 width-100per borderradius-6 bg-grey marginbottom-5 fontsize-12 flex-row align-center" style="color:#808896">
-                                <img src="/static/global/images/warning-grey.png" class="img-16 marginright-5" style="margin-top: 1px;">
+                            <div class="padding-10 width-100per borderradius-6 bg-grey marginbottom-5 fontsize-12 flex-row align-center"
+                                style="color:#808896">
+                                <img src="/static/global/images/warning-grey.png" class="img-16 marginright-5"
+                                    style="margin-top: 1px;">
                                 文件格式为.txt，待添加节点之间父子关系由Tab符数量决定，且文件中无需包含上方父节点
                             </div>
-                            <div id="formattedfilecontainer" class="margintop-10 width-100per borderradius-6 border-lightblack" style="min-height:200px;">
+                            <div id="formattedfilecontainer"
+                                class="margintop-10 width-100per borderradius-6 border-lightblack"
+                                style="min-height:200px;">
                                 <!-- 文件上传框和预览框 -->
-                                <div class="width-100per border-bottom-darkgrey flex-row align-center bg-grey justify-between" style="height:39px;">
-                                    <input id="newdomain-formattedfile" onchange="UploadFormattedFile()" type="file" class="padding-5 borderradius-6 fontsize-12" style="height:32px;width:500px;">
+                                <div class="width-100per border-bottom-darkgrey flex-row align-center bg-grey justify-between"
+                                    style="height:39px;">
+                                    <input id="newdomain-formattedfile" onchange="UploadFormattedFile()" type="file"
+                                        class="padding-5 borderradius-6 fontsize-12" style="height:32px;width:500px;">
                                     <div class="flex-row align-center marginright-5">
                                         <div id="newdomain-formattedfile-filesize" class="fontsize-12">0 KB</div>
                                     </div>
                                 </div>
                                 <!-- 预览内容框 -->
                                 <!-- 没有文件时候的默认显示 -->
-                                <div name="newdomain-formattedfile-content" class="flex-row align-center justify-center fontsize-12 color-lightblack width-100per" style="height:160px;">
-                                    此处可预览上传文件的内容 
+                                <div name="newdomain-formattedfile-content"
+                                    class="flex-row align-center justify-center fontsize-12 color-lightblack width-100per"
+                                    style="height:160px;">
+                                    此处可预览上传文件的内容
                                 </div>
                                 <!-- 上传了文件，显示文件内容 -->
-                                <div name="newdomain-formattedfile-content" class="hidden width-100per overflow-auto" style="min-height:60px;max-height:500px;">
-                                    <pre class="paddingleft-10 paddingtop-5 paddingbottom-5 fontsize-12 color-lightblack" style="font-family:Arial;">
+                                <div name="newdomain-formattedfile-content" class="hidden width-100per overflow-auto"
+                                    style="min-height:60px;max-height:500px;">
+                                    <pre class="paddingleft-10 paddingtop-5 paddingbottom-5 fontsize-12 color-lightblack"
+                                        style="font-family:Arial;">
                                     </pre>
                                 </div>
                             </div>
@@ -163,17 +173,17 @@
                             style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
                             所属数据库信息
                         </div>
-                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                        <div class="flex-row align-center width-100per paddingbottom-15 paddingtop-10">
                             <div style="color: #808896;width:30%">数据库名</div>
                             <span class="paddingleft-5">Null</span>
                         </div>
-                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
-                            <div style="color: #808896;width:30%">数据库类型</div>
-                            <span class="paddingleft-5">Null</span>
-                        </div>
-                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                        <div class="flex-row align-center width-100per paddingbottom-15 paddingtop-10">
                             <div style="color: #808896;width:30%">数据库uri</div>
                             <span class="paddingleft-5">Null</span>
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-15 paddingtop-10">
+                            <div style="color: #808896;width:30%">数据库类型</div>
+                            <span class="paddingleft-5">Neo4j</span>
                         </div>
                         <!-- 小栏 -->
                         <div class="fontweight-600 paddingtop-15 paddingbottom-15"
@@ -182,13 +192,11 @@
                         </div>
                         <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
                             <div style="color: #808896;width:30%">领域名</div>
-                            <input type="text" autocomplete="off" placeholder="形如  bolt://  http://  https://"
-                                class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                            <input type="text" autocomplete="off" class="layui-input" style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
                         </div>
-                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
-                            <div style="color: #808896;width:30%">领域描述</div>
-                            <input type="password" autocomplete="off" class="layui-input"
-                                style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                        <div class="flex-row width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%;margin-top: 5px;">领域描述（选填）</div>
+                            <textarea class="layui-input padding-5 fontsize-14" style="width: 70%;border-radius:6px;border: 1px solid #dadada;min-height: 130px; resize: vertical;"></textarea>
                         </div>
                     </div>
                     <div class="flex-row align-center justify-between"
@@ -199,7 +207,7 @@
                         <div class="flex-row">
                             <button onclick="ClosePopup()" type="button" class="layui-btn layui-btn-primary"
                                 style="width:80px;border-radius:6px;font-weight:600;">取消</button>
-                            <button onclick="AddNewDBConnection()" type="button" class="layui-btn layui-btn-normal"
+                            <button onclick="AddNewDomain()" type="button" class="layui-btn layui-btn-normal"
                                 style="width:80px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
                                 <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
                                     style="display:none;margin-right:3px;"></i>
@@ -285,8 +293,14 @@
                 <!-- content-kgdb -->
                 <div id="content-kgdb" class="height-100per width-100per hidden"
                     style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
-                    <div id="name-db-content" class="width-100per marginbottom-15 fontsize-22 fontweight-600">Database
-                        Name</div>
+                    <div class="width-100per marginbottom-15 fontsize-22 fontweight-600 flex-row justify-between align-center">
+                        <div id="name-db-content">Database Name</div>
+                        <button onclick="OpenPopup('adddomain-popup')" type="button" class="layui-btn layui-btn-normal"
+                            style="width:110px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
+                            <text style="font-size: 24px;margin-right: 5px;">+</text>
+                            新建领域
+                        </button>
+                    </div>
                     <div id="tabbar-kgdb" class="width-100per marginbottom-10 fontsize-14 flex-row align-center"
                         style="border-bottom: 1px solid #d0d0d9;">
                         <div onclick="ClickTab_DB('kgdb_gailan',0)" class="cursor-pointer tab-notclicked"
@@ -512,7 +526,7 @@
                                 <div
                                     style="position: absolute; top: 10px; left: 10px; padding: 5px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                 </div>
-                                
+
                             </div>
                             <!-- 表格 -->
                             <div id="jishu_biaoge" class="width-100per hidden margintop-5"

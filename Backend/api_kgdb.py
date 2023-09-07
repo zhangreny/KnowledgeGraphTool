@@ -360,3 +360,34 @@ def api_index_post_addtechnology():
             return {"status": "success", "resultdata": "添加"+str(allconceptnumber)+"个技术节点成功！"}
         except:
             return dumps({'status':'fail', 'resultdata':'添加技术节点失败'})  
+
+@api_kgdb.route("/api/adddomain", methods=['POST'], strict_slashes=False)     
+def api_index_post_adddomain():
+    if request.method == 'POST':
+        dbname = request.form['dbname']
+        domainname = request.form['domainname']
+        description = request.form['description']
+        try: 
+            with current_app.config['Lock_Database_Driver']:
+                for i in range(len(current_app.config['System_Database_list'])):
+                    dict_item = current_app.config['System_Database_list'][i]
+                    if dict_item['unique_dbname'] == dbname:
+                        ind = i
+                        break
+                driver = current_app.config['System_Dbdriver_list'][ind]
+            with driver.session() as session:
+                tx = session.begin_transaction()
+                try:
+                    conceptid = list(tx.run("CREATE (f:领域名 {name: $name}) Return id(f) AS ID",
+                                            name=domainname))[0]['ID']
+                    node_properties = {"domain": domainname, "level": 0, "formerpath": domainname, "description": description}
+                    tx.run("MATCH (n:领域名) where id(n)="+str(conceptid)+" SET n += $props RETURN n",
+                            props=node_properties)
+                    tx.commit()
+                except:
+                    tx.rollback()
+                    return dumps({"status": "fail", "resultdata": "新建领域"+domainname+"失败"})
+            return {"status": "success", "resultdata": "新建领域"+domainname+"成功！"}
+            
+        except:
+            return dumps({'status':'fail', 'resultdata':'新建领域'+domainname+'失败'})  

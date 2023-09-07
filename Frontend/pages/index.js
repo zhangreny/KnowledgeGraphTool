@@ -93,7 +93,13 @@ function OpenPopup(divid) {
         } else if (node.label == "技术"){
             spans[1].innerHTML = node.level + " 级" + node.label
         }
-        
+    }
+    else if (divid == "adddomain-popup") {
+        const container = document.getElementById(divid)
+        const spans = container.getElementsByTagName("span")
+        var database_json = JSON.parse(sessionStorage.getItem('database'))
+        spans[0].innerHTML = database_json[Current_DB_index].unique_dbname
+        spans[1].innerHTML = database_json[Current_DB_index].uri
     }
 }
 
@@ -991,4 +997,67 @@ function AddNewTechnology() {
     })
 }
 
+function AddNewDomain() {
+    const element = document.getElementById("adddomain-popup")
+    const inputs = element.getElementsByTagName("input")
+    if (inputs[0].value == "") {
+        ShowErrorinPopup("adddomain-popup", "请填写领域名")
+        inputs[0].style.border = "2px solid red"
+        setTimeout(function () { inputs[0].style.border = "1px solid #dadada" }, 1500);
+        return;
+    }
+    // show loading
+    var icon = element.getElementsByTagName("button")[1].getElementsByTagName("i")[0]
+    icon.style.display = ""
+    element.getElementsByTagName("button")[1].style.backgroundColor = "#87CEFA";
+    element.getElementsByTagName("button")[0].disabled = true;
+    element.getElementsByTagName("button")[1].disabled = true;
 
+    const mydbname = element.getElementsByTagName("span")[0].innerHTML
+    const domainname = inputs[0].value
+    const description = element.getElementsByTagName("textarea")[0].value
+
+    var formFile = new FormData()
+    formFile.append("dbname", mydbname)
+    formFile.append("domainname", domainname)
+    formFile.append("description", description)
+    var data = formFile;
+    $.ajax({
+        url: "/api/adddomain",
+        data: data,
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            // close loading
+            icon.style.display = "none"
+            element.getElementsByTagName("button")[1].style.backgroundColor = ""
+            element.getElementsByTagName("button")[0].disabled = false
+            element.getElementsByTagName("button")[1].disabled = false
+            if (res.status == "success") {
+                // popup success
+                showtaskmsg_success(res.resultdata)
+                // leave popup
+                ClosePopup()
+                // clear user input
+                inputs[0].value = ""
+                element.getElementsByTagName("textarea")[0].value = ""
+                // update tasks
+                
+                // update navbar
+                var idtmp = "db_"+Current_DB_index.toString()
+                Getdatabase().then(function() {  
+                    ExpandandCollapse_database(idtmp)
+                });
+            } else if (res.status == "fail") {
+                ShowErrorinPopup("adddomain-popup", res.resultdata)
+            } else if (res.status == "notuniquename") {
+                ShowErrorinPopup("adddomain-popup", res.resultdata)
+                inputs[0].style.border = "2px solid red"
+                setTimeout(function () { inputs[0].style.border = "1px solid #dadada" }, 3000);
+            }
+        },
+    })
+}
