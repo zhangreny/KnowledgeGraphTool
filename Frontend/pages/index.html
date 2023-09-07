@@ -23,7 +23,7 @@
                     style="position: fixed;top: 26px;right:26px;width:24px;height:24px;border-radius: 50%;background-color: #4b4b4b;">
                     <i class="layui-icon layui-icon-close" style="font-size: 14px; color:#fff;"></i>
                 </div>
-                <div id="kgdb-popup" class="paddingleft-10" style="width: 40%;margin-top:40px;height:100%;">
+                <div id="kgdb-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;height:100%;">
                     <div class="paddingleft-10 overflow-auto paddingbottom-20"
                         style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
                         <div class="fontweight-600 margintop-10"
@@ -63,6 +63,75 @@
                             <div style="color: #808896;width:30%">密码</div>
                             <input type="password" autocomplete="off" class="layui-input"
                                 style="width: 70%;border-radius:6px;border: 1px solid #dadada;">
+                        </div>
+                    </div>
+                    <div class="flex-row align-center justify-between"
+                        style="width: 100%; height:59px;border-top: 1px solid #d1d1d1;">
+                        <div class="color-red">
+                            <span></span>
+                        </div>
+                        <div class="flex-row">
+                            <button onclick="ClosePopup()" type="button" class="layui-btn layui-btn-primary"
+                                style="width:80px;border-radius:6px;font-weight:600;">取消</button>
+                            <button onclick="AddNewDBConnection()" type="button" class="layui-btn layui-btn-normal"
+                                style="width:80px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
+                                <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
+                                    style="display:none;margin-right:3px;"></i>
+                                提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="addjishu-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;height:100%;">
+                    <div class="paddingleft-10 overflow-auto paddingbottom-20"
+                        style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
+                        <div class="fontweight-600 margintop-10"
+                            style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
+                            添加技术
+                        </div>
+                        <!-- 小栏 -->
+                        <div class="fontweight-600 paddingtop-15 paddingbottom-15"
+                            style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
+                            要添加其下的父技术节点信息
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">节点名</div>
+                            <span class="paddingleft-5">Null</span>
+                        </div>
+                        <div class="flex-row align-center width-100per paddingbottom-10 paddingtop-10">
+                            <div style="color: #808896;width:30%">节点类型</div>
+                            <span class="paddingleft-5">Null</span>
+                        </div>
+                        <!-- 小栏 -->
+                        <div class="fontweight-600 paddingtop-15 paddingbottom-15"
+                            style="margin-top:10px; border-bottom: 1px solid #d1d1d1; margin-bottom: 15px;">
+                            技术节点文件上传
+                        </div>
+                        <!-- 概念体系文件导入框 -->
+                        <div class="width-100per flex-column paddingbottom-20">
+                            <div class="padding-10 width-100per borderradius-6 bg-grey marginbottom-5 fontsize-12 flex-row align-center" style="color:#808896">
+                                <img src="/static/global/images/warning-grey.png" class="img-16 marginright-5" style="margin-top: 1px;">
+                                待添加节点之间父子关系由Tab符数量决定，且文件中无需包含上方父节点
+                            </div>
+                            <div id="formattedfilecontainer" class="margintop-10 width-100per borderradius-6 border-lightblack" style="min-height:200px;">
+                                <!-- 文件上传框和预览框 -->
+                                <div class="width-100per border-bottom-darkgrey flex-row align-center bg-grey justify-between" style="height:39px;">
+                                    <input id="newdomain-formattedfile" onchange="UploadFormattedFile()" type="file" class="padding-5 borderradius-6 fontsize-12" style="height:32px;width:500px;">
+                                    <div class="flex-row align-center marginright-5">
+                                        <div id="newdomain-formattedfile-filesize" class="fontsize-12">0 KB</div>
+                                    </div>
+                                </div>
+                                <!-- 预览内容框 -->
+                                <!-- 没有文件时候的默认显示 -->
+                                <div name="newdomain-formattedfile-content" class="flex-row align-center justify-center fontsize-12 color-lightblack width-100per" style="height:160px;">
+                                    此处可预览上传文件的内容 
+                                </div>
+                                <!-- 上传了文件，显示文件内容 -->
+                                <div name="newdomain-formattedfile-content" class="hidden width-100per overflow-auto" style="min-height:60px;max-height:500px;">
+                                    <pre class="paddingleft-10 paddingtop-5 paddingbottom-5 fontsize-12 color-lightblack" style="font-family:Arial;">
+                                    </pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flex-row align-center justify-between"
@@ -373,7 +442,7 @@
                                         class="layui-input"
                                         style="width:400px;border-radius:6px 6px 6px 6px;height:32px;font-size: 12px;margin-left: 15px;border: 1px solid #dadada">
                                 </div>
-                                <button onclick="AddKnowledgeToDomain('jishu')" type="button"
+                                <button onclick="OpenPopup('addjishu-popup')" type="button"
                                     class="layui-btn layui-btn-normal"
                                     style="width:110px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;"><text
                                         style="font-size: 24px;margin-right: 5px;">+</text>添加技术</button>
