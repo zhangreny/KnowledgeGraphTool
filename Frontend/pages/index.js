@@ -1047,10 +1047,8 @@ function AddNewDomain() {
                 // update tasks
                 
                 // update navbar
-                var idtmp = "db_"+Current_DB_index.toString()
-                Getdatabase().then(function() {  
-                    ExpandandCollapse_database(idtmp)
-                });
+                Getdatabase()
+                KeepExpandingUntilSuccess(mydbname, domainname, 0)
             } else if (res.status == "fail") {
                 ShowErrorinPopup("adddomain-popup", res.resultdata)
             } else if (res.status == "notuniquename") {
@@ -1060,4 +1058,36 @@ function AddNewDomain() {
             }
         },
     })
+}
+
+function KeepExpandingUntilSuccess(dbname, domainname, times) {  
+    if (times == 100) {  
+        return  
+    }
+    var flag = false  
+    var database_json = JSON.parse(sessionStorage.getItem('database'))  
+    var thisdb = database_json.filter(function(item) {  
+        return item.unique_dbname == dbname  
+    })  
+    if (thisdb.length != 0) {  
+        var domains = thisdb[0].domains  
+        var thisdomain = domains.filter(function(item) {  
+            return item.domainname == domainname  
+        })  
+        if (thisdomain.length > 0){  
+            flag = true  
+            var ele = document.getElementById("db_"+thisdomain[0].domainindex.split('_')[1])
+            ele.getElementsByTagName("div")[0].click()
+            document.getElementById(thisdomain[0].domainindex).click()
+        }  
+    }  
+  
+    if (flag == false) {  
+        return setTimeout(function() {  
+            return KeepExpandingUntilSuccess(dbname, domainname, times+1)  
+        }, 300);    
+    }  
+    else {
+        return   
+    }  
 }
