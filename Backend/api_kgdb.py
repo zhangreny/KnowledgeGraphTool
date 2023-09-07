@@ -118,128 +118,245 @@ def api_index_post_gettechnologygraph():
         downlevel = request.form['downlevel']
         uplevel = request.form['uplevel']
         numlimit = request.form['numlimit']
-        #try: 
-        with current_app.config['Lock_Database_Driver']:
-            for i in range(len(current_app.config['System_Database_list'])):
-                dict_item = current_app.config['System_Database_list'][i]
-                if dict_item['unique_dbname'] == dbname:
-                    ind = i
-                    break
-            driver = current_app.config['System_Dbdriver_list'][ind]
-        res = {}
-        res['nodes'] = []
-        res['links'] = []
-        # get center node first
-        with driver.session() as session:
-            tmpres = list(session.run("MATCH (n) where id(n)=" + str(nodeid) + " "
-                                        "RETURN properties(n) AS Properties, n.name as Name, labels(n) as Label"))[0]
-        node = tmpres['Properties']
-        node['id'] = int(nodeid)
-        node['label'] = tmpres['Label'][0]
-        res['nodes'].append(node)
-        centerlevel = tmpres['Properties']['level']
-        domainname = tmpres['Properties']['domain']
+        try: 
+            with current_app.config['Lock_Database_Driver']:
+                for i in range(len(current_app.config['System_Database_list'])):
+                    dict_item = current_app.config['System_Database_list'][i]
+                    if dict_item['unique_dbname'] == dbname:
+                        ind = i
+                        break
+                driver = current_app.config['System_Dbdriver_list'][ind]
+            res = {}
+            res['nodes'] = []
+            res['links'] = []
+            # get center node first
+            with driver.session() as session:
+                tmpres = list(session.run("MATCH (n) where id(n)=" + str(nodeid) + " "
+                                            "RETURN properties(n) AS Properties, n.name as Name, labels(n) as Label"))[0]
+            node = tmpres['Properties']
+            node['id'] = int(nodeid)
+            node['label'] = tmpres['Label'][0]
+            res['nodes'].append(node)
+            centerlevel = tmpres['Properties']['level']
+            domainname = tmpres['Properties']['domain']
 
-        # get outer link node
-        subids = []
-        subids.append(nodeid)
-        for i in range(int(downlevel)):
-            tmpsubids = []
-            for sub_id in subids:
-                with driver.session() as session:
-                    result = list(session.run("MATCH p=(s)-[r:"+nodetype+"细分]->(o:"+nodetype+") "
-                                        "where s.domain=$domainname "
-                                        "and o.domain=$domainname "
-                                        "and id(s)="+str(sub_id)+" "
-                                        "RETURN properties(s) AS subproperties, ID(s) as subid, labels(s) as sublabel, "
-                                        "properties(o) AS objproperties, ID(o) as objid, labels(o) as objlabel, "
-                                        "properties(r) AS properties, type(r) as type "
-                                        "LIMIT $numlimit"
-                                        ,domainname=domainname
-                                        ,numlimit=int(numlimit)-len(res['nodes'])
-                                        ))
-                for record in result:
-                    subnode = record['subproperties']
-                    subnode['id'] = record['subid']
-                    subnode['label'] = record['sublabel'][0]
-                    try: 
-                        subindex = res['nodes'].index(subnode)
-                    except ValueError:
-                        res['nodes'].append(subnode)
-                        subindex = len(res['nodes'])-1
-                        
-                    objnode = record['objproperties']
-                    objnode['id'] = record['objid']
-                    tmpsubids.append(record['objid'])
-                    objnode['label'] = record['objlabel'][0]
-                    try: 
-                        objindex = res['nodes'].index(objnode)
-                    except ValueError:
-                        res['nodes'].append(objnode)
-                        objindex = len(res['nodes'])-1   
-                        
-                    relation = record['properties']
-                    relation['relaname'] = record['type']
-                    relation['source'] = subindex
-                    relation['target'] = objindex    
-                    if relation not in res['links']:
-                        res['links'].append(relation)   
+            # get outer link node
+            subids = []
+            subids.append(nodeid)
+            for i in range(int(downlevel)):
+                tmpsubids = []
+                for sub_id in subids:
+                    with driver.session() as session:
+                        result = list(session.run("MATCH p=(s)-[r:"+nodetype+"细分]->(o:"+nodetype+") "
+                                            "where s.domain=$domainname "
+                                            "and o.domain=$domainname "
+                                            "and id(s)="+str(sub_id)+" "
+                                            "RETURN properties(s) AS subproperties, ID(s) as subid, labels(s) as sublabel, "
+                                            "properties(o) AS objproperties, ID(o) as objid, labels(o) as objlabel, "
+                                            "properties(r) AS properties, type(r) as type "
+                                            "LIMIT $numlimit"
+                                            ,domainname=domainname
+                                            ,numlimit=int(numlimit)-len(res['nodes'])
+                                            ))
+                    for record in result:
+                        subnode = record['subproperties']
+                        subnode['id'] = record['subid']
+                        subnode['label'] = record['sublabel'][0]
+                        try: 
+                            subindex = res['nodes'].index(subnode)
+                        except ValueError:
+                            res['nodes'].append(subnode)
+                            subindex = len(res['nodes'])-1
+                            
+                        objnode = record['objproperties']
+                        objnode['id'] = record['objid']
+                        tmpsubids.append(record['objid'])
+                        objnode['label'] = record['objlabel'][0]
+                        try: 
+                            objindex = res['nodes'].index(objnode)
+                        except ValueError:
+                            res['nodes'].append(objnode)
+                            objindex = len(res['nodes'])-1   
+                            
+                        relation = record['properties']
+                        relation['relaname'] = record['type']
+                        relation['source'] = subindex
+                        relation['target'] = objindex    
+                        if relation not in res['links']:
+                            res['links'].append(relation)   
 
-                    if len(res['nodes']) >= int(numlimit):
-                        return dumps({'status':'success','resultdata':res,'nodeid':nodeid})    
-            subids = tmpsubids
+                        if len(res['nodes']) >= int(numlimit):
+                            return dumps({'status':'success','resultdata':res,'nodeid':nodeid})    
+                subids = tmpsubids
 
-        # get upper link node
-        objids = []
-        objids.append(nodeid)
-        for i in range(int(downlevel)):
-            tmpobjids = []
-            for obj_id in objids:
-                with driver.session() as session:
-                    result = list(session.run("MATCH p=(s)-[r:"+nodetype+"细分]->(o:"+nodetype+") "
-                                        "where s.domain=$domainname "
-                                        "and o.domain=$domainname "
-                                        "and id(o)="+str(obj_id)+" "
-                                        "RETURN properties(s) AS subproperties, ID(s) as subid, labels(s) as sublabel, "
-                                        "properties(o) AS objproperties, ID(o) as objid, labels(o) as objlabel, "
-                                        "properties(r) AS properties, type(r) as type "
-                                        "LIMIT $numlimit"
-                                        ,domainname=domainname
-                                        ,numlimit=int(numlimit)-len(res['nodes'])
-                                        ))
-                for record in result:
-                    subnode = record['subproperties']
-                    subnode['id'] = record['subid']
-                    tmpobjids.append(record['objid'])
-                    subnode['label'] = record['sublabel'][0]
-                    try: 
-                        subindex = res['nodes'].index(subnode)
-                    except ValueError:
-                        res['nodes'].append(subnode)
-                        subindex = len(res['nodes'])-1
-                        
-                    objnode = record['objproperties']
-                    objnode['id'] = record['objid']
-                    objnode['label'] = record['objlabel'][0]
-                    try: 
-                        objindex = res['nodes'].index(objnode)
-                    except ValueError:
-                        res['nodes'].append(objnode)
-                        objindex = len(res['nodes'])-1   
-                        
-                    relation = record['properties']
-                    relation['relaname'] = record['type']
-                    relation['source'] = subindex
-                    relation['target'] = objindex    
-                    if relation not in res['links']:
-                        res['links'].append(relation)   
+            # get upper link node
+            objids = []
+            objids.append(nodeid)
+            for i in range(int(downlevel)):
+                tmpobjids = []
+                for obj_id in objids:
+                    with driver.session() as session:
+                        result = list(session.run("MATCH p=(s)-[r:"+nodetype+"细分]->(o:"+nodetype+") "
+                                            "where s.domain=$domainname "
+                                            "and o.domain=$domainname "
+                                            "and id(o)="+str(obj_id)+" "
+                                            "RETURN properties(s) AS subproperties, ID(s) as subid, labels(s) as sublabel, "
+                                            "properties(o) AS objproperties, ID(o) as objid, labels(o) as objlabel, "
+                                            "properties(r) AS properties, type(r) as type "
+                                            "LIMIT $numlimit"
+                                            ,domainname=domainname
+                                            ,numlimit=int(numlimit)-len(res['nodes'])
+                                            ))
+                    for record in result:
+                        subnode = record['subproperties']
+                        subnode['id'] = record['subid']
+                        tmpobjids.append(record['objid'])
+                        subnode['label'] = record['sublabel'][0]
+                        try: 
+                            subindex = res['nodes'].index(subnode)
+                        except ValueError:
+                            res['nodes'].append(subnode)
+                            subindex = len(res['nodes'])-1
+                            
+                        objnode = record['objproperties']
+                        objnode['id'] = record['objid']
+                        objnode['label'] = record['objlabel'][0]
+                        try: 
+                            objindex = res['nodes'].index(objnode)
+                        except ValueError:
+                            res['nodes'].append(objnode)
+                            objindex = len(res['nodes'])-1   
+                            
+                        relation = record['properties']
+                        relation['relaname'] = record['type']
+                        relation['source'] = subindex
+                        relation['target'] = objindex    
+                        if relation not in res['links']:
+                            res['links'].append(relation)   
 
-                    if len(res['nodes']) >= int(numlimit):
-                        return dumps({'status':'success','resultdata':res,'nodeid':nodeid})        
-            objids = tmpobjids
+                        if len(res['nodes']) >= int(numlimit):
+                            return dumps({'status':'success','resultdata':res,'nodeid':nodeid})        
+                objids = tmpobjids
 
-        return dumps({'status':'success','resultdata':res,'nodeid':nodeid})
+            return dumps({'status':'success','resultdata':res,'nodeid':nodeid})
 
             
-        #except:
-         #   return dumps({'status':'fail', 'resultdata':'获取领域 ' + dbname + ' 技术节点失败'})  
+        except:
+            return dumps({'status':'fail', 'resultdata':'获取领域 ' + dbname + ' 技术节点失败'})  
+
+def findword(line):
+    i = 0
+    ans = ''
+    for i in range(len(line)):
+        ans = ''
+        if ord(line[i]) != 9:
+            for j in range(i, len(line)):
+                if ord(line[j]) != 10 and ord(line[j]) != 13:  # \r \n
+                    ans += line[j]
+            return i, ans.strip()
+    return i, ans
+
+@api_kgdb.route("/api/addtechnology", methods=['POST'], strict_slashes=False)     
+def api_index_post_addtechnology():
+    if request.method == 'POST':
+        dbname = request.form['dbname']
+        nodeid = request.form['nodeid']
+        if 'file' not in request.files:
+            return dumps({'status': 'fail', 'resultdata': '请选择文件后再提交'})
+        file = request.files['file']
+        if file.filename == '':
+            return dumps({'status': 'fail', 'resultdata': '请选择文件后再提交'})
+        try:
+            lines = file.readlines()
+        except:
+            return dumps({"status": "fail", "resultdata": "读取txt文件失败"})
+        try: 
+            with current_app.config['Lock_Database_Driver']:
+                for i in range(len(current_app.config['System_Database_list'])):
+                    dict_item = current_app.config['System_Database_list'][i]
+                    if dict_item['unique_dbname'] == dbname:
+                        ind = i
+                        break
+                driver = current_app.config['System_Dbdriver_list'][ind]
+            with driver.session() as session:
+                nodeinfo = list(session.run("MATCH (n) where id(n)=" + str(nodeid) + " "
+                                            "RETURN n.domain as Domain, n.level as Level, n.formerpath as Formerpath, n.name as Name"))[0]
+            rootlevel = nodeinfo['Level']
+            rootformerpath = nodeinfo['Formerpath']
+            rootname = nodeinfo['Name']
+            domainname = nodeinfo['Domain']
+            cache = []
+            cacheid = []
+            previous_tabnum = 0
+            allconceptnumber = 0
+            with driver.session() as session:
+                tx = session.begin_transaction()
+                try:
+                    for k in range(len(lines)):
+                        line = lines[k]
+                        line = str(line, encoding="utf-8")
+                        tabnum, phrase = findword(line)
+                        if phrase == "":
+                            continue
+                        allconceptnumber += 1
+
+                        conceptid = list(tx.run("CREATE (f:技术 {name: $name}) Return id(f) AS ID",
+                                                name=phrase))[0]['ID']
+                        node_properties = {"domain": domainname, "level": tabnum+rootlevel+1}
+                        tx.run("MATCH (n:技术) where id(n)="+str(conceptid)+" SET n += $props RETURN n",
+                                props=node_properties)
+
+                        if tabnum == 0:
+                            tx.run("MATCH (f) WHERE id(f)=$rootnodeid "
+                                    "MATCH (s) WHERE id(s)=$conceptid "
+                                    "MERGE (f)-[r:技术细分]->(s) "
+                                    "RETURN r",
+                                    rootnodeid=int(nodeid),
+                                    conceptid=conceptid
+                                    )
+                            node_properties = {"formerpath": rootformerpath + " >>> " + phrase}
+                            tx.run("MATCH (n:技术) where id(n)="+str(conceptid)+" SET n += $props RETURN n",
+                                props=node_properties)
+
+                            if tabnum >= len(cache):
+                                cache.append(phrase)
+                                cacheid.append(conceptid)
+                            else:
+                                cache[tabnum] = phrase
+                                cacheid[tabnum] = conceptid
+                            previous_tabnum = 0
+
+                        elif tabnum >= 1:
+                            if tabnum >= (previous_tabnum + 2):
+                                tx.rollback()
+                                return dumps({"status": "fail", "resultdata": "文件的第"+str(k+1)+"行，tab符号间隔超过两级"})
+                            else:
+                                tx.run("MATCH (f {name: $subname}) WHERE id(f)=$rootnodeid "
+                                        "MATCH (s {name: $objname}) WHERE id(s)=$conceptid "
+                                        "MERGE (f)-[r:技术细分]->(s) "
+                                        "RETURN r",
+                                        subname=cache[tabnum-1],
+                                        rootnodeid=cacheid[tabnum-1],
+                                        objname=phrase,
+                                        conceptid=conceptid
+                                        )
+                                tmppath = list(tx.run("MATCH (f) WHERE id(f)=$rootnodeid RETURN f.formerpath as Formerpath",
+                                        rootnodeid=cacheid[tabnum-1],
+                                        ))[0]['Formerpath']
+                                node_properties = {"formerpath": tmppath + " >>> " + phrase}
+                                tx.run("MATCH (n:技术) where id(n)="+str(conceptid)+" SET n += $props RETURN n",
+                                    props=node_properties)
+                                if tabnum >= len(cache):
+                                    cache.append(phrase)
+                                    cacheid.append(conceptid)
+                                else:
+                                    cache[tabnum] = phrase
+                                    cacheid[tabnum] = conceptid
+                                previous_tabnum = tabnum
+                    tx.commit()
+                except:
+                    tx.rollback()
+                    return dumps({"status": "fail", "resultdata": "添加技术节点失败"})
+            return {"status": "success", "resultdata": "添加"+str(allconceptnumber)+"个技术节点成功！"}
+        except:
+            return dumps({'status':'fail', 'resultdata':'添加技术节点失败'})  

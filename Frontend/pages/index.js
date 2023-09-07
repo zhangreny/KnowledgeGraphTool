@@ -82,7 +82,6 @@ function OpenPopup(divid) {
 
     if (divid == "addjishu-popup") {
         var storage_nodes = JSON.parse(sessionStorage.getItem('nodes'))
-        console.log(storage_nodes, former_jishu_nodeid)
         var node = storage_nodes.filter(function(item) {
             return item.id.toString() == former_jishu_nodeid.toString()
         })[0];
@@ -193,9 +192,10 @@ function AddNewDBConnection() {
 
 function ShowErrorinPopup(containerid, errmsg) {
     const element = document.getElementById(containerid)
-    const span_element = element.getElementsByTagName("span")[0]
+    const spans = element.getElementsByTagName("span")
+    const span_element = spans[spans.length-1]
     span_element.innerHTML = errmsg
-    setTimeout(function () { span_element.innerHTML = "" }, 1500);
+    setTimeout(function () { span_element.innerHTML = "" }, 2400);
 }
 
 function showtaskmsg_success(msg) {
@@ -582,9 +582,9 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                 simulation.force("x", d3.forceX().strength(0.1))
                 simulation.force("y", d3.forceY().strength(0.25))
                 simulation.force("radial", d3.forceRadial(width / 4, height / 4, width / 2))
-                simulation.alphaDecay(0.12); 
+                simulation.alphaDecay(0.25); 
                 simulation.force("collide", d3.forceCollide().radius(50))
-                simulation.tick(20);
+                simulation.tick(40);
 
                 // 边长
                 const link = g.append("g").selectAll(".link")
@@ -933,6 +933,62 @@ function UploadFormattedFile(){
 	document.getElementById("newdomain-formattedfile-filesize").innerHTML = getSize(fileObj.size);
 }
 
+function AddNewTechnology() {
+    var fileObj = document.getElementById("newdomain-formattedfile").files[0];
+    if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+        ShowErrorinPopup("addjishu-popup", "请选择文件后再提交")
+        return;
+    }
 
+    // show loading
+    var element = document.getElementById("addjishu-popup")
+    var icon = element.getElementsByTagName("button")[1].getElementsByTagName("i")[0]
+    icon.style.display = ""
+    element.getElementsByTagName("button")[1].style.backgroundColor = "#87CEFA";
+    element.getElementsByTagName("button")[0].disabled = true;
+    element.getElementsByTagName("button")[1].disabled = true;
+
+
+    var database_json = JSON.parse(sessionStorage.getItem('database'))
+    var dbname = database_json[Current_DB_index].unique_dbname
+    var formFile = new FormData()
+    formFile.append("dbname", dbname)
+    formFile.append("nodeid", former_jishu_nodeid)		
+    formFile.append("file", fileObj);
+    var data = formFile;
+
+    $.ajax({
+        url: "/api/addtechnology",
+        data: data,
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            icon.style.display = "none"
+            element.getElementsByTagName("button")[1].style.backgroundColor = ""
+            element.getElementsByTagName("button")[0].disabled = false
+            element.getElementsByTagName("button")[1].disabled = false
+            if (res.status == "success") {
+                // popup success
+                showtaskmsg_success(res.resultdata)
+                // leave popup
+                ClosePopup()
+                // clear user input
+                var fileObj = document.getElementById("newdomain-formattedfile").files[0];
+                document.getElementsByName("newdomain-formattedfile-content")[1].getElementsByTagName("pre")[0].innerHTML = "";
+                document.getElementById("newdomain-formattedfile-filesize").innerHTML = '0 KB';
+                document.getElementById("newdomain-formattedfile").value = '';
+                // update tasks
+
+                // update navbar
+                GetTechnologyGraph(database_json[Current_DB_index].unique_dbname, database_json[Current_DB_index].domains[Current_Domain_index].domainid)
+            } else if (res.status == "fail") {
+                ShowErrorinPopup("addjishu-popup", res.resultdata)
+            }
+        }
+    })
+}
 
 
