@@ -220,24 +220,30 @@
         </div>
 
         <!-- navbar -->
-        <div class="width-100per flex-row justify-between align-center border-bottom-grey" style="height:55px;">
-            <div class="flex-row paddingleft-10 paddingright-5 align-center">
-                <img src="/static/global/images/logoandtitle.png" style="width:66px;height:46px;">
-                <div class="layui-form marginleft-10 fontweight-600 fontsize-12" style="width:130px;">
-                    <select lay-filter="page-filter" class="layui-input">
-                        <option value="知识库" selected>知识库</option>
-                        <option value="用户事件">用户事件</option>
-                        <option value="系统事件">系统事件</option>
-                        <option value="用户与权限">用户与权限</option>
-                    </select>
-                </div>
-                <div class="flex-row align-center"
-                    style="height:38px; width: 280px; border-radius: 1px; border: 1px solid #e8e8e8; font-size: 12px; margin-left: 12px;">
-                    <div class="flex-row align-center justify-center" style="height:38px; width: 38px;">
-                        <img src="/static/global/images/search.png" class="img-20">
+        <div class="width-100per flex-row align-center border-bottom-grey" style="height:55px;">
+            <div class="width-100per flex-row paddingleft-10 paddingright-5 align-center justify-between">
+                <div class="flex-row align-center">
+                    <img src="/static/global/images/logoandtitle.png" style="width:66px;height:46px;">
+                    <div class="layui-form marginleft-10 fontweight-600 fontsize-12" style="width:130px;">
+                        <select lay-filter="page-filter" class="layui-input">
+                            <option value="知识库" selected>知识库</option>
+                            <option value="用户事件">用户事件</option>
+                            <option value="系统事件">系统事件</option>
+                            <option value="用户与权限">用户与权限</option>
+                        </select>
                     </div>
-                    <input type="text" placeholder="搜索" class="width-100per height-100per padding-10"
-                        style="border: none; padding-left:0px">
+                    <div class="flex-row align-center"
+                        style="height:38px; width: 280px; border-radius: 1px; border: 1px solid #e8e8e8; font-size: 12px; margin-left: 12px;">
+                        <div class="flex-row align-center justify-center" style="height:38px; width: 38px;">
+                            <img src="/static/global/images/search.png" class="img-20">
+                        </div>
+                        <input type="text" placeholder="搜索" class="width-100per height-100per padding-10"
+                            style="border: none; padding-left:0px">
+                    </div>
+                </div>
+                <div class="flex-row align-center marginright-10">
+                    <img src="/static/global/images/setting-bg-blue.png" class="cursor-pointer img-32">
+
                 </div>
             </div>
         </div>
@@ -250,7 +256,7 @@
                     <div class="padding-5 flex-row hidden">
                         <i class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"
                             style="color: #a8a8ae;font-size: 18px;"></i>
-                        <span class="marginleft-10" style="color: #a8a8ae;">多线程获取数据库信息中</span>
+                        <span class="marginleft-10" style="color: #a8a8ae;">获取数据库信息中</span>
                     </div>
                     <button onclick="Getdatabase()" type="button"
                         class="layui-btn layui-btn-primary fontsize-12 flex-row justify-center hidden"
@@ -294,7 +300,9 @@
                 <div id="content-kgdb" class="height-100per width-100per hidden"
                     style="padding-top: 20px;padding-left: 20px;padding-right: 20px;">
                     <div class="width-100per marginbottom-15 fontsize-22 fontweight-600 flex-row justify-between align-center">
-                        <div id="name-db-content">Database Name</div>
+                        <div id="name-db-content" class="flex-row align-center">
+                            <span>Database Name</span>
+                        </div>
                         <button onclick="OpenPopup('adddomain-popup')" type="button" class="layui-btn layui-btn-normal"
                             style="width:110px;border-radius:6px;font-weight:600;display:flex;flex-direction:row;align-items:center;justify-content:center;">
                             <text style="font-size: 24px;margin-right: 5px;">+</text>
@@ -316,7 +324,7 @@
                             style="padding:8px 18px 8px 38px; border-radius:6px 6px 0px 0px">设置</div>
                     </div>
                     <!-- 概览页内容 -->
-                    <div id="tabcontent-kgdb" class="width-100per overflow-auto" style="height:calc(100% - 85px)">
+                    <div id="tabcontent-kgdb" class="width-100per overflow-auto" style="height:calc(100% - 91px)">
                         <!-- 概览页内容 -->
                         <div id="kgdb_gailan" class="width-100per height-100per flex-row" style="flex-wrap: wrap;">
                             <div class="layui-row" style="width:100%">

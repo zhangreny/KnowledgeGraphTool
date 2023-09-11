@@ -71,7 +71,7 @@ function Getdatabase() {
 }
 
 function ChangePage(pagename) {
-    console.log(pagename);
+    
 }
 
 function OpenPopup(divid) {
@@ -262,7 +262,7 @@ function ClickDatabase(divid) {
     }
     var database_json = JSON.parse(sessionStorage.getItem('database'))
     Current_DB_index = parseInt(divid.split("_")[1]);
-    document.getElementById("name-db-content").innerHTML = database_json[Current_DB_index].unique_dbname
+    document.getElementById("name-db-content").getElementsByTagName("span")[0].innerHTML = database_json[Current_DB_index].unique_dbname
 
     // change css
     const navbar = document.getElementById("kgdb-navbar")
@@ -555,7 +555,7 @@ function GetTechnologyGraph(dbname, domainnodeid) {
 
                 $('<div onclick="GraphViewSetting(`jishu`)" class="cursor-pointer fontsize-12 borderradius-6 color-white fontweight-600 flex-row align-center" style="height:34px;position: absolute; bottom: 10px; left: 10px; padding: 8px; background-color: #1c86ee;"><img src="/static/global/images/setting-white.png" class="img-16 marginright-5"><text style="margin-bottom:2px;">查看设置</text></div>').appendTo(jishugraph)
                 $('<div id="chakanshezhi-jishu" class="layui-anim hidden fontsize-12 borderradius-6 color-lightblack" style="position: absolute; bottom: 44px; left: 10px; padding: 8px; background-color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);height:220px;width:400px"><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">共同展示中心节点的子节点层数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">共同展示中心节点的父节点层数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">开启地图查看模式（滚轮操作查看父子节点）</div><div style="width:100px;"><input type="checkbox" class="borderradius-6 inputfocus-blue padding-10" style="width:15px;height:15px;border: 1px solid #eaeaea"></div></div><div class="flex-row align-center width-100per" style="height:40px;"><div class="" style="width:300px;">图可展示最大节点数</div><div style="width:100px;"><input type="text" class="borderradius-6 inputfocus-blue padding-10" style="width:100px;height:30px;border: 1px solid #dadada"></div></div><div class="width-100per flex-row align-center justify-between margintop-5 paddingtop-5" style="border-top:1px solid #dadada;height:45px;"><span class="color-red"></span><div class="flex-row"><button onclick="CancelGraphViewSetting(`jishu`)" type="button" class="layui-btn layui-btn-primary" style="width:70px;border-radius:6px;font-weight:600;">取消</button><button onclick="SaveGraphViewSetting(`jishu`)" type="button" class="layui-btn layui-btn-normal" style="width:70px;border-radius:6px;font-weight:600;">保存</button></div></div></div></div>').appendTo(jishugraph)
-                $('<div id="jishu-showbox-title" class="overflowy-auto color-lightblack bg-grey paddingbottom-5 layui-anim"style="border-radius:6px 6px 0px 0px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);width:450px;min-height:100px;max-height:95px;position: absolute; top: 10px; right: 10px;"><div class="width-100per"style="height:95px;border-radius: 6px 6px 0px 0px;padding: 12px;"><div class="flex-row justify-between align-center width-100per paddingbottom-5"><span class="fontsize-18 fontweight-600"style="width: calc(100% - 30px)">Node Name</span><div onclick="CloseShowBox(`jishu`)"class="flex-row cursor-pointer align-center justify-center"style="width:16px;height:16px;border-radius: 50%;background-color: #4b4b4b;"><i class="layui-icon layui-icon-close"style="font-size:8px; color:#fff;"></i></div></div><div class="flex-row align-center width-100per borderradius-6 fontsize-12"style="background-color:rgb(246,250,254);height:40px;margin-top:3px;border:1px solid #dadada"><div class="flex-row align-center marginleft-5 padding-5 hover-bg-blue borderradius-6 cursor-pointer"style="color:#1C86EE"><img src="/static/global/images/edit.png"class="marginright-5 img-14">编辑</div><div class="flex-row align-center marginleft-5 padding-5 hover-bg-lightred color-red borderradius-6 cursor-pointer"><img src="/static/global/images/delete.png"class="marginright-5 img-14">删除</div></div></div></div><div id="jishu-showbox" class="overflowy-auto color-lightblack bg-grey paddingbottom-5 layui-anim"style="border-radius:0px 0px 6px 6px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);width:450px;min-height:100px;max-height:calc(100% - 115px);position: absolute; top: 106px; right: 10px;"><div class="padding-10" style="min-height:0px;max-height:calc(100% - 115px);border-radius: 0px 0px 6px 6px;border-top:1px solid #dadada;padding: 8px;"><div class="fontweight-600 color-darkgrey fontsize-14 padding-5">基本信息</div><div class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点名</text><span class="color-lightblack"style="width: calc(100% - 110px);">Node Name</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点类型</text><span class="color-lightblack"style="width: calc(100% - 110px);">Node Label</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点层级</text><span class="color-lightblack"style="width: calc(100% - 110px);">1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">所属领域</text><span class="color-lightblack"style="width: calc(100% - 110px);">Domain Name</span></div></div><div class="fontweight-600 color-darkgrey fontsize-14 padding-5 margintop-15">其它属性</div><div class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">key2</text><span class="color-lightblack"style="width: calc(100% - 110px);">value2</span></div></div><div class="fontweight-600 color-darkgrey fontsize-14 padding-5 margintop-15">其他类型节点相连情况</div><div class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">key2</text><span class="color-lightblack"style="width: calc(100% - 110px);">value2</span></div></div></div></div>').appendTo(jishugraph)
+                $('<div id="jishu-showbox-title" class="overflowy-auto color-lightblack bg-grey paddingbottom-5 layui-anim"style="border-radius:6px 6px 0px 0px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);width:450px;min-height:100px;max-height:95px;position: absolute; top: 10px; right: 10px;"><div class="width-100per"style="height:95px;border-radius: 6px 6px 0px 0px;padding: 12px;"><div class="flex-row justify-between align-center width-100per paddingbottom-5"><span class="fontsize-18 fontweight-600"style="width: calc(100% - 30px)">Node Name</span><div onclick="CloseShowBox(`jishu`)"class="flex-row cursor-pointer align-center justify-center"style="width:16px;height:16px;border-radius: 50%;background-color: #4b4b4b;"><i class="layui-icon layui-icon-close"style="font-size:8px; color:#fff;"></i></div></div><div class="flex-row align-center width-100per borderradius-6 fontsize-12"style="background-color:rgb(246,250,254);height:40px;margin-top:3px;border:1px solid #dadada"><div class="flex-row align-center marginleft-5 padding-5 hover-bg-blue borderradius-6 cursor-pointer"style="color:#1C86EE"><img src="/static/global/images/edit.png"class="marginright-5 img-14">编辑</div><div class="flex-row align-center marginleft-5 padding-5 hover-bg-lightred color-red borderradius-6 cursor-pointer"><img src="/static/global/images/delete.png"class="marginright-5 img-14">删除</div></div></div></div><div id="jishu-showbox" class="overflowy-auto color-lightblack bg-grey paddingbottom-5 layui-anim"style="border-radius:0px 0px 6px 6px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);width:450px;min-height:100px;max-height:calc(100% - 115px);position: absolute; top: 106px; right: 10px;"><div class="padding-10" style="min-height:0px;max-height:calc(100% - 115px);border-radius: 0px 0px 6px 6px;border-top:1px solid #dadada;padding: 8px;"><div class="fontweight-600 color-darkgrey fontsize-14 padding-5">基本信息</div><div id="jishu-showbox-basic" class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点名</text><span class="color-lightblack"style="width: calc(100% - 110px);">Node Name</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点类型</text><span class="color-lightblack"style="width: calc(100% - 110px);">Node Label</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">节点层级</text><span class="color-lightblack"style="width: calc(100% - 110px);">1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">所属领域</text><span class="color-lightblack"style="width: calc(100% - 110px);">Domain Name</span></div></div><div class="fontweight-600 color-darkgrey fontsize-14 padding-5 margintop-15">其它属性</div><div id="jishu-showbox-other" class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">key2</text><span class="color-lightblack"style="width: calc(100% - 110px);">value2</span></div></div><div class="fontweight-600 color-darkgrey fontsize-14 padding-5 margintop-15">其他类型节点相连情况</div><div id="jishu-showbox-connection" class="borderradius-6 bg-white margin-5 padding-15 fontsize-12"style="border:1px solid #dadada"><div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">key1</text><span class="color-lightblack"style="width: calc(100% - 110px);">value1</span></div><div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">key2</text><span class="color-lightblack"style="width: calc(100% - 110px);">value2</span></div></div></div></div>').appendTo(jishugraph)
 
                 const links = res.resultdata.links;
                 const nodes = res.resultdata.nodes;
@@ -588,9 +588,9 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                 simulation.force("x", d3.forceX().strength(0.1))
                 simulation.force("y", d3.forceY().strength(0.25))
                 simulation.force("radial", d3.forceRadial(width / 4, height / 4, width / 2))
-                simulation.alphaDecay(0.25); 
+                simulation.alphaDecay(0.15); 
                 simulation.force("collide", d3.forceCollide().radius(50))
-                simulation.tick(40);
+                simulation.tick(25);
 
                 // 边长
                 const link = g.append("g").selectAll(".link")
@@ -810,14 +810,52 @@ function ClickNode_jishu_Graph(id, nodes, links) {
 	}
 	node.classList.add("chosen");
 
-    //
+    // 写好属性
+    const originalObject = nodes.filter(function(item) {
+        return item.id.toString() == id.toString()
+    })[0];
+    console.log("Clicked Node:", originalObject)
+    const nodeinfo = Object.assign({}, originalObject);
+    // 基本属性
+    document.getElementById("jishu-showbox-title").getElementsByTagName("span")[0].innerHTML = nodeinfo.name
+    const basic = document.getElementById("jishu-showbox-basic")
+    var spans = basic.getElementsByTagName("span")
+    spans[0].innerHTML = nodeinfo.name
+    spans[1].innerHTML = nodeinfo.label
+    spans[2].innerHTML = nodeinfo.level
+    spans[3].innerHTML = nodeinfo.domain
+    // 其他属性
+    const notinlabels = ['formerpath','domain','id','index','label','level','name','vx','vy','cx','cy','dx','dy','x','y','fx','fy']
+    for (var i = 0; i < notinlabels.length; i++) {
+        var key = notinlabels[i];
+        if (nodeinfo.hasOwnProperty(key)) {
+            delete nodeinfo[key];
+        }
+    }
+    var keys = Object.keys(nodeinfo);
+    const other = $("div#jishu-showbox-other").empty();
+    if (keys.length > 0) {
+        var lastKeyIndex = keys.length - 1;
+        for (var key in nodeinfo) {
+            if (key != keys[lastKeyIndex]) {
+                $('<div class="paddingbottom-10 paddingtop-10 color-grey border-bottom-grey flex-row align-center justify-between"><text style="width: 105px;">'+key.toString()+'</text><span class="color-lightblack" style="width: calc(100% - 110px);">'+nodeinfo[key].toString()+'</span></div>').appendTo(other)
+            } else {
+                $('<div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-between"><text style="width: 105px;">'+key.toString()+'</text><span class="color-lightblack" style="width: calc(100% - 110px);">'+nodeinfo[key].toString()+'</span></div>').appendTo(other)
+            }
+        }
+    } else {
+        $('<div class="paddingbottom-10 paddingtop-10 color-grey flex-row align-center justify-center"><text style="width: 105px;">暂无其他属性</text></div>').appendTo(other)
+    }
+    
+
+
+    // 展示属性框
     const showbox = document.getElementById("jishu-showbox")
     showbox.classList.remove("hidden")
     showbox.classList.add("layui-anim-downbit")
     const showboxtitle = document.getElementById("jishu-showbox-title")
     showboxtitle.classList.remove("hidden")
     showboxtitle.classList.add("layui-anim-downbit")
-
 
     former_jishu_nodeid = id;
 }
@@ -1085,7 +1123,7 @@ function KeepExpandingUntilSuccess(dbname, domainname, times) {
     if (flag == false) {  
         return setTimeout(function() {  
             return KeepExpandingUntilSuccess(dbname, domainname, times+1)  
-        }, 300);    
+        }, 300);
     }  
     else {
         return   
