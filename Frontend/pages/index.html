@@ -241,16 +241,26 @@
                             style="border: none; padding-left:0px">
                     </div>
                 </div>
-                <div class="flex-row align-center marginright-10">
-                    <img src="/static/global/images/setting-bg-blue.png" class="cursor-pointer img-32">
-
+                <div class="flex-row align-center marginright-10" style="position: relative;">
+                    <div onclick="Setting_PageView()" class="padding-5 hover-bg-lightgrey borderradius-6">
+                        <img src="/static/global/images/setting-bg-blue.png" class="cursor-pointer img-32">
+                    </div>
+                    <div id="pageview-setting" class="fontsize-14 hidden bg-white border-lightgrey layui-anim paddingbottom-10 paddingtop-10" style="width:250px;position: absolute;top:45px;right:2px;z-index:100;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2)">
+                        <div class="flex-row align-center layui-form width-100per justify-between paddingleft-10 paddingright-10 fontweight-600">
+                            页面设置
+                        </div>
+                        <div class="margintop-5 flex-row align-center width-100per justify-between paddingleft-10 paddingright-10" style="color:#808896">
+                            隐藏左侧数据库栏
+                            <input onchange="ExpandandConcealNavbar()" type="checkbox" style="width:16px;height:16px;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- content -->
         <div class="width-100per flex-row" style="height:calc(100% - 56px)">
-            <div id="navbar" class="height-100per bg-grey" style="width:16%;">
+            <div id="navbar" class="height-100per bg-grey" style="width:19%;">
                 <!-- loading database -->
                 <div id="loading-navbar" class="height-100per width-100per flex-row align-center justify-center">
                     <div class="padding-5 flex-row hidden">
@@ -289,7 +299,7 @@
             </div>
 
             <div id="content" class="height-100per"
-                style="width:84%;background: linear-gradient(to top, rgb(241, 244, 251), #fff);">
+                style="width:100%;background: linear-gradient(to top, rgb(241, 244, 251), #fff);">
                 <!-- content-loading -->
                 <div id="content-loading" class="height-100per width-100per flex-column align-center justify-center"
                     style="color: #a8a8ae;">

@@ -290,3 +290,15 @@ body .loading-class .layui-layer-content .layui-layer-ico {
 	stroke: rgb(153, 205, 252);
 	stroke-width: 5px;
 }
+
+.layui-form-switch {
+    min-width: 42px !important;
+    margin-top: 1px !important;
+}
+.layui-form-switch i{
+    top: 2px !important;
+}
+
+.layui-form-onswitch {
+    background-color: #1C86EE !important;
+}

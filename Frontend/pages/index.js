@@ -71,7 +71,7 @@ function Getdatabase() {
 }
 
 function ChangePage(pagename) {
-    
+    console.log(pagename)
 }
 
 function OpenPopup(divid) {
@@ -1128,4 +1128,27 @@ function KeepExpandingUntilSuccess(dbname, domainname, times) {
     else {
         return   
     }  
+}
+
+function Setting_PageView() {
+    const showbox = document.getElementById("pageview-setting")
+    if (showbox.classList.contains("hidden")) {
+        showbox.classList.remove("hidden")
+        showbox.classList.add("layui-anim-downbit")
+        document.addEventListener("mousedown", function(event) {
+            if (showbox && !showbox.contains(event.target)) {
+                showbox.classList.add("hidden");
+                showbox.classList.remove("layui-anim-downbit");
+            }
+        });
+    }
+}
+
+function ExpandandConcealNavbar() {
+    var ele = document.getElementById("pageview-setting").getElementsByTagName("input")[0]
+    if (ele.checked) {
+        document.getElementById("navbar").classList.add("hidden")
+    } else {
+        document.getElementById("navbar").classList.remove("hidden")
+    }
 }
