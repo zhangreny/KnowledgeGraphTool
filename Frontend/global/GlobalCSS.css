@@ -198,6 +198,9 @@ span {
 .color-blue{
 	color: #2547ba;
 }
+.color-notdarkgreen{
+	color: rgb(32,185,102);
+}
 .color-darkgrey{
 	color: #7e7e7e;
 }
@@ -334,6 +337,15 @@ span {
 }
 .bg-red{
 	background-color: #d81e06;
+}
+.bg-lightred{
+	background-color: rgb(255,237,237);
+}
+.bg-lightgreen{
+	background-color: rgb(245,251,247);
+}
+.bg-notsodarkgreen{
+	background-color:  rgb(32,185,102);
 }
 /*************** 点击的cursor样式 ***************/
 .cursor-pointer{
@@ -499,5 +511,14 @@ span {
     }
     to {
         transform: translateX(0);
+    }
+}
+
+@keyframes slideOutUpBit {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-2%);
     }
 }

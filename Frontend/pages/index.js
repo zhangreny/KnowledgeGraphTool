@@ -279,6 +279,29 @@ function ClickDatabase(divid) {
     });
     document.getElementById("content-kgdb").classList.remove("hidden")
 
+    // get information of gailan
+    // 连接状态
+    const status = $("div#db_gailan_connectstatus").empty();
+    if (database_json[Current_DB_index].status == "active") {
+        $('<div class="flex-row justify-center align-center bg-lightgreen" style="height: 26px;border-radius: 13px;width: 90px;"><div class="bg-notsodarkgreen" style="height: 12px;width: 12px;border-radius: 6px;"></div><span class="fontsize-12 marginleft-10">连接正常</span></div>').appendTo(status)
+    } else if (database_json[Current_DB_index].status == "down") {
+        $('<div class="flex-row justify-center align-center bg-lightred" style="height: 26px;border-radius: 13px;width: 90px;"><div class="bg-red" style="height: 12px;width: 12px;border-radius: 6px;"></div><span class="fontsize-12 marginleft-10">连接异常</span></div>').appendTo(status)
+    }
+    // 领域信息
+    const length = database_json[Current_DB_index].domains.length
+    const domaininfo = $("div#db_gailan_domain").empty();
+    for(var i=0; i<length; i++) {
+        var thisdomain = database_json[Current_DB_index].domains[i]
+        if (i != length-1) {
+            $('<div class="flex-column border-bottom-grey padding-10 width-100per" style="min-height: 60px;"><span onclick="ClickDomain(`'+thisdomain.domainindex+'`)" class="cursor-pointer height-100per color-lightblack fontsize-14 hover-textunderline hover-font-blue" style="width:150px;">'+thisdomain.domainname+'</span><span class="fontsize-12 color-grey margintop-5">'+thisdomain.dimensions.technum+'技术 · '+thisdomain.dimensions.essaynum+'论文 · '+thisdomain.dimensions.productnum+'产品 · '+thisdomain.dimensions.patentnum+'专利 · '+thisdomain.dimensions.projectnum+'工程 · '+thisdomain.dimensions.standardnum+'标准</span></div>').appendTo(domaininfo)
+        } else {
+            $('<div class="flex-column padding-10 width-100per" style="min-height: 60px;"><span onclick="ClickDomain(`'+thisdomain.domainindex+'`)" class="cursor-pointer height-100per color-lightblack fontsize-14 hover-textunderline hover-font-blue" style="width:150px;">'+thisdomain.domainname+'</span><span class="fontsize-12 color-grey margintop-5">'+thisdomain.dimensions.technum+'技术 · '+thisdomain.dimensions.essaynum+'论文 · '+thisdomain.dimensions.productnum+'产品 · '+thisdomain.dimensions.patentnum+'专利 · '+thisdomain.dimensions.projectnum+'工程 · '+thisdomain.dimensions.standardnum+'标准</span></div>').appendTo(domaininfo)
+        }
+
+    }
+
+
+
     ClickTab_DB('kgdb_gailan', 0)
 }
 
@@ -294,6 +317,12 @@ function ClickDomain(domainid) {
     var database_json = JSON.parse(sessionStorage.getItem('database'))
     document.getElementById("name-db-domain-content").innerHTML = database_json[Current_DB_index].unique_dbname
     document.getElementById("name-domain-domain-content").innerHTML = database_json[Current_DB_index].domains[Current_Domain_index].domainname
+
+    // if db not expand, expand db
+    if (document.getElementById(domainid).classList.contains("hidden")) {
+        document.getElementById("db_"+Current_DB_index.toString()).getElementsByTagName("div")[0].click()
+    }
+
 
     // change css
     const navbar = document.getElementById("kgdb-navbar")

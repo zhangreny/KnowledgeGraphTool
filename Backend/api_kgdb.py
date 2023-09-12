@@ -80,12 +80,20 @@ def api_index_get_databaseinfo():
             if dbdriverlist[i] != "driver failed!":
                 with dbdriverlist[i].session() as session:
                     results = list(session.run("MATCH (n:领域名) RETURN n.name AS NAME, id(n) as ID"))
-                for j in range(len(results)):
-                    tmp['domains'].append({"domainindex": tmp['id']+"_domain_"+str(j),"domainid": results[j]['ID'], "domainname": results[j]['NAME']})
+                    for j in range(len(results)):
+                        domaindict = {"domainindex": tmp['id']+"_domain_"+str(j),"domainid": results[j]['ID'], "domainname": results[j]['NAME'], "dimensions": {}}
+                        domaindict['dimensions']['technum'] = list(session.run("MATCH (n:技术) where n.domain=$domainname RETURN count(n) AS Count",domainname=results[j]['NAME']))[0]['Count']
+                        domaindict['dimensions']['essaynum'] = list(session.run("MATCH (n:论文) where n.domain=$domainname RETURN count(n) AS Count",domainname=results[j]['NAME']))[0]['Count']
+                        domaindict['dimensions']['productnum'] = list(session.run("MATCH (n:产品) where n.domain=$domainname RETURN count(n) AS Count",domainname=results[j]['NAME']))[0]['Count']
+                        domaindict['dimensions']['patentnum'] = list(session.run("MATCH (n:专利) where n.domain=$domainname RETURN count(n) AS Count",domainname=results[j]['NAME']))[0]['Count']
+                        domaindict['dimensions']['standardnum'] = list(session.run("MATCH (n:标准) where n.domain=$domainname RETURN count(n) AS Count",domainname=results[j]['NAME']))[0]['Count']
+                        domaindict['dimensions']['projectnum'] = list(session.run("MATCH (n:工程) where n.domain=$domainname RETURN count(n) AS Count",domainname=results[j]['NAME']))[0]['Count']
+                        tmp['domains'].append(domaindict)
             ans.append(tmp)
         current_app.config['System_Dbdriver_list'] = dbdriverlist
         return dumps({'status':'success', 'resultdata':ans})  
-    except:
+    except Exception as e:
+        print(e)
         return dumps({'status':'fail', 'resultdata':'获取数据库列表失败'})  
 
 @api_kgdb.route("/api/deleteconnectiondb", methods=['POST'], strict_slashes=False)
