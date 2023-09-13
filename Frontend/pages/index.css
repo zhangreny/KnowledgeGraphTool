@@ -310,5 +310,4 @@ body .loading-class .layui-layer-content .layui-layer-ico {
 
 .hover-bitup:hover {
     animation: slideOutUpBit 0.3s ease-in-out forwards;
-    color: #1C86EE;
 }
