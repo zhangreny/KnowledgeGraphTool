@@ -10,6 +10,8 @@ from loadsystem import load_db_file
 from loadsystem import load_config_file
 from loadsystem import load_dbdriver
 import threading
+from timefunctions import getdatenow_string
+from timefunctions import datestring2unixtime_int
 
 port = 8000
 
@@ -39,6 +41,27 @@ app.config['Lock_User_Token'] = threading.Lock()
 @app.route("/")
 def get_default():
     return redirect('/login')
+
+# 定时任务
+from apscheduler.schedulers.background import BackgroundScheduler
+scheduler = BackgroundScheduler()
+
+def ClearOutdatedToken():
+    timestr = getdatenow_string()
+    info_msg = colored("["+timestr+"]Interval Job Executed: ClearOutdatedToken", "cyan")
+    print(info_msg)
+    timenow = datestring2unixtime_int(timestr)
+    keystodelete = []
+    for key, value in app.config['USERNAME_TOKEN_ENDTIME'].items():
+        if value[1] < timenow:
+            keystodelete.append(key)
+    with app.config['Lock_User_Token']: 
+        for key in keystodelete:
+            del app.config['USERNAME_TOKEN_ENDTIME'][key]
+    return
+    
+
+
 
 if __name__ == '__main__':
     print("======================= [init] =======================")
@@ -70,5 +93,15 @@ if __name__ == '__main__':
     app.config['System_Dbdriver_list'], activedrivernum = load_dbdriver(app.config['System_Database_list'])
     print(success_msg, "Active", activedrivernum, "/ All", len(app.config['System_Dbdriver_list']))
 
+    print("5. Starting interval jobs...", end=" ")
+    try:
+        scheduler.add_job(ClearOutdatedToken, 'interval', hours=int(app.config['System_Config_dict']['auth']['token_validtime_hours'])//2+1)    
+        scheduler.start()
+        print(success_msg)
+    except:
+        print(error_msg)
+        exit()
+
     app.run(host='127.0.0.1', port=port)
+
 

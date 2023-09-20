@@ -14,8 +14,14 @@ window.onpageshow = function () {
 function Getdatabase() {
     document.getElementById("loading-navbar").getElementsByTagName('button')[0].style.display = "none"
     document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.remove('hidden')
-    $.get("/api/databaseinfo",
-        function (res) {
+    $.ajax({
+        url: "/api/databaseinfo",
+        method: "GET",
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
+        success: function(res2) {
+            var res = JSON.parse(res2)
             console.log("Database List:", res)
             // close loading
             if (res.status == "success") {
@@ -54,7 +60,6 @@ function Getdatabase() {
                             }
                         }
                     }
-
                     // click the first
                     ClickDatabase("db_0")
                 }
@@ -64,7 +69,8 @@ function Getdatabase() {
             }
             document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.add('hidden')
             document.getElementById("loading-navbar").getElementsByTagName('button')[0].style.display = ""
-        }, "json");
+        }
+    });
 }
 
 function ChangePage(pagename) {

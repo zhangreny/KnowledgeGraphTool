@@ -7,6 +7,8 @@ from flask import current_app
 from json import dumps, dump
 from neo4j import GraphDatabase
 from loadsystem import load_dbdriver
+from timefunctions import getdatenow_string
+from timefunctions import datestring2unixtime_int
 
 api_kgdb = Blueprint('api_kgdb', __name__, static_folder='../Frontend')
 
@@ -21,6 +23,14 @@ def uniquedbauth(dblist, uri):
         if db['uri'] == uri:
             return True
     return False
+
+def checktoken(token, tokendict):
+    if token not in tokendict:
+        return "不存在此token"
+    timenow = datestring2unixtime_int(getdatenow_string)
+    if tokendict[token][1] < timenow:
+        return "token已过期"
+
 
 @api_kgdb.route("/api/addconnectiondb", methods=['POST'], strict_slashes=False)
 def api_index_post_addconnectiondb():
@@ -59,6 +69,11 @@ def api_index_post_addconnectiondb():
 
 @api_kgdb.route("/api/databaseinfo")
 def api_index_get_databaseinfo():
+    '''
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, )
+    print(token)
+    '''
     try: 
         ans = []
         # 等自动更新数据库状态写好之后，这里就不再手动去连接一次了，直接获取状态就行（或者出于稳定也还是连接一次）
