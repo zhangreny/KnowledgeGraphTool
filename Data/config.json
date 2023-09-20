@@ -1,0 +1,11 @@
+{
+    "auth": {
+        "token_validtime_hours": 6 
+    },
+    "backup": {
+
+    },
+    "event": {
+
+    }
+}

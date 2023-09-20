@@ -7,8 +7,6 @@ var numlimit = 90;
 
 var former_jishu_nodeid = -1;
 
-
-
 window.onpageshow = function () {
     Getdatabase();
 }
@@ -67,7 +65,6 @@ function Getdatabase() {
             document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.add('hidden')
             document.getElementById("loading-navbar").getElementsByTagName('button')[0].style.display = ""
         }, "json");
-
 }
 
 function ChangePage(pagename) {

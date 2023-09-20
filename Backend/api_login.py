@@ -6,6 +6,9 @@ from flask import request
 from flask import current_app
 from hashlib import sha256
 from json import dumps
+from timefunctions import getdatenow_string
+from timefunctions import datestring2unixtime_int
+from time import sleep
 
 api_login = Blueprint('api_login', __name__, static_folder='../Frontend')
 
@@ -51,7 +54,18 @@ def api_login_post_login():
                 if current_app.config["System_Auth_dict"][username][0] != str(sha256(password.encode("utf-8")).hexdigest()):
                     return dumps({'status':'fail2','resultdata':'密码输入错误哦'})
                 else:
-                    return dumps({'status':'success','resultdata':'登录成功'})
+                    validhours = current_app.config["System_Config_dict"]['auth']['token_validtime_hours']
+                    with current_app.config['Lock_User_Token']:
+                        timenow = getdatenow_string()
+                        lasttimestamp = datestring2unixtime_int(timenow) + 36000*validhours
+                        token = sha256((username+timenow).encode('utf-8')).hexdigest() 
+                        # token 重复检查
+                        while token in current_app.config['USERNAME_TOKEN_ENDTIME']:
+                            sleep(0.1)
+                            timenow = getdatenow_string()
+                            lasttimestamp = datestring2unixtime_int(timenow) + 36000*validhours
+                            token = sha256((username+timenow).encode('utf-8')).hexdigest() 
+                        current_app.config['USERNAME_TOKEN_ENDTIME'][token] = [username, lasttimestamp]
+                    return dumps({'status':'success','resultdata':'登录成功','token':token})
         except:
             return dumps({'status':'fail','resultdata':'用户登录出现bug了'})
-        # 添加任务日志

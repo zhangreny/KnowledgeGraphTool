@@ -214,6 +214,7 @@
                 contentType: false,
                 success: function (res) {
                     if (res.status == "success") {
+                        localStorage.setItem("token", res.token)
                         window.location.href = "index";
                     } else if (res.status == "fail1") {
                         layer.msg(res.resultdata, {offset: 'calc(50% - 170px)', time: 2000})

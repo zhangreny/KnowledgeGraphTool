@@ -27,6 +27,14 @@ def load_db_file(file_path):
         return data
     except:
         return "Failed!"
+    
+def load_config_file(file_path):
+    try:
+        with open(file_path, 'r', encoding="utf-8") as json_file:
+            data = json.load(json_file)
+        return data
+    except:
+        return "Failed!"
 
 def connect_db(dbinfo):
     try:
