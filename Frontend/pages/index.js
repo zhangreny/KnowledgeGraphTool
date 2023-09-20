@@ -64,8 +64,22 @@ function Getdatabase() {
                     ClickDatabase("db_0")
                 }
             }
-            else {
+            else if(res.status == "fail") {
                 showtaskmsg_fail("获取数据库列表失败")
+            }
+            else if (res.status == "tokenfail") {
+                swal({
+                    title: "Token 验证失败",
+                    text: res.resultdata,
+                    icon: "error",
+                    buttons: {
+                        confirm: "重新登录",
+                    },
+                }).then((result) => {
+                    if (result) {
+                        window.location.href = "login";
+                    }
+                });
             }
             document.getElementById("loading-navbar").getElementsByTagName('div')[0].classList.add('hidden')
             document.getElementById("loading-navbar").getElementsByTagName('button')[0].style.display = ""
@@ -162,6 +176,9 @@ function AddNewDBConnection() {
         data: data,
         type: "POST",
         dataType: "json",
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
         cache: false,
         processData: false,
         contentType: false,
@@ -194,6 +211,19 @@ function AddNewDBConnection() {
                 ShowErrorinPopup("kgdb-popup", res.resultdata)
                 inputs[1].style.border = "2px solid red"
                 setTimeout(function () { inputs[1].style.border = "1px solid #dadada" }, 3000);
+            } else if (res.status == "tokenfail") {
+                swal({
+                    title: "Token 验证失败",
+                    text: res.resultdata,
+                    icon: "error",
+                    buttons: {
+                        confirm: "重新登录",
+                    },
+                }).then((result) => {
+                    if (result) {
+                        window.location.href = "login";
+                    }
+                });
             }
         },
     })
@@ -442,6 +472,9 @@ function DeleteDBConnection(dbname) {
         data: data,
         type: "POST",
         dataType: "json",
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
         cache: false,
         processData: false,
         contentType: false,
@@ -460,6 +493,19 @@ function DeleteDBConnection(dbname) {
                 Current_DB_index = -1
                 // refresh page
                 Getdatabase()
+            } else if (res.status == "tokenfail") {
+                swal({
+                    title: "Token 验证失败",
+                    text: res.resultdata,
+                    icon: "error",
+                    buttons: {
+                        confirm: "重新登录",
+                    },
+                }).then((result) => {
+                    if (result) {
+                        window.location.href = "login";
+                    }
+                });
             } else {
                 showtaskmsg_fail(res.resultdata)
             }
@@ -548,6 +594,9 @@ function GetTechnologyGraph(dbname, domainnodeid) {
         data: data,
         type: "POST",
         dataType: "json",
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
         cache: false,
         processData: false,
         contentType: false,
@@ -826,6 +875,19 @@ function GetTechnologyGraph(dbname, domainnodeid) {
                 CloseShowBox("jishu")
                 sessionStorage.setItem("nodes", JSON.stringify(nodes))
                 sessionStorage.setItem("links", JSON.stringify(links))
+            } else if (res.status == "tokenfail") {
+                swal({
+                    title: "Token 验证失败",
+                    text: res.resultdata,
+                    icon: "error",
+                    buttons: {
+                        confirm: "重新登录",
+                    },
+                }).then((result) => {
+                    if (result) {
+                        window.location.href = "login";
+                    }
+                });
             } else {
                 showtaskmsg_fail(res.resultdata)
             }
@@ -1038,6 +1100,9 @@ function AddNewTechnology() {
         data: data,
         type: "POST",
         dataType: "json",
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
         cache: false,
         processData: false,
         contentType: false,
@@ -1060,6 +1125,19 @@ function AddNewTechnology() {
 
                 // update navbar
                 GetTechnologyGraph(database_json[Current_DB_index].unique_dbname, database_json[Current_DB_index].domains[Current_Domain_index].domainid)
+            } else if (res.status == "tokenfail") {
+                swal({
+                    title: "Token 验证失败",
+                    text: res.resultdata,
+                    icon: "error",
+                    buttons: {
+                        confirm: "重新登录",
+                    },
+                }).then((result) => {
+                    if (result) {
+                        window.location.href = "login";
+                    }
+                });
             } else if (res.status == "fail") {
                 ShowErrorinPopup("addjishu-popup", res.resultdata)
             }
@@ -1097,6 +1175,9 @@ function AddNewDomain() {
         data: data,
         type: "POST",
         dataType: "json",
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
         cache: false,
         processData: false,
         contentType: false,
@@ -1125,6 +1206,19 @@ function AddNewDomain() {
                 ShowErrorinPopup("adddomain-popup", res.resultdata)
                 inputs[0].style.border = "2px solid red"
                 setTimeout(function () { inputs[0].style.border = "1px solid #dadada" }, 3000);
+            } else if (res.status == "tokenfail") {
+                swal({
+                    title: "Token 验证失败",
+                    text: res.resultdata,
+                    icon: "error",
+                    buttons: {
+                        confirm: "重新登录",
+                    },
+                }).then((result) => {
+                    if (result) {
+                        window.location.href = "login";
+                    }
+                });
             }
         },
     })

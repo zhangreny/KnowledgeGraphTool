@@ -6,9 +6,9 @@ from flask import request
 from flask import current_app
 from hashlib import sha256
 from json import dumps
+from time import sleep
 from timefunctions import getdatenow_string
 from timefunctions import datestring2unixtime_int
-from time import sleep
 
 api_login = Blueprint('api_login', __name__, static_folder='../Frontend')
 

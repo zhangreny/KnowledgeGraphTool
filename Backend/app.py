@@ -15,6 +15,8 @@ from timefunctions import datestring2unixtime_int
 
 port = 8000
 
+
+# app
 app = Flask(
     __name__,
     static_folder='../Frontend',
@@ -23,7 +25,6 @@ app = Flask(
 app.register_blueprint(api_login)
 app.register_blueprint(api_index)
 app.register_blueprint(api_kgdb)
-
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1) 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=1) 
@@ -42,7 +43,8 @@ app.config['Lock_User_Token'] = threading.Lock()
 def get_default():
     return redirect('/login')
 
-# 定时任务
+
+# apscheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 scheduler = BackgroundScheduler()
 
@@ -59,10 +61,9 @@ def ClearOutdatedToken():
         for key in keystodelete:
             del app.config['USERNAME_TOKEN_ENDTIME'][key]
     return
-    
 
 
-
+# main
 if __name__ == '__main__':
     print("======================= [init] =======================")
     error_msg = colored("Failed!", "red")
@@ -95,7 +96,7 @@ if __name__ == '__main__':
 
     print("5. Starting interval jobs...", end=" ")
     try:
-        scheduler.add_job(ClearOutdatedToken, 'interval', hours=int(app.config['System_Config_dict']['auth']['token_validtime_hours'])//2+1)    
+        scheduler.add_job(ClearOutdatedToken, 'interval', hours=int(app.config['System_Config_dict']['auth']['token_validtime_hours'])//3+1)    
         scheduler.start()
         print(success_msg)
     except:

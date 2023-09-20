@@ -26,14 +26,42 @@ def uniquedbauth(dblist, uri):
 
 def checktoken(token, tokendict):
     if token not in tokendict:
-        return "不存在此token"
-    timenow = datestring2unixtime_int(getdatenow_string)
+        return "不存在此token", "fail"
+    timenow = datestring2unixtime_int(getdatenow_string())
     if tokendict[token][1] < timenow:
-        return "token已过期"
-
+        return "token已过期", "fail"
+    return tokendict[token][0], "success"
+    '''
+    用法:
+    前端发送
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
+    前端接收 
+    else if (res.status == "tokenfail") {
+        swal({
+            title: "Token 验证失败",
+            text: res.resultdata,
+            icon: "error",
+            buttons: {
+                confirm: "重新登录",
+            },
+        }).then((result) => {
+            if (result) {
+                window.location.href = "login";
+            }
+        });
+    }
+    '''
 
 @api_kgdb.route("/api/addconnectiondb", methods=['POST'], strict_slashes=False)
 def api_index_post_addconnectiondb():
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
+    
     if request.method == 'POST':
         mydbname = request.form['mydbname']
         uri = request.form['uri']
@@ -69,11 +97,10 @@ def api_index_post_addconnectiondb():
 
 @api_kgdb.route("/api/databaseinfo")
 def api_index_get_databaseinfo():
-    '''
     token = request.headers.get('Authorization')
-    Username, status = checktoken(token, )
-    print(token)
-    '''
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
     try: 
         ans = []
         # 等自动更新数据库状态写好之后，这里就不再手动去连接一次了，直接获取状态就行（或者出于稳定也还是连接一次）
@@ -113,6 +140,10 @@ def api_index_get_databaseinfo():
 
 @api_kgdb.route("/api/deleteconnectiondb", methods=['POST'], strict_slashes=False)
 def api_index_post_deleteconnectiondb():
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
     if request.method == 'POST':
         dbname = request.form['dbname']
         try: 
@@ -134,6 +165,10 @@ def api_index_post_deleteconnectiondb():
 
 @api_kgdb.route("/api/gettechnologygraph", methods=['POST'], strict_slashes=False)     
 def api_index_post_gettechnologygraph():
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
     if request.method == 'POST':
         dbname = request.form['dbname']
         nodeid = request.form['nodeid']
@@ -281,6 +316,10 @@ def findword(line):
 
 @api_kgdb.route("/api/addtechnology", methods=['POST'], strict_slashes=False)     
 def api_index_post_addtechnology():
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
     if request.method == 'POST':
         dbname = request.form['dbname']
         nodeid = request.form['nodeid']
@@ -386,6 +425,10 @@ def api_index_post_addtechnology():
 
 @api_kgdb.route("/api/adddomain", methods=['POST'], strict_slashes=False)     
 def api_index_post_adddomain():
+    token = request.headers.get('Authorization')
+    Username, status = checktoken(token, current_app.config['USERNAME_TOKEN_ENDTIME'])
+    if status == "fail":
+        return dumps({'status': 'tokenfail', 'resultdata': Username}) 
     if request.method == 'POST':
         dbname = request.form['dbname']
         domainname = request.form['domainname']
