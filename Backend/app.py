@@ -33,6 +33,8 @@ app.config['System_Config_dict'] = {}
 app.config['System_Database_list'] = []
 app.config['System_Dbdriver_list'] = []
 app.config['Lock_Database_Driver'] = threading.Lock()
+app.config['System_Data_folder'] = '../Data/Databases/'
+app.config['Lock_Data_folder'] = threading.Lock()
 app.config['System_Passwd_file'] = '../Data/auth.txt'
 app.config['System_Database_file'] = '../Data/db.json'
 app.config['System_Config_file'] = '../Data/config.json'
@@ -61,6 +63,9 @@ def ClearOutdatedToken():
         for key in keystodelete:
             del app.config['USERNAME_TOKEN_ENDTIME'][key]
     return
+
+def ClearNonExistDatabaseAndDomainFolder():
+    pass
 
 
 # main

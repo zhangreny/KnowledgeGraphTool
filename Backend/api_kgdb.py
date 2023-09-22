@@ -7,6 +7,9 @@ from flask import current_app
 from json import dumps, dump
 from neo4j import GraphDatabase
 from loadsystem import load_dbdriver
+from hashlib import sha256
+import os
+from shutil import rmtree
 from timefunctions import getdatenow_string
 from timefunctions import datestring2unixtime_int
 
@@ -84,6 +87,23 @@ def api_index_post_addconnectiondb():
             driver = GraphDatabase.driver(uri, auth=(username,password))
             with driver.session() as session:
                 session.run("MATCH (x) RETURN x limit 1")
+                
+            # create database folder
+            sha256dbname = sha256((mydbname).encode('utf-8')).hexdigest() 
+            if os.path.exists(current_app.config['System_Data_folder'] + sha256dbname):
+                return dumps({'status':'notuniquename', 'resultdata':'数据库哈希碰撞，请更换数据库名'})  
+            # initialize database folder
+            with current_app.config['Lock_Data_folder']:
+                os.mkdir(current_app.config['System_Data_folder'] + sha256dbname) 
+                with open(current_app.config['System_Data_folder'] + sha256dbname + '/databasename.txt', "w", encoding="utf-8") as f:
+                    f.write(mydbname)
+                os.mkdir(current_app.config['System_Data_folder'] + sha256dbname + '/backups') 
+                os.mkdir(current_app.config['System_Data_folder'] + sha256dbname + '/events') 
+                with open(current_app.config['System_Data_folder'] + sha256dbname + '/config.json', "w", encoding="utf-8") as f:
+                    f.write(mydbname)
+                initconfig = {"maxeventsize(Bytes)": 1073741824, "backupinterval(Hours)": 720, "maxbackupsize(Bytes)": 1073741824}
+                with open(current_app.config['System_Data_folder'] + sha256dbname + '/config.json', 'w', encoding="utf-8") as json_file:
+                    dump(initconfig, json_file, indent=4)
 
             with current_app.config['Lock_Database_Driver']:
                 current_app.config['System_Database_list'].append(dbinfo)
@@ -153,6 +173,9 @@ def api_index_post_deleteconnectiondb():
                     if dict_item['unique_dbname'] == dbname:
                         ind = i
                         break
+                sha256dbname = sha256((dbname).encode('utf-8')).hexdigest() 
+                if os.path.exists(current_app.config['System_Data_folder'] + sha256dbname):
+                    rmtree(current_app.config['System_Data_folder'] + sha256dbname)
                 tmp = [dict_item for dict_item in current_app.config['System_Database_list'] if dict_item['unique_dbname'] != dbname]  
                 current_app.config['System_Database_list'] = tmp
                 tmpdriver = [current_app.config['System_Dbdriver_list'][i] for i in range(len(current_app.config['System_Dbdriver_list'])) if i != ind]
@@ -160,7 +183,8 @@ def api_index_post_deleteconnectiondb():
                 with open(current_app.config['System_Database_file'], 'w') as json_file:
                     dump(current_app.config['System_Database_list'], json_file, indent=4)
             return dumps({'status':'success', 'resultdata':'移除数据库 ' + dbname + ' 成功！'})  
-        except:
+        except Exception as e:
+            print(e)
             return dumps({'status':'fail', 'resultdata':'移除数据库 ' + dbname + ' 失败'})  
 
 @api_kgdb.route("/api/gettechnologygraph", methods=['POST'], strict_slashes=False)     

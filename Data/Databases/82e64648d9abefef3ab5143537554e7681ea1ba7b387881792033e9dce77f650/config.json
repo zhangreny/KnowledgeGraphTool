@@ -1,0 +1,5 @@
+{
+    "maxeventsize(Bytes)": 1073741824,
+    "backupinterval(Hours)": 720,
+    "maxbackupsize(Bytes)": 1073741824
+}
