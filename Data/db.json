@@ -5,5 +5,12 @@
         "uri": "bolt://127.0.0.1",
         "username": "neo4j",
         "password": "zhangry2001"
+    },
+    {
+        "unique_dbname": "remotedb",
+        "category": "neo4j",
+        "uri": "neo4j+ssc://bff4c246.databases.neo4j.io",
+        "username": "neo4j",
+        "password": "jsG4n6hJXgM2P56NvuVWBiCwGBY2fyRNjqP4bGhF1Oo"
     }
 ]

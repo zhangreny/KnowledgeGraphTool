@@ -23,9 +23,9 @@
                     style="position: fixed;top: 26px;right:26px;width:24px;height:24px;border-radius: 50%;background-color: #4b4b4b;">
                     <i class="layui-icon layui-icon-close" style="font-size: 14px; color:#fff;"></i>
                 </div>
-                <div id="kgdb-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;height:100%;">
-                    <div class="paddingleft-10 overflow-auto paddingbottom-20"
-                        style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
+                <div id="kgdb-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;min-height:100%;max-height:100%;">
+                    <div class="paddingleft-10 overflow-auto paddingright-15 paddingbottom-20"
+                        style="width: 100%;margin-top:20px;height:calc(100% - 100px);">
                         <div class="fontweight-600 margintop-10"
                             style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
                             创建数据库连接
@@ -82,9 +82,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="addjishu-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;height:100%;">
-                    <div class="paddingleft-10 overflow-auto paddingbottom-20"
-                        style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
+                <div id="addjishu-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;min-height:100%;max-height:100%;">
+                    <div class="paddingleft-10 overflow-auto paddingright-15 paddingbottom-20"
+                        style="width: 100%;margin-top:20px;height:calc(100% - 100px);">
                         <div class="fontweight-600 margintop-10"
                             style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
                             添加技术
@@ -161,9 +161,9 @@
                         </div>
                     </div>
                 </div>
-                <div id="adddomain-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;height:100%;">
-                    <div class="paddingleft-10 overflow-auto paddingbottom-20"
-                        style="width: 100%;margin-top:20px;height:calc(100% - 82px);">
+                <div id="adddomain-popup" class="paddingleft-10 hidden" style="width: 40%;margin-top:40px;min-height:100%;max-height:100%;">
+                    <div class="paddingleft-10 overflow-auto paddingright-15 paddingbottom-20"
+                        style="width: 100%;margin-top:20px;height:calc(100% - 100px);">
                         <div class="fontweight-600 margintop-10"
                             style="font-size:32px;margin-left:-10px;margin-bottom:18px;">
                             创建新领域
@@ -386,7 +386,7 @@
                                     <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15"
                                         style="width: calc(100% - 15px);height: calc(100% - 15px);">
                                         <div class="width-100per flex-row align-center justify-between" style="height:16px">
-                                            <span class="fontsize-12 fontweight-600 hover-font-blue cursor-pointer">事件审计</span>
+                                            <span onclick="ClickTab_DB('kgdb_shijianshenji',2)" class="fontsize-12 fontweight-600 hover-font-blue cursor-pointer">事件审计</span>
                                             <span class="fontsize-12" style="color: #9a9a9a;">
                                                 共 <text id="gailan_numofeventlog">2</text> 条记录 · <text
                                                     id="gailan_sizeofeventlog">200 MB</text>
@@ -443,7 +443,7 @@
                                     <div class="bg-white border-lightgrey margintop-15 marginright-15 borderradius-6 padding-15"
                                         style="width: calc(100% - 15px);height: calc(100% - 15px);">
                                         <div class="width-100per flex-row align-center justify-between" style="height:16px">
-                                            <span class="fontsize-12 fontweight-600 hover-font-blue cursor-pointer">备份和恢复</span>
+                                            <span onclick="ClickTab_DB('kgdb_beifenjihuifu',3)" class="fontsize-12 fontweight-600 hover-font-blue cursor-pointer">备份和恢复</span>
                                             <span class="fontsize-12" style="color: #9a9a9a;">
                                                 共 <text id="gailan_numofbackup">2</text> 个备份
                                             </span>
@@ -490,7 +490,7 @@
                                                     <span class="flex-row justify-end align-center" style="width: calc(100% - 130px);color: #9a9a9a;">网络空间安全</span>
                                                 </div>
                                                 <span style="width: 100%;color: #aeaeae;margin-top: 2px;margin-bottom: 5px;">角度来看就断开连接的付款了估计是快乐的的法律规定立刻释放公里ssdafafdasf虑独立访客劳动法离开对方空间</span>
-                                                <div class="flex-row align-center justify-center color-lightblack" style="font-size: 10px; width: 100%;margin-top: 15px;margin-bottom: 5px;">概览页只展示至多最近50条事件</div>
+                                                <div class="flex-row align-center justify-center color-lightblack" style="font-size: 10px; width: 100%;margin-top: 15px;margin-bottom: 5px;">概览页只展示至多最近50条备份记录</div>
                                             </div>
                                         </div>
                                     </div>
