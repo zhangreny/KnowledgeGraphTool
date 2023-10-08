@@ -110,7 +110,8 @@ def api_index_post_addconnectiondb():
                 with open(current_app.config['System_Database_file'], 'w') as json_file:
                     dump(current_app.config['System_Database_list'], json_file, indent=4)
             return dumps({'status':'success', 'resultdata':'添加数据库连接成功！'})  
-        except:
+        except Exception as e:
+            print(e)
             return dumps({'status':'fail', 'resultdata':'连接失败，请检查鉴权信息以及数据库状态'})  
         
         # 添加任务日志
@@ -319,11 +320,9 @@ def api_index_post_gettechnologygraph():
                         if len(res['nodes']) >= int(numlimit):
                             return dumps({'status':'success','resultdata':res,'nodeid':nodeid})        
                 objids = tmpobjids
-
             return dumps({'status':'success','resultdata':res,'nodeid':nodeid})
-
-            
-        except:
+        except Exception as e:
+            print(e)
             return dumps({'status':'fail', 'resultdata':'获取领域 ' + dbname + ' 技术节点失败'})  
 
 def findword(line):
@@ -444,7 +443,8 @@ def api_index_post_addtechnology():
                     tx.rollback()
                     return dumps({"status": "fail", "resultdata": "添加技术节点失败"})
             return {"status": "success", "resultdata": "添加"+str(allconceptnumber)+"个技术节点成功！"}
-        except:
+        except Exception as e:
+            print(e)
             return dumps({'status':'fail', 'resultdata':'添加技术节点失败'})  
 
 @api_kgdb.route("/api/adddomain", methods=['POST'], strict_slashes=False)     
@@ -477,7 +477,10 @@ def api_index_post_adddomain():
                 except:
                     tx.rollback()
                     return dumps({"status": "fail", "resultdata": "新建领域"+domainname+"失败"})
+            # add db event
+             
             return {"status": "success", "resultdata": "新建领域"+domainname+"成功！"}
             
-        except:
+        except Exception as e:
+            print(e)
             return dumps({'status':'fail', 'resultdata':'新建领域'+domainname+'失败'})  
